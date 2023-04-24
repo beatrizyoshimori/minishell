@@ -1,7 +1,7 @@
 
 NAME			=		minishell
 
-SOURCES 		=		minishell.c
+SOURCES			=		minishell.c
 
 SOURCES_PATH	=		sources
 
@@ -15,14 +15,23 @@ HEADER_PATH		=		includes
 
 CC				=		cc
 
-C_FLAGS			=		-Wall -Wextra -Werror -g3 -I$(HEADER_PATH)
+C_FLAGS			=		-Wall -Wextra -Werror -g3 -I$(HEADER_PATH) -I$(LIBFT_PATH)
+
+LIBFT_FLAGS		=		-Llibft -lft
+
+LIBFT_PATH		=		libft
+
+LIBFT			=		$(addprefix $(LIBFT_PATH)/, libft.a)
 
 RM				=		rm -rf
 
-all: 					$(NAME)
+all:					$(LIBFT) $(NAME)
+
+$(LIBFT):
+						@make -C $(LIBFT_PATH)
 
 $(NAME):				$(OBJECTS_PATH) $(OBJECTS)
-						$(CC) $(C_FLAGS) $(OBJECTS) -o $@
+						$(CC) $(C_FLAGS) $(OBJECTS) $(LIBFT_FLAGS) -o $@ -lreadline
 
 $(OBJECTS_PATH):
 						@mkdir -p $(OBJECTS_PATH)
@@ -32,9 +41,11 @@ $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 
 clean:
 						@$(RM) $(OBJECTS_PATH)
+						@make -C $(LIBFT_PATH) clean
 
 fclean:					clean
 						@$(RM) $(NAME)
+						@make -C $(LIBFT_PATH) fclean
 
 re:						fclean all
 
