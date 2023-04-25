@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/24 20:16:05 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/24 21:42:12 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 typedef struct s_ms
 {
-	
+	int	num_cmds;
 }	t_ms;
 
 typedef struct s_cmd
