@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/26 19:46:16 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:11:37 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_metacharacters(char *prompt)
+static int	count_metacharacters(char *prompt)
 {
 	int	count;
 	int	i;
@@ -40,7 +40,7 @@ int	count_metacharacters(char *prompt)
 	return (count);
 }
 
-void	copy_prompt(char *prompt, char *new_prompt)
+static void	copy_prompt(char *prompt, char *new_prompt)
 {
 	int	i;
 	int	j;
