@@ -1,7 +1,8 @@
 
 NAME			=		minishell
 
-SOURCES			=		minishell.c
+SOURCES			=		minishell.c \
+						list_utils.c
 
 SOURCES_PATH	=		sources
 
@@ -15,7 +16,7 @@ HEADER_PATH		=		includes
 
 CC				=		cc
 
-C_FLAGS			=		-Wall -Wextra -Werror -g3 -I$(HEADER_PATH) -I$(LIBFT_PATH)
+C_FLAGS			=		-g3 -I$(HEADER_PATH) -I$(LIBFT_PATH)
 
 LIBFT_FLAGS		=		-Llibft -lft
 
