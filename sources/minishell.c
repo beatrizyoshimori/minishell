@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/25 19:39:09 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:48:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	read_commands(char **line, t_cmd **cmd, t_ms *ms)
 	}
 }
 
-int	check_no_spaces(char *prompt, char c)
+int	count_metacharacters(char *prompt)
 {
 	int	count;
 	int	i;
@@ -51,18 +51,19 @@ int	check_no_spaces(char *prompt, char c)
 	count = 0;
 	while (prompt[i])
 	{
-		if (prompt[i] == c)
+		if (prompt[i] == '|')
+			count += 2;
+		else if(prompt[i] == '<')
 		{
-
-			if (!((prompt[i - 1] >= 9 && prompt[i - 1] <= 13)
-				|| prompt[i - 1] == 32))
-				count++;
-			if ((prompt[i] == '<' && prompt[i + 1] == '<')
-				|| prompt[i] == '>' && prompt[i + 1] == '>')
+			if (prompt[i + 1] == '<')
 				i++;
-			if (!((prompt[i + 1] >= 9 && prompt[i + 1] <= 13)
-				|| prompt[i + 1] == 32))
-				count++;
+			count += 2;
+		}
+		else if (prompt[i] == '>')
+		{
+			if (prompt[i + 1] == '>')
+				i++;
+			count += 2;
 		}
 		i++;
 	}
@@ -71,12 +72,31 @@ int	check_no_spaces(char *prompt, char c)
 
 void	copy_prompt(char *prompt, char *new_prompt)
 {
-	int	i;
+	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	while (prompt[i])
 	{
+		if (prompt[i] == '|' || prompt[i] == '<' || prompt[i] == '>')
+		{
+			new_prompt[j] = ' ';
+			new_prompt[j + 1] = prompt[i];
+			if ((prompt[i] == '<' && prompt[i + 1] == '<')
+				|| (prompt[i] == '>' && prompt[i + 1] == '>'))
+			{
+				new_prompt[j + 2] = prompt[i + i];
+				i++;
+				j++;
+			}
+			new_prompt[j + 2] = ' ';
+			j += 2;
+		}
+		else
+			new_prompt[j] = prompt[i];
 		i++;
+		j++;
 	}
 }
 
@@ -86,15 +106,12 @@ void	create_spaces(char *prompt)
 	char	*new_prompt;
 
 	length = ft_strlen(prompt);
-	length += check_no_spaces(prompt, '|');
-	length += check_no_spaces(prompt, '<');
-	length += check_no_spaces(prompt, '>');
+	length += count_metacharacters(prompt);
 	if (length != ft_strlen(prompt))
 	{
 		new_prompt = (char *)ft_calloc(length + 1, sizeof(char));
 		copy_prompt(prompt, new_prompt);
 	}
-	return ;
 }
 
 void	redirections_spaces(char *prompt)
@@ -159,7 +176,7 @@ void	create_prompt(t_cmd **cmd, t_ms **ms)
 		printf("%s\n", prompt);
 		// line = ft_split(prompt, -1);
 		// (*ms)->num_cmds = count_commands(line);
-		// read_commands(line, cmd, *ms);
+		// read_com"mands(line, cmd, *ms);
 	}
 }
 
