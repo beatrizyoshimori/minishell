@@ -5,7 +5,8 @@ LEXER_PATH		=		lexer
 
 SOURCES			=		minishell.c \
 						cmd_list_utils.c \
-						$(LEXER_PATH)/spaces.c
+						$(LEXER_PATH)/spaces.c \
+						$(LEXER_PATH)/quotes.c
 
 SOURCES_PATH	=		sources
 
