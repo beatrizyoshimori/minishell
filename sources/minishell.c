@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/26 18:48:10 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:39:41 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	count_metacharacters(char *prompt)
 	{
 		if (prompt[i] == '|')
 			count += 2;
-		else if(prompt[i] == '<')
+		else if (prompt[i] == '<')
 		{
 			if (prompt[i + 1] == '<')
 				i++;
@@ -72,13 +72,14 @@ int	count_metacharacters(char *prompt)
 
 void	copy_prompt(char *prompt, char *new_prompt)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	i = 0;
-	j = 0;
-	while (prompt[i])
+	i = -1;
+	j = -1;
+	while (prompt[++i])
 	{
+		++j;
 		if (prompt[i] == '|' || prompt[i] == '<' || prompt[i] == '>')
 		{
 			new_prompt[j] = ' ';
@@ -95,8 +96,6 @@ void	copy_prompt(char *prompt, char *new_prompt)
 		}
 		else
 			new_prompt[j] = prompt[i];
-		i++;
-		j++;
 	}
 }
 
@@ -111,6 +110,8 @@ void	create_spaces(char *prompt)
 	{
 		new_prompt = (char *)ft_calloc(length + 1, sizeof(char));
 		copy_prompt(prompt, new_prompt);
+		free(prompt);
+		prompt = ft_strdup(new_prompt);
 	}
 }
 
@@ -171,16 +172,18 @@ void	create_prompt(t_cmd **cmd, t_ms **ms)
 	while (1)
 	{
 		prompt = readline("lúbia> ");
+		create_spaces(prompt);
 		pipe_spaces(prompt);
 		redirections_spaces(prompt);
 		printf("%s\n", prompt);
+		free(prompt);
 		// line = ft_split(prompt, -1);
 		// (*ms)->num_cmds = count_commands(line);
 		// read_com"mands(line, cmd, *ms);
 	}
 }
 
-int main(void)
+int	main(void)
 {
 	t_cmd	*cmd;
 	t_ms	*ms;
