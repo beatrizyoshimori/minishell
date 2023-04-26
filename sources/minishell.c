@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/26 19:46:00 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:33:01 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	create_prompt(t_cmd **cmd, t_ms **ms)
 	while (1)
 	{
 		prompt = readline("lúbia> ");
+		metachar_inside_quotes(prompt);
 		create_spaces(prompt);
 		pipe_spaces(prompt);
 		redirections_spaces(prompt);
