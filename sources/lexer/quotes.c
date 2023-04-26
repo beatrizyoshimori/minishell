@@ -6,15 +6,16 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/26 20:10:28 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/04/26 20:32:01 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.c"
+#include "minishell.h"
 
 void	metachar_inside_quotes(char *prompt)
 {
-	int	i;
+	int		i;
+	char	c;
 
 	i = 0;
 	while (prompt[i])
