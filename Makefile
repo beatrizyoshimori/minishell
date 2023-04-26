@@ -1,8 +1,11 @@
 
 NAME			=		minishell
 
+LEXER_PATH		=		lexer
+
 SOURCES			=		minishell.c \
-						list_utils.c
+						cmd_list_utils.c \
+						$(LEXER_PATH)/spaces.c
 
 SOURCES_PATH	=		sources
 
@@ -36,6 +39,7 @@ $(NAME):				$(OBJECTS_PATH) $(OBJECTS)
 
 $(OBJECTS_PATH):
 						@mkdir -p $(OBJECTS_PATH)
+						@mkdir -p $(OBJECTS_PATH)/$(LEXER_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 					 	$(CC) $(C_FLAGS) -c $< -o $@
