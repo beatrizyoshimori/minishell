@@ -20,13 +20,15 @@ HEADER_PATH		=		includes
 
 CC				=		cc
 
-C_FLAGS			=		-g3 -I$(HEADER_PATH) -I$(LIBFT_PATH)
-
-LIBFT_FLAGS		=		-Llibft -lft
+C_FLAGS			=		-g3 -I$(HEADER_PATH) -I$(LIBFT_H)
 
 LIBFT_PATH		=		libft
 
+LIBFT_H			=		$(addprefix $(LIBFT_PATH)/, $(HEADER_PATH))
+
 LIBFT			=		$(addprefix $(LIBFT_PATH)/, libft.a)
+
+LIBFT_FLAGS		=		-L$(LIBFT_PATH) -lft
 
 RM				=		rm -rf
 
@@ -36,14 +38,14 @@ $(LIBFT):
 						@make -C $(LIBFT_PATH)
 
 $(NAME):				$(OBJECTS_PATH) $(OBJECTS)
-						$(CC) $(C_FLAGS) $(OBJECTS) $(LIBFT_FLAGS) -o $@ -lreadline
+						@$(CC) $(C_FLAGS) $(OBJECTS) $(LIBFT_FLAGS) -o $@ -lreadline
 
 $(OBJECTS_PATH):
 						@mkdir -p $(OBJECTS_PATH)
 						@mkdir -p $(OBJECTS_PATH)/$(LEXER_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
-					 	$(CC) $(C_FLAGS) -c $< -o $@
+					 	@$(CC) $(C_FLAGS) -c $< -o $@
 
 clean:
 						@$(RM) $(OBJECTS_PATH)
