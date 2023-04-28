@@ -6,26 +6,20 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 19:18:13 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:31:10 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_tokens(char **line)
+int	count_tokens(char **tokens)
 {
-	int	i;
-	int	tokens;
+	int	count;
 
-	tokens = 1;
-	i = 0;
-	while (!line[i])
-	{
-		if (line[i][0] == '|')
-			tokens++;
-		i++;
-	}
-	return (tokens);
+	count = 0;
+	while (!tokens[count])
+		count++;
+	return (count);
 }
 
 void	read_tokens(char **line, t_token **token, t_ms *ms)
@@ -45,7 +39,7 @@ void	read_tokens(char **line, t_token **token, t_ms *ms)
 void	create_prompt(t_token **token, t_ms **ms)
 {
 	char	*prompt;
-	char	**line;
+	char	**tokens;
 
 	while (1)
 	{
@@ -57,10 +51,10 @@ void	create_prompt(t_token **token, t_ms **ms)
 		pipe_spaces(prompt);
 		redirections_spaces(prompt);
 		printf("%s\n", prompt);
-		// free(prompt);
-		// line = ft_split(prompt, -1);
-		// (*ms)->num_tokens = count_commands(line);
-		// read_com"mands(line, token, *ms);
+		tokens = ft_split(prompt, PIPE_SPACE);
+		(*ms)->num_tokens = count_tokens(tokens);
+		read_tokens(tokens, token, *ms);
+		free(prompt);
 	}
 }
 
