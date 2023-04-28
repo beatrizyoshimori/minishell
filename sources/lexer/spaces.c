@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spaces.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/26 20:11:37 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:13:49 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	copy_prompt(char *prompt, char *new_prompt)
 			if ((prompt[i] == '<' && prompt[i + 1] == '<')
 				|| (prompt[i] == '>' && prompt[i + 1] == '>'))
 			{
-				new_prompt[j + 2] = prompt[i + i];
+				new_prompt[j + 2] = prompt[i + 1];
 				i++;
 				j++;
 			}
@@ -82,6 +82,7 @@ void	create_spaces(char *prompt)
 		copy_prompt(prompt, new_prompt);
 		free(prompt);
 		prompt = ft_strdup(new_prompt);
+		free(new_prompt);
 	}
 }
 
