@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 19:17:44 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:55:13 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,8 @@ void	pipe_spaces(char *prompt);
 // quote functions
 void	metachar_inside_quotes(char *prompt);
 void	dollar_inside_quotes(char *prompt);
+
+// token list utils
+void	set_tokens(char **tokens, t_token **token_list, t_ms **ms);
 
 #endif
