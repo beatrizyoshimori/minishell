@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 18:45:54 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:03:22 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	create_prompt(t_cmd **cmd, t_ms **ms)
 	while (1)
 	{
 		prompt = readline("bilu> ");
+		add_history(prompt);
 		metachar_inside_quotes(prompt);
 		dollar_inside_quotes(prompt);
 		create_spaces(prompt);

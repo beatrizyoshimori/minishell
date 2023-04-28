@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 18:57:07 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:03:42 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
-// # include <readline/history.h>
+# include <readline/history.h>
 
 # define PIPE_SPACE -1
 # define RDCT_SPACE -2
