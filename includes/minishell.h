@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 18:45:35 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:57:07 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <stdio.h>
 # include <readline/readline.h>
 // # include <readline/history.h>
+
+# define PIPE_SPACE -1
+# define RDCT_SPACE -2
+# define PIPE_QUOTES -3
+# define L_RDCT_QUOTES -4
+# define R_RDCT_QUOTES -5
+# define DOLLAR_QUOTES -6
 
 typedef struct s_ms
 {

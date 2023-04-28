@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/28 18:44:53 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:59:22 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	metachar_inside_quotes(char *prompt)
 			while (prompt[i] != c)
 			{
 				if (prompt[i] == '|')
-					prompt[i] = -3;
+					prompt[i] = PIPE_QUOTES;
 				else if (prompt[i] == '<')
-					prompt[i] = -4;
+					prompt[i] = L_RDCT_QUOTES;
 				else if (prompt[i] == '>')
-					prompt[i] = -5;
+					prompt[i] = R_RDCT_QUOTES;
 				i++;
 			}
 		}
@@ -52,7 +52,7 @@ void	dollar_inside_quotes(char *prompt)
 			while (prompt[i] != '\'')
 			{
 				if (prompt[i] == '$')
-					prompt[i] = -6;
+					prompt[i] = DOLLAR_QUOTES;
 				i++;
 			}
 		}

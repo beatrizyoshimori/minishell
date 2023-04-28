@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/28 18:13:49 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:58:26 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	redirections_spaces(char *prompt)
 		{
 			j = i - 1;
 			while ((prompt[j] >= 9 && prompt[j] <= 13) || prompt[j] == 32)
-				prompt[j--] = -2;
+				prompt[j--] = RDCT_SPACE;
 			i++;
 			if ((prompt[i - 1] == '>' && prompt[i] == '>')
 				|| (prompt[i - 1] == '<' && prompt[i] == '<'))
@@ -108,7 +108,7 @@ void	redirections_spaces(char *prompt)
 			while (!((prompt[i] >= 9 && prompt[i] <= 13) || prompt[i] == 32))
 				i++;
 			while ((prompt[i] >= 9 && prompt[i] <= 13) || prompt[i] == 32)
-				prompt[i++] = -2;
+				prompt[i++] = RDCT_SPACE;
 		}
 		i++;
 	}
@@ -126,10 +126,10 @@ void	pipe_spaces(char *prompt)
 		{
 			j = i - 1;
 			while ((prompt[j] >= 9 && prompt[j] <= 13) || prompt[j] == 32)
-				prompt[j--] = -1;
+				prompt[j--] = PIPE_SPACE;
 			j = i + 1;
 			while ((prompt[j] >= 9 && prompt[j] <= 13) || prompt[j] == 32)
-				prompt[j++] = -1;
+				prompt[j++] = PIPE_SPACE;
 		}
 		i++;
 	}
