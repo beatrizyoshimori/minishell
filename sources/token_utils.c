@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 19:55:07 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:57:02 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_tokenadd_back(t_token **token, t_token *new)
 void	set_tokens(char **tokens, t_token **token_list, t_ms **ms)
 {
 	t_token	*new;
-	
+
 	(*ms)->num_tokens = 0;
 	while (tokens[(*ms)->num_tokens])
 	{
