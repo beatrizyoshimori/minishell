@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 19:03:42 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:17:44 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@
 
 typedef struct s_ms
 {
-	int	num_cmds;
+	int	num_tokens;
 }	t_ms;
 
-typedef struct s_cmd
+typedef struct s_token
 {
-	char			*cmd;
+	char			*token;
+	char			**cmd;
 	char			type;
-	struct s_cmd	*next;
-}	t_cmd;
+	struct s_token	*next;
+}	t_token;
 
 // space functions
 void	create_spaces(char *prompt);

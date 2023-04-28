@@ -6,43 +6,43 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 19:03:22 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:18:13 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_commands(char **line)
+int	count_tokens(char **line)
 {
 	int	i;
-	int	cmds;
+	int	tokens;
 
-	cmds = 1;
+	tokens = 1;
 	i = 0;
 	while (!line[i])
 	{
 		if (line[i][0] == '|')
-			cmds++;
+			tokens++;
 		i++;
 	}
-	return (cmds);
+	return (tokens);
 }
 
-void	read_commands(char **line, t_cmd **cmd, t_ms *ms)
+void	read_tokens(char **line, t_token **token, t_ms *ms)
 {
-	t_cmd	*new;
+	t_token	*new;
 	int		i;
 
 	i = 0;
-	while (i < ms->num_cmds)
+	while (i < ms->num_tokens)
 	{
-		new = (t_cmd *)malloc(sizeof(t_cmd));
-		new->cmd = line[i];
+		new = (t_token *)malloc(sizeof(t_token));
+		new->token = line[i];
 		i++;
 	}
 }
 
-void	create_prompt(t_cmd **cmd, t_ms **ms)
+void	create_prompt(t_token **token, t_ms **ms)
 {
 	char	*prompt;
 	char	**line;
@@ -59,18 +59,18 @@ void	create_prompt(t_cmd **cmd, t_ms **ms)
 		printf("%s\n", prompt);
 		// free(prompt);
 		// line = ft_split(prompt, -1);
-		// (*ms)->num_cmds = count_commands(line);
-		// read_com"mands(line, cmd, *ms);
+		// (*ms)->num_tokens = count_commands(line);
+		// read_com"mands(line, token, *ms);
 	}
 }
 
 int	main(void)
 {
-	t_cmd	*cmd;
+	t_token	*token;
 	t_ms	*ms;
 
-	cmd = NULL;
+	token = NULL;
 	ms = (t_ms *)malloc(sizeof(t_ms));
-	create_prompt(&cmd, &ms);
+	create_prompt(&token, &ms);
 	return (0);
 }

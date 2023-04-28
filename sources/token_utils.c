@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/25 19:39:29 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/28 19:16:43 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*ft_cmd_last(t_cmd *cmd)
+t_token	*ft_token_last(t_token *token)
 {
-	if (cmd == NULL)
-		return (cmd);
-	while (cmd->next != NULL)
-		cmd = cmd->next;
-	return (cmd);
+	if (token == NULL)
+		return (token);
+	while (token->next != NULL)
+		token = token->next;
+	return (token);
 }
 
-void	ft_cmdadd_back(t_cmd **cmd, t_cmd *new)
+void	ft_tokenadd_back(t_token **token, t_token *new)
 {
-	if (*cmd == NULL)
+	if (*token == NULL)
 	{
-		*cmd = new;
+		*token = new;
 		return ;
 	}
-	ft_cmd_last(*cmd)->next = new;
+	ft_token_last(*token)->next = new;
 }
