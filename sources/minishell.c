@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/26 20:33:01 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:45:54 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ void	create_prompt(t_cmd **cmd, t_ms **ms)
 
 	while (1)
 	{
-		prompt = readline("lúbia> ");
+		prompt = readline("bilu> ");
 		metachar_inside_quotes(prompt);
+		dollar_inside_quotes(prompt);
 		create_spaces(prompt);
 		pipe_spaces(prompt);
 		redirections_spaces(prompt);
 		printf("%s\n", prompt);
-		free(prompt);
+		// free(prompt);
 		// line = ft_split(prompt, -1);
 		// (*ms)->num_cmds = count_commands(line);
 		// read_com"mands(line, cmd, *ms);
