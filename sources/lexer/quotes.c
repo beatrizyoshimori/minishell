@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/29 15:04:02 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:45:50 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,23 @@ void	dollar_inside_quotes(char *prompt)
 				i++;
 			}
 		}
+		i++;
+	}
+}
+
+void	change_metachar_back(char *prompt)
+{
+	int	i;
+
+	i = 0;
+	while (prompt[i])
+	{
+		if (prompt[i] == PIPE_QUOTES)
+			prompt[i] = '|';
+		else if (prompt[i] == L_RDCT_QUOTES)
+			prompt[i] = '<';
+		else if (prompt[i] == R_RDCT_QUOTES)
+			prompt[i] = '>';
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 16:30:07 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:46:11 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 		create_spaces(&prompt);
 		pipe_spaces(prompt);
 		token_spaces(prompt);
+		change_metachar_back(prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
 		set_tokens(tokens, token_list, ms);
 		print_list(token_list);
