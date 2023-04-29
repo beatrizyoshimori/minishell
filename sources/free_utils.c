@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:12:32 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 17:13:12 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 18:29:48 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_token_list(t_token **token_list)
 	while (*token_list)
 	{
 		aux = (*token_list)->next;
-		free(token_list);
+		free(*token_list);
 		(*token_list) = aux;
 	}
 }
