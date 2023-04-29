@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/29 16:35:39 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 18:48:36 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	copy_prompt(char *prompt, char *new_prompt)
 
 void	create_spaces(char **prompt)
 {
-	int		length;
+	size_t	length;
 	char	*new_prompt;
 
 	length = ft_strlen(*prompt);
@@ -122,9 +122,12 @@ void	token_spaces(char *prompt)
 			i++;
 		}
 		c = prompt[i];
-		i++;
-		while (prompt[i] != c && prompt[i])
+		if (c != '\0')
+		{
 			i++;
-		i++;
+			while (prompt[i] != c && prompt[i])
+				i++;
+			i++;
+		}
 	}
 }
