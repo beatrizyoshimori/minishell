@@ -48,7 +48,7 @@ $(OBJECTS_PATH):
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 						@$(CC) $(C_FLAGS) -c $< -o $@
 
-valg2:					$(LIBFT) $(NAME)
+v:						$(LIBFT) $(NAME)
 						@valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
 						--suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
 						--trace-children-skip='/bin/,/sbin/' \
