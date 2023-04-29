@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 15:01:05 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:38:40 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <readline/history.h>
 
 # define PIPE_SPACE -1
-# define RDCT_SPACE -2
-# define PIPE_QUOTES -3
-# define L_RDCT_QUOTES -4
-# define R_RDCT_QUOTES -5
-# define DOLLAR_QUOTES -6
+# define PIPE_QUOTES -2
+# define L_RDCT_QUOTES -3
+# define R_RDCT_QUOTES -4
+# define DOLLAR_QUOTES -5
+# define SPACE_OUT_QUOTES -6
 
 typedef struct s_ms
 {
@@ -40,8 +40,8 @@ typedef struct s_token
 
 // space functions
 void	create_spaces(char **prompt);
-void	redirections_spaces(char *prompt);
 void	pipe_spaces(char *prompt);
+void	token_spaces(char *prompt);
 
 // quote functions
 void	metachar_inside_quotes(char *prompt);

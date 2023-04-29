@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/29 15:13:30 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:35:39 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,34 +86,6 @@ void	create_spaces(char **prompt)
 	}
 }
 
-void	redirections_spaces(char *prompt)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (prompt[i])
-	{
-		if (prompt[i] == '>' || prompt[i] == '<')
-		{
-			j = i - 1;
-			while (ft_iswhitespace(prompt[j]) && prompt[j])
-				prompt[j--] = RDCT_SPACE;
-			i++;
-			if ((prompt[i - 1] == '>' && prompt[i] == '>')
-				|| (prompt[i - 1] == '<' && prompt[i] == '<'))
-				i++;
-			while (ft_iswhitespace(prompt[i]) && prompt[i])
-				i++;
-			while (!ft_iswhitespace(prompt[i]) && prompt[i])
-				i++;
-			while (ft_iswhitespace(prompt[i]) && prompt[i])
-				prompt[i++] = RDCT_SPACE;
-		}
-		i++;
-	}
-}
-
 void	pipe_spaces(char *prompt)
 {
 	int	i;
@@ -131,6 +103,28 @@ void	pipe_spaces(char *prompt)
 			while (ft_iswhitespace(prompt[j]) && prompt[j])
 				prompt[j++] = PIPE_SPACE;
 		}
+		i++;
+	}
+}
+
+void	token_spaces(char *prompt)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	while (prompt[i])
+	{
+		while (prompt[i] != '\'' && prompt[i] != '\"' && prompt[i])
+		{
+			if (prompt[i] == ' ')
+				prompt[i] = SPACE_OUT_QUOTES;
+			i++;
+		}
+		c = prompt[i];
+		i++;
+		while (prompt[i] != c && prompt[i])
+			i++;
 		i++;
 	}
 }
