@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/28 20:50:03 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:21:33 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 		add_history(prompt);
 		metachar_inside_quotes(prompt);
 		dollar_inside_quotes(prompt);
-		create_spaces(prompt);
+		create_spaces(&prompt);
 		pipe_spaces(prompt);
 		redirections_spaces(prompt);
 		printf("%s\n", prompt);

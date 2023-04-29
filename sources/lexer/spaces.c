@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/28 20:20:44 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:22:56 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,19 @@ static void	copy_prompt(char *prompt, char *new_prompt)
 	}
 }
 
-void	create_spaces(char *prompt)
+void	create_spaces(char **prompt)
 {
 	int		length;
 	char	*new_prompt;
 
-	length = ft_strlen(prompt);
-	length += count_metacharacters(prompt);
-	if (length != ft_strlen(prompt))
+	length = ft_strlen(*prompt);
+	length += count_metacharacters(*prompt);
+	if (length != ft_strlen(*prompt))
 	{
 		new_prompt = (char *)ft_calloc(length + 1, sizeof(char));
-		copy_prompt(prompt, new_prompt);
-		free(prompt);
-		prompt = ft_strdup(new_prompt);
+		copy_prompt(*prompt, new_prompt);
+		free(*prompt);
+		*prompt = strdup(new_prompt);
 		free(new_prompt);
 	}
 }
