@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/29 14:22:56 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:13:30 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	create_spaces(char **prompt)
 		new_prompt = (char *)ft_calloc(length + 1, sizeof(char));
 		copy_prompt(*prompt, new_prompt);
 		free(*prompt);
-		*prompt = strdup(new_prompt);
+		*prompt = ft_strdup(new_prompt);
 		free(new_prompt);
 	}
 }
@@ -97,17 +97,17 @@ void	redirections_spaces(char *prompt)
 		if (prompt[i] == '>' || prompt[i] == '<')
 		{
 			j = i - 1;
-			while ((prompt[j] >= 9 && prompt[j] <= 13) || prompt[j] == 32)
+			while (ft_iswhitespace(prompt[j]) && prompt[j])
 				prompt[j--] = RDCT_SPACE;
 			i++;
 			if ((prompt[i - 1] == '>' && prompt[i] == '>')
 				|| (prompt[i - 1] == '<' && prompt[i] == '<'))
 				i++;
-			while ((prompt[i] >= 9 && prompt[i] <= 13) || prompt[i] == 32)
+			while (ft_iswhitespace(prompt[i]) && prompt[i])
 				i++;
-			while (!((prompt[i] >= 9 && prompt[i] <= 13) || prompt[i] == 32))
+			while (!ft_iswhitespace(prompt[i]) && prompt[i])
 				i++;
-			while ((prompt[i] >= 9 && prompt[i] <= 13) || prompt[i] == 32)
+			while (ft_iswhitespace(prompt[i]) && prompt[i])
 				prompt[i++] = RDCT_SPACE;
 		}
 		i++;
@@ -125,10 +125,10 @@ void	pipe_spaces(char *prompt)
 		if (prompt[i] == '|')
 		{
 			j = i - 1;
-			while ((prompt[j] >= 9 && prompt[j] <= 13) || prompt[j] == 32)
+			while (ft_iswhitespace(prompt[j]) && prompt[j])
 				prompt[j--] = PIPE_SPACE;
 			j = i + 1;
-			while ((prompt[j] >= 9 && prompt[j] <= 13) || prompt[j] == 32)
+			while (ft_iswhitespace(prompt[j]) && prompt[j])
 				prompt[j++] = PIPE_SPACE;
 		}
 		i++;

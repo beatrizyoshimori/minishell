@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/28 18:59:22 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:04:02 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	metachar_inside_quotes(char *prompt)
 		{
 			c = prompt[i];
 			i++;
-			while (prompt[i] != c)
+			while (prompt[i] != c && prompt[i])
 			{
 				if (prompt[i] == '|')
 					prompt[i] = PIPE_QUOTES;
@@ -49,7 +49,7 @@ void	dollar_inside_quotes(char *prompt)
 		if (prompt[i] == '\'')
 		{
 			i++;
-			while (prompt[i] != '\'')
+			while (prompt[i] != '\'' && prompt[i])
 			{
 				if (prompt[i] == '$')
 					prompt[i] = DOLLAR_QUOTES;
