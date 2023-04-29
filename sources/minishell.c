@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 16:46:11 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:12:43 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 		tokens = ft_split(prompt, PIPE_SPACE);
 		set_tokens(tokens, token_list, ms);
 		print_list(token_list);
+		free_split(tokens);
+		free_token_list(token_list);
 		free(prompt);
 	}
 }
@@ -53,5 +55,6 @@ int	main(void)
 	token_list = NULL;
 	ms = (t_ms *)malloc(sizeof(t_ms));
 	create_prompt(&token_list, &ms);
+	free(ms);
 	return (0);
 }

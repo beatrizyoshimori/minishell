@@ -5,6 +5,7 @@ LEXER_PATH		=		lexer
 
 SOURCES			=		minishell.c \
 						token_utils.c \
+						free_utils .c \
 						$(LEXER_PATH)/spaces.c \
 						$(LEXER_PATH)/quotes.c
 
@@ -45,7 +46,13 @@ $(OBJECTS_PATH):
 						@mkdir -p $(OBJECTS_PATH)/$(LEXER_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
-					 	@$(CC) $(C_FLAGS) -c $< -o $@
+						@$(CC) $(C_FLAGS) -c $< -o $@
+
+valg2:					$(LIBFT) $(NAME)
+						valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
+						--suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
+						--trace-children-skip='/bin/,/sbin/' \
+						./minishell
 
 clean:
 						@$(RM) $(OBJECTS_PATH)

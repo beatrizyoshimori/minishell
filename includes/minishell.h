@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 16:46:01 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:12:19 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ void	change_metachar_back(char *prompt);
 
 // token list utils
 void	set_tokens(char **tokens, t_token **token_list, t_ms **ms);
+
+// free functions
+void	free_split(char **tokens);
+void	free_token_list(t_token **token_list);
 
 #endif
