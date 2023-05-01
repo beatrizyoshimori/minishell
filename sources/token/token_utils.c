@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 18:36:25 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:32:32 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	set_tokens(char **tokens, t_token **token_list, t_ms **ms)
 	while (tokens[(*ms)->num_tokens])
 	{
 		new = (t_token *)malloc(sizeof(t_token));
-		new->token = tokens[(*ms)->num_tokens];
+		new->token = ft_split(tokens[(*ms)->num_tokens], -6);
 		new->next = NULL;
 		ft_tokenadd_back(token_list, new);
 		(*ms)->num_tokens++;
