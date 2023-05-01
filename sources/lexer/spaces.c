@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/01 15:55:03 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:22:40 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	pipe_spaces(char *prompt)
 			while (j >= 0 && ft_iswhitespace(prompt[j]))
 				prompt[j--] = PIPE_SPACE;
 			j = i + 1;
-			while (ft_iswhitespace(prompt[j]) && prompt[j])
+			while (prompt[j] && ft_iswhitespace(prompt[j]))
 				prompt[j++] = PIPE_SPACE;
 		}
 		i++;
@@ -115,7 +115,7 @@ void	token_spaces(char *prompt)
 	i = 0;
 	while (prompt[i])
 	{
-		while (prompt[i] != '\'' && prompt[i] != '\"' && prompt[i])
+		while (prompt[i] && prompt[i] != '\'' && prompt[i] != '\"')
 		{
 			if (prompt[i] == ' ')
 				prompt[i] = SPACE_OUT_QUOTES;
@@ -125,9 +125,10 @@ void	token_spaces(char *prompt)
 		if (c != '\0')
 		{
 			i++;
-			while (prompt[i] != c && prompt[i])
+			while (prompt[i] && prompt[i] != c)
 				i++;
-			i++;
+			if (prompt[i] != '\0')
+				i++;
 		}
 	}
 }
