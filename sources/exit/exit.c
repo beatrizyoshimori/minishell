@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 17:12:32 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 18:29:48 by byoshimo         ###   ########.fr       */
+/*   Created: 2023/05/01 17:04:10 by byoshimo          #+#    #+#             */
+/*   Updated: 2023/05/01 17:04:27 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_split(char **tokens)
+void	exit_command(char *prompt, t_ms **ms)
 {
-	int	i;
-
-	i = 0;
-	while (tokens[i])
+	if (!ft_strncmp(prompt, "exit", 5))
 	{
-		free(tokens[i]);
-		i++;
+		rl_clear_history();
+		free(*ms);
+		free(prompt);
+		exit(0);
 	}
-	free(tokens);
-	tokens = NULL;
 }
 
-void	free_token_list(t_token **token_list)
+void	exit_program(t_token **token_list, t_ms **ms)
 {
-	t_token	*aux;
-
-	while (*token_list)
-	{
-		aux = (*token_list)->next;
-		free(*token_list);
-		(*token_list) = aux;
-	}
+	rl_clear_history();
+	free(*ms);
+	free_token_list(token_list);
+	exit(1);
 }
