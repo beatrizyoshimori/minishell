@@ -9,7 +9,8 @@ TOKEN_PATH		=		token
 
 EXIT_PATH		=		exit
 
-LEXER			=		$(addprefix $(LEXER_PATH)/,		spaces.c \
+LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
+														spaces.c \
 														quotes.c)
 
 PARSER			=		$(addprefix $(PARSER_PATH)/,	parser.c)
