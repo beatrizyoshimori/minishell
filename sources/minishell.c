@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 18:58:10 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:04:24 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,20 @@
 
 void	print_list(t_token **token_list)
 {
+	int		i;
 	t_token	*aux;
 
 	aux = *token_list;
 	while (aux)
 	{
-		printf("%s\n", aux->token);
+		i = 0;
+		while (aux->token[i])
+		{
+			printf("%s\n", aux->token[i]);
+			i++;
+		}
+		printf("\n");
 		aux = aux->next;
-	}
-}
-
-void	exit_program(char *prompt, t_ms **ms)
-{
-	if (!ft_strncmp(prompt, "exit", 5))
-	{
-		rl_clear_history();
-		free(*ms);
-		free(prompt);
-		exit(0);
 	}
 }
 
@@ -46,7 +42,7 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 	{
 		prompt = readline("bilu> ");
 		add_history(prompt);
-		exit_program(prompt, ms);
+		exit_command(prompt, ms);
 		metachar_inside_quotes(prompt);
 		dollar_inside_quotes(prompt);
 		create_spaces(&prompt);
@@ -55,14 +51,13 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 		change_metachar_back(prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
 		set_tokens(tokens, token_list, ms);
-		print_list(token_list);
-		free_token_list(token_list);
 		free(prompt);
 		free_split(tokens);
+		print_list(token_list);
+		parser(token_list, ms);
+		free_token_list(token_list);
 	}
 }
-
-		//printf("%p\n", &prompt);
 
 int	main(void)
 {

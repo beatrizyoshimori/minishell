@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/04/29 18:49:43 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:02:22 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ typedef struct s_ms
 
 typedef struct s_token
 {
-	char			*token;
-	char			**cmd;
+	char			**token;
 	char			type;
 	struct s_token	*next;
 }	t_token;
@@ -54,5 +53,12 @@ void	set_tokens(char **tokens, t_token **token_list, t_ms **ms);
 // free functions
 void	free_split(char **tokens);
 void	free_token_list(t_token **token_list);
+
+// parser functions
+void	parser(t_token **token_list, t_ms **ms);
+
+// exit functions
+void	exit_command(char *prompt, t_ms **ms);
+void	exit_program(t_token **token_list, t_ms **ms);
 
 #endif
