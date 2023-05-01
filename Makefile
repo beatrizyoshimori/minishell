@@ -3,11 +3,27 @@ NAME			=		minishell
 
 LEXER_PATH		=		lexer
 
+PARSER_PATH		=		parser
+
+TOKEN_PATH		=		token
+
+EXIT_PATH		=		exit
+
+LEXER			=		$(addprefix $(LEXER_PATH)/,		spaces.c \
+														quotes.c)
+
+PARSER			=		$(addprefix $(PARSER_PATH)/,	parser.c)
+
+TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
+
+EXIT			=		$(addprefix $(EXIT_PATH)/,		exit.c \
+														free_utils.c)
+
 SOURCES			=		minishell.c \
-						token_utils.c \
-						free_utils.c \
-						$(LEXER_PATH)/spaces.c \
-						$(LEXER_PATH)/quotes.c
+						$(LEXER) \
+						$(PARSER) \
+						$(TOKEN) \
+						$(EXIT)
 
 SOURCES_PATH	=		sources
 
@@ -34,6 +50,7 @@ LIBFT_FLAGS		=		-L$(LIBFT_PATH) -lft
 RM				=		rm -rf
 
 all:					$(LIBFT) $(NAME)
+						@./$(NAME)
 
 $(LIBFT):
 						@make -C $(LIBFT_PATH)
@@ -44,6 +61,9 @@ $(NAME):				$(OBJECTS_PATH) $(OBJECTS)
 $(OBJECTS_PATH):
 						@mkdir -p $(OBJECTS_PATH)
 						@mkdir -p $(OBJECTS_PATH)/$(LEXER_PATH)
+						@mkdir -p $(OBJECTS_PATH)/$(PARSER_PATH)
+						@mkdir -p $(OBJECTS_PATH)/$(TOKEN_PATH)
+						@mkdir -p $(OBJECTS_PATH)/$(EXIT_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 						@$(CC) $(C_FLAGS) -c $< -o $@
