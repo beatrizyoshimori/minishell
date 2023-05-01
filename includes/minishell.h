@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/01 17:02:22 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:38:39 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct s_token
 	char			type;
 	struct s_token	*next;
 }	t_token;
+
+// lexer functions
+void	lexer(char **prompt);
 
 // space functions
 void	create_spaces(char **prompt);
