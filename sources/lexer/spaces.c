@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/04/29 18:48:36 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:55:03 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	pipe_spaces(char *prompt)
 		if (prompt[i] == '|')
 		{
 			j = i - 1;
-			while (ft_iswhitespace(prompt[j]) && prompt[j])
+			while (j >= 0 && ft_iswhitespace(prompt[j]))
 				prompt[j--] = PIPE_SPACE;
 			j = i + 1;
 			while (ft_iswhitespace(prompt[j]) && prompt[j])
