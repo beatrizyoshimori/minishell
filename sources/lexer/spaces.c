@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spaces.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/01 20:22:40 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/03 19:05:45 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	create_spaces(char **prompt)
 	}
 }
 
-void	pipe_spaces(char *prompt)
+void	mark_pipe_spaces(char *prompt)
 {
 	int	i;
 	int	j;
@@ -107,7 +107,7 @@ void	pipe_spaces(char *prompt)
 	}
 }
 
-void	token_spaces(char *prompt)
+void	mark_token_spaces(char *prompt)
 {
 	int		i;
 	char	c;

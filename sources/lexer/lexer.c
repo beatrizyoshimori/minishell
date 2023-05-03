@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 19:01:10 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 19:05:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	check_only_whitespaces(char **prompt)
 
 void	lexer(char **prompt)
 {
-	metachar_inside_quotes(*prompt);
-	dollar_inside_quotes(*prompt);
+	mark_metachar_inside_quotes(*prompt);
+	mark_dollar_inside_quotes(*prompt);
 	create_spaces(prompt);
-	pipe_spaces(*prompt);
-	token_spaces(*prompt);
+	mark_pipe_spaces(*prompt);
+	mark_token_spaces(*prompt);
 	change_metachar_back(*prompt);
 }

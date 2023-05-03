@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/01 20:17:15 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/03 19:03:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	metachar_inside_quotes(char *prompt)
+void	mark_metachar_inside_quotes(char *prompt)
 {
 	int		i;
 	char	c;
@@ -40,7 +40,7 @@ void	metachar_inside_quotes(char *prompt)
 	}
 }
 
-void	dollar_inside_quotes(char *prompt)
+void	mark_dollar_inside_quotes(char *prompt)
 {
 	int		i;
 
