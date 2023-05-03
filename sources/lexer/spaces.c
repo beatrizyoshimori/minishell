@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/03 19:05:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 19:10:15 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	mark_pipe_spaces(char *prompt)
 			while (j >= 0 && ft_iswhitespace(prompt[j]))
 				prompt[j--] = PIPE_SPACE;
 			j = i + 1;
-			while (prompt[j] && ft_iswhitespace(prompt[j]))
+			while (ft_iswhitespace(prompt[j]))
 				prompt[j++] = PIPE_SPACE;
 		}
 		i++;
