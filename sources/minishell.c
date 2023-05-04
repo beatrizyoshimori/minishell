@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 19:00:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:10:37 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 	{
 		prompt = readline("bilu> ");
 		add_history(prompt);
-		check_only_whitespaces(&prompt);
+		check_whitespaces_enter(&prompt);
 		exit_command(prompt, ms);
 		lexer(&prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);

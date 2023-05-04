@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 19:05:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:04:55 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_only_whitespaces(char **prompt)
+static int	check_only_whitespaces(char **prompt)
 {
 	int	i;
 
@@ -22,14 +22,20 @@ void	check_only_whitespaces(char **prompt)
 		while (ft_iswhitespace((*prompt)[i]))
 			i++;
 		if (!(*prompt)[i])
-		{
-			free(*prompt);
-			*prompt = readline("bilu> ");
-			add_history(*prompt);
-			i = 0;
-		}
+			return (0);
 		else
 			break ;
+	}
+	return (1);
+}
+
+void	check_whitespaces_enter(char **prompt)
+{
+	while (!(**prompt) || !check_only_whitespaces(prompt))
+	{
+		free(*prompt);
+		*prompt = readline("bilu> ");
+		add_history(*prompt);
 	}
 }
 
