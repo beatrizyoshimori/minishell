@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 21:20:34 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:54:02 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ static int	check_only_whitespaces(char **prompt)
 		while (ft_iswhitespace((*prompt)[i]))
 			i++;
 		if (!(*prompt)[i])
-			return (0);
+			return (1);
 		else
 			break ;
 	}
-	return (1);
+	return (0);
 }
 
 void	check_whitespaces_enter(char **prompt)
 {
-	while (!(**prompt) || !check_only_whitespaces(prompt))
+	while (!(**prompt) || check_only_whitespaces(prompt))
 	{
 		add_history(*prompt);
 		free(*prompt);
