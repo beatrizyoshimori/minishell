@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 21:54:02 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:53:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	check_whitespaces_enter(char **prompt)
 {
 	while (!(**prompt) || check_only_whitespaces(prompt))
 	{
-		add_history(*prompt);
+		if (**prompt)
+			add_history(*prompt);
 		free(*prompt);
 		*prompt = readline("bilu> ");
 	}
