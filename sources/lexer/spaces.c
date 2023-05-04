@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:43:25 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/03 19:10:15 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:52:00 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	mark_token_spaces(char *prompt)
 	{
 		while (prompt[i] && prompt[i] != '\'' && prompt[i] != '\"')
 		{
-			if (prompt[i] == ' ')
+			if (ft_iswhitespace(prompt[i]))
 				prompt[i] = SPACE_OUT_QUOTES;
 			i++;
 		}
