@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 21:04:07 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/03 21:20:11 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_token
 }	t_token;
 
 // lexer functions
+void	check_ctrl_d(char *prompt, t_ms **ms);
 void	check_whitespaces_enter(char **prompt);
 void	lexer(char **prompt);
 
