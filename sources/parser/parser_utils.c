@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/01 20:36:05 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:15:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	print_syntax_error(t_token **token_list, t_ms **ms, char c)
 {
-	printf("bilu: syntax error near unexpected token ");
+	ft_putstr_fd("bilu: syntax error near unexpected token ", 2);
 	if (c == '\n')
-		printf("'newline'\n");
+		ft_putstr_fd("'newline'\n", 2);
 	else
-		printf("'%c'\n", c);
+	{
+		ft_putchar_fd('\'', 2);
+		ft_putchar_fd(c, 2);
+		ft_putstr_fd("'\n", 2);
+	}
 	exit_program(token_list, ms);
 }
