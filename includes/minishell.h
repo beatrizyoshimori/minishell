@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/04 16:23:12 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/04 21:59:00 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,20 @@
 
 typedef struct s_ms
 {
-	int	num_tokens;
+	int		num_tokens;
+	char	**paths;
 }	t_ms;
 
 typedef struct s_token
 {
 	char			**token;
+	char			*pathname;
 	char			type;
+	int				fd_in;
+	int				fd_out;
+	pid_t			pid;
+	int				status;
+	struct s_ms		*ms;
 	struct s_token	*next;
 }	t_token;
 
