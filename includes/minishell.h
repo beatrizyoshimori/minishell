@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/04 21:59:00 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:30:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ typedef struct s_token
 	char			**token;
 	char			*pathname;
 	char			type;
-	int				fd_in;
-	int				fd_out;
+	int				fd[2];
 	pid_t			pid;
 	int				status;
 	struct s_ms		*ms;
