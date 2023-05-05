@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/04 18:19:23 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:40:09 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	signal_handler(int signal)
 	}
 }
 
-void	create_prompt(t_token **token_list, t_ms **ms)
+void	create_prompt(t_token **token_list, t_ms *ms)
 {
 	char	*prompt;
 	char	**tokens;
@@ -67,15 +67,32 @@ void	create_prompt(t_token **token_list, t_ms **ms)
 	}
 }
 
-int	main(void)
+void	get_paths(char **envp, t_ms *ms)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], "PATH=", 5))
+			break ;
+		i++;
+	}
+	ms->paths = ft_split(envp[i] + 5, ':');
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_token	*token_list;
 	t_ms	*ms;
 
-	token_list = NULL;
+	(void)argc;
+	(void)argv;
 	ms = (t_ms *)malloc(sizeof(t_ms));
+	get_paths(envp, ms);
+	token_list = NULL;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	create_prompt(&token_list, &ms);
+	create_prompt(&token_list, ms);
 	return (0);
 }
