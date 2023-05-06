@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/05 18:30:58 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:38:24 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_token
 }	t_token;
 
 // lexer functions
-void	check_ctrl_d(char *prompt, t_ms **ms);
+void	check_ctrl_d(char *prompt, t_ms *ms);
 void	check_whitespaces_enter(char **prompt);
 void	lexer(char **prompt);
 
@@ -60,18 +60,18 @@ void	mark_dollar_inside_quotes(char *prompt);
 void	change_metachar_back(char *prompt);
 
 // token list utils
-void	set_tokens(char **tokens, t_token **token_list, t_ms **ms);
+void	set_tokens(char **tokens, t_token **token_list, t_ms *ms);
 
 // free functions
 void	free_split(char **tokens);
 void	free_token_list(t_token **token_list);
 
 // parser functions
-void	parser(t_token **token_list, t_ms **ms);
-void	print_syntax_error(t_token **token_list, t_ms **ms, char c);
+void	parser(t_token **token_list, t_ms *ms);
+void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
 
 // exit functions
-void	exit_command(char *prompt, t_ms **ms);
-void	exit_program(t_token **token_list, t_ms **ms);
+void	exit_command(char *prompt, t_ms *ms);
+void	exit_program(t_token **token_list, t_ms *ms);
 
 #endif

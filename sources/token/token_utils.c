@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/01 12:32:32 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:39:23 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@ static t_token	*ft_token_last(t_token *token)
 	return (token);
 }
 
-static void	ft_tokenadd_back(t_token **token, t_token *new)
+static void	ft_tokenadd_back(t_token **token_list, t_token *new)
 {
-	if (*token == NULL)
+	if (*token_list == NULL)
 	{
-		*token = new;
+		*token_list = new;
 		return ;
 	}
-	ft_token_last(*token)->next = new;
+	ft_token_last(*token_list)->next = new;
 }
 
-void	set_tokens(char **tokens, t_token **token_list, t_ms **ms)
+void	set_tokens(char **tokens, t_token **token_list, t_ms *ms)
 {
 	t_token	*new;
 
-	(*ms)->num_tokens = 0;
-	while (tokens[(*ms)->num_tokens])
+	ms->num_tokens = 0;
+	while (tokens[ms->num_tokens])
 	{
 		new = (t_token *)malloc(sizeof(t_token));
-		new->token = ft_split(tokens[(*ms)->num_tokens], -6);
+		new->token = ft_split(tokens[ms->num_tokens], -6);
 		new->next = NULL;
 		ft_tokenadd_back(token_list, new);
-		(*ms)->num_tokens++;
+		ms->num_tokens++;
 	}
 }

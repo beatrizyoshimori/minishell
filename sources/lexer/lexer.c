@@ -6,17 +6,18 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/04 18:21:56 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:39:48 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_ctrl_d(char *prompt, t_ms **ms)
+void	check_ctrl_d(char *prompt, t_ms *ms)
 {
 	if (prompt == NULL)
 	{
-		free(*ms);
+		free_split(ms->paths);
+		free(ms);
 		exit (0);
 	}
 }

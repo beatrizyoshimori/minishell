@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:57:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/03 19:08:12 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:41:14 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	check_pipe_error(t_token **token_list, t_ms **ms)
+static void	check_pipe_error(t_token **token_list, t_ms *ms)
 {
 	t_token	*aux;
 
@@ -28,7 +28,7 @@ static void	check_pipe_error(t_token **token_list, t_ms **ms)
 	}
 }
 
-static void	check_redirections_error(t_token **token_list, t_ms **ms)
+static void	check_redirections_error(t_token **token_list, t_ms *ms)
 {
 	int		i;
 	t_token	*aux;
@@ -54,7 +54,7 @@ static void	check_redirections_error(t_token **token_list, t_ms **ms)
 	}
 }
 
-static void	aux_check_quotes(t_token **token_list, t_ms **ms, char *a, int *j)
+static void	aux_check_quotes(t_token **token_list, t_ms *ms, char *a, int *j)
 {
 	char	c;
 
@@ -73,7 +73,7 @@ static void	aux_check_quotes(t_token **token_list, t_ms **ms, char *a, int *j)
 	}
 }
 
-static void	check_quotes_error(t_token **token_list, t_ms **ms)
+static void	check_quotes_error(t_token **token_list, t_ms *ms)
 {
 	int		i;
 	int		j;
@@ -93,7 +93,7 @@ static void	check_quotes_error(t_token **token_list, t_ms **ms)
 	}
 }
 
-void	parser(t_token **token_list, t_ms **ms)
+void	parser(t_token **token_list, t_ms *ms)
 {
 	check_pipe_error(token_list, ms);
 	check_redirections_error(token_list, ms);
