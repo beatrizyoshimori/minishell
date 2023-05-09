@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 22:00:54 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:37:53 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exit_command(t_token *token_list, t_ms *ms)
 {
-	if (ft_strncmp((token_list->token)[0], "exit", 5) == 0)
+	if (ft_strncmp(token_list->token[0], "exit", 5) == 0)
 	{
 		rl_clear_history();
 		free_token_list(&token_list);

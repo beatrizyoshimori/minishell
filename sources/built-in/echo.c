@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:10:15 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 20:51:47 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:37:23 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	echo(t_token *token_list)
 
 	i = 0;
 	flag = 0;
-	if (ft_strncmp((token_list->token)[i], "echo", 5) == 0)
+	if (ft_strncmp(token_list->token[i], "echo", 5) == 0)
 	{
 			i++;
 		if (check_n_flag(token_list->token[i]))
@@ -43,11 +43,11 @@ void	echo(t_token *token_list)
 			i++;
 			flag = 1;
 		}
-		while ((token_list->token)[i])
+		while (token_list->token[i])
 		{
-			printf("%s", (token_list->token)[i]);
+			printf("%s", token_list->token[i]);
 			i++;
-			if ((token_list->token)[i])
+			if (token_list->token[i])
 				printf(" ");
 			else if (!flag)
 				printf("\n");
