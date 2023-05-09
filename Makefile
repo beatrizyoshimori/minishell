@@ -30,7 +30,8 @@ EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
 BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	echo.c \
 														exit.c \
 														pwd.c \
-														env.c)
+														env.c \
+														export.c)
 
 SOURCES			=		minishell.c \
 						$(LEXER) \

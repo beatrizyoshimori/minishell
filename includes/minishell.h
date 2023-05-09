@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/09 18:48:54 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:08:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_ms
 	int		num_tokens;
 	char	**paths;
 	char	**env;
+	int		env_nbr_ptr;
 }	t_ms;
 
 typedef struct s_token
@@ -83,5 +84,6 @@ void	echo(t_token *token_list);
 void	exit_command(t_token *token_list, t_ms *ms);
 void	pwd(t_token *token_list);
 void	env(t_token *token_list);
+void	export(t_token *token_list);
 
 #endif
