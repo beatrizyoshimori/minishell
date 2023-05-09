@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 22:00:38 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:13:52 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ void	change_metachar_back(char *prompt);
 
 // token list utils
 void	set_tokens(char **tokens, t_token **token_list, t_ms *ms);
+
+// envp utils
+void	get_paths(char **envp, t_ms *ms);
+void	copy_envp(char **envp, t_ms *ms);
 
 // free functions
 void	free_ptrptr(char **tokens);
