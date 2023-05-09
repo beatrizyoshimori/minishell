@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/05 20:39:23 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:47:06 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	set_tokens(char **tokens, t_token **token_list, t_ms *ms)
 	{
 		new = (t_token *)malloc(sizeof(t_token));
 		new->token = ft_split(tokens[ms->num_tokens], -6);
+		new->ms = ms;
 		new->next = NULL;
 		ft_tokenadd_back(token_list, new);
 		ms->num_tokens++;
