@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 22:02:57 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:49:16 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_whitespaces_enter(char **prompt)
 void	lexer(char **prompt)
 {
 	mark_metachar_inside_quotes(*prompt);
-	mark_dollar_inside_quotes(*prompt);
+	find_metachar_dollar(*prompt);
 	create_spaces(prompt);
 	mark_pipe_spaces(*prompt);
 	mark_token_spaces(*prompt);

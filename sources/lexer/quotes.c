@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/03 19:03:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:50:02 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ void	mark_metachar_inside_quotes(char *prompt)
 	}
 }
 
-void	mark_dollar_inside_quotes(char *prompt)
+static void	mark_metachar_dollar(char *c)
 {
-	int		i;
+	if (*c == '$')
+		*c = DOLLAR_QUOTES;
+}
+
+void	find_metachar_dollar(char *prompt)
+{
+	int	i;
 
 	i = 0;
 	while (prompt[i])
@@ -51,12 +57,19 @@ void	mark_dollar_inside_quotes(char *prompt)
 		{
 			i++;
 			while (prompt[i] && prompt[i] != '\'')
+				i++;
+		}
+		else if (prompt[i] == '\"')
+		{
+			i++;
+			while (prompt[i] && prompt[i] != '\"')
 			{
-				if (prompt[i] == '$')
-					prompt[i] = DOLLAR_QUOTES;
+				mark_metachar_dollar(&prompt[i]);
 				i++;
 			}
 		}
+		else
+			mark_metachar_dollar(&prompt[i]);
 		if (prompt[i] != '\0')
 			i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/09 18:13:52 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:48:54 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	mark_token_spaces(char *prompt);
 
 // quote functions
 void	mark_metachar_inside_quotes(char *prompt);
-void	mark_dollar_inside_quotes(char *prompt);
+void	find_metachar_dollar(char *prompt);
 void	change_metachar_back(char *prompt);
 
 // token list utils
