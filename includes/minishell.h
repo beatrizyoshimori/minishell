@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 21:03:51 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:24:46 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	exit_program(t_token **token_list, t_ms *ms);
 // built-in functions
 void	echo(t_token *token_list);
 void	exit_command(t_token *token_list, t_ms *ms);
+void	pwd(t_token *token_list);
 
 #endif

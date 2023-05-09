@@ -24,7 +24,8 @@ EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
 														free_utils.c)
 
 BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	echo.c \
-														exit.c)
+														exit.c \
+														pwd.c)
 
 SOURCES			=		minishell.c \
 						$(LEXER) \

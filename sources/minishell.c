@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 21:04:45 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:25:38 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	create_prompt(t_token **token_list, t_ms *ms)
 		parser(token_list, ms);
 		echo(*token_list);
 		exit_command(*token_list, ms);
+		pwd(*token_list);
 		free_token_list(token_list);
 	}
 }
