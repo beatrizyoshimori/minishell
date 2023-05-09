@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 21:24:46 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:00:38 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_ms
 {
 	int		num_tokens;
 	char	**paths;
+	char	**env;
 }	t_ms;
 
 typedef struct s_token
@@ -63,7 +64,7 @@ void	change_metachar_back(char *prompt);
 void	set_tokens(char **tokens, t_token **token_list, t_ms *ms);
 
 // free functions
-void	free_split(char **tokens);
+void	free_ptrptr(char **tokens);
 void	free_token_list(t_token **token_list);
 
 // parser functions
@@ -77,5 +78,6 @@ void	exit_program(t_token **token_list, t_ms *ms);
 void	echo(t_token *token_list);
 void	exit_command(t_token *token_list, t_ms *ms);
 void	pwd(t_token *token_list);
+void	env(t_token *token_list);
 
 #endif

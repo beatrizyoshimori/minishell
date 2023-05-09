@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:04:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 20:49:11 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:01:55 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 // 	if (!ft_strncmp(aux, "exit", 5))
 // 	{
 // 		rl_clear_history();
-// 		free_split(ms->paths);
+// 		free_ptrptr(ms->paths);
 // 		free(ms);
 // 		free(aux);
 // 		free(prompt);
@@ -59,7 +59,8 @@
 void	exit_program(t_token **token_list, t_ms *ms)
 {
 	rl_clear_history();
-	free_split(ms->paths);
+	free_ptrptr(ms->paths);
+	free_ptrptr(ms->env);
 	free(ms);
 	free_token_list(token_list);
 	exit(1);

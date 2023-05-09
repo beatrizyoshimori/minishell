@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 21:03:46 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:00:54 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	exit_command(t_token *token_list, t_ms *ms)
 	{
 		rl_clear_history();
 		free_token_list(&token_list);
-		free_split(ms->paths);
+		free_ptrptr(ms->paths);
+		free_ptrptr(ms->env);
 		free(ms);
 		exit(0);
 	}

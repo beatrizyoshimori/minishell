@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 17:12:32 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/08 22:02:14 by byoshimo         ###   ########.fr       */
+/*   Created: 2023/05/08 21:37:22 by byoshimo          #+#    #+#             */
+/*   Updated: 2023/05/08 21:58:25 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_ptrptr(char **tokens)
+void	env(t_token *token_list)
 {
 	int	i;
 
-	i = 0;
-	while (tokens[i])
+	if (!ft_strncmp((token_list->token)[0], "env", 4) && !token_list->token[1])
 	{
-		free(tokens[i]);
-		i++;
-	}
-	free(tokens);
-	tokens = NULL;
-}
-
-void	free_token_list(t_token **token_list)
-{
-	t_token	*aux;
-
-	while (*token_list)
-	{
-		aux = (*token_list)->next;
-		free_ptrptr((*token_list)->token);
-		free(*token_list);
-		(*token_list) = aux;
+		i = 0;
+		while (token_list->ms->env[i])
+		{
+			printf("%s\n", token_list->ms->env[i]);
+			i++;
+		}
 	}
 }
