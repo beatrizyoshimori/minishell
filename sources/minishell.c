@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/05 20:40:09 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:04:45 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ void	create_prompt(t_token **token_list, t_ms *ms)
 		check_ctrl_d(prompt, ms);
 		check_whitespaces_enter(&prompt);
 		add_history(prompt);
-		exit_command(prompt, ms);
 		lexer(&prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
 		set_tokens(tokens, token_list, ms);
 		free(prompt);
 		free_split(tokens);
-		print_list(token_list);
+		// print_list(token_list);
 		parser(token_list, ms);
+		echo(*token_list);
+		exit_command(*token_list, ms);
 		free_token_list(token_list);
 	}
 }

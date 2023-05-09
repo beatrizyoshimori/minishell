@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/05 20:38:24 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:03:51 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	parser(t_token **token_list, t_ms *ms);
 void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
 
 // exit functions
-void	exit_command(char *prompt, t_ms *ms);
 void	exit_program(t_token **token_list, t_ms *ms);
+
+// built-in functions
+void	echo(t_token *token_list);
+void	exit_command(t_token *token_list, t_ms *ms);
 
 #endif

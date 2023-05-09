@@ -7,7 +7,9 @@ PARSER_PATH		=		parser
 
 TOKEN_PATH		=		token
 
-EXIT_PATH		=		exit
+EXIT_PATH		=		exit_free
+
+BUILT-IN_PATH	=		built-in
 
 LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
 														spaces.c \
@@ -18,14 +20,18 @@ PARSER			=		$(addprefix $(PARSER_PATH)/,	parser.c \
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
 
-EXIT			=		$(addprefix $(EXIT_PATH)/,		exit.c \
+EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
 														free_utils.c)
+
+BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	echo.c \
+														exit.c)
 
 SOURCES			=		minishell.c \
 						$(LEXER) \
 						$(PARSER) \
 						$(TOKEN) \
-						$(EXIT)
+						$(EXIT) \
+						$(BUILT-IN)
 
 SOURCES_PATH	=		sources
 
@@ -66,6 +72,7 @@ $(OBJECTS_PATH):
 						@mkdir -p $(OBJECTS_PATH)/$(PARSER_PATH)
 						@mkdir -p $(OBJECTS_PATH)/$(TOKEN_PATH)
 						@mkdir -p $(OBJECTS_PATH)/$(EXIT_PATH)
+						@mkdir -p $(OBJECTS_PATH)/$(BUILT-IN_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 						@$(CC) $(C_FLAGS) -c $< -o $@
