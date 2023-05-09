@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:12:43 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/09 18:13:17 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:13:52 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	copy_envp(char **envp, t_ms *ms)
 	i = 0;
 	while (envp[i])
 		i++;
+	ms->env_nbr_ptr = i;
 	ms->env = (char **)malloc(sizeof(char *) * (i + 1));
 	ms->env[i] = NULL;
 	i = 0;
