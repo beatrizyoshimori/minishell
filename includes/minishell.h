@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/09 19:08:10 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/09 22:03:55 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@
 # define R_RDCT_QUOTES -4
 # define DOLLAR_QUOTES -5
 # define SPACE_OUT_QUOTES -6
+# define LL_MAX 9223372036854775807
 
 typedef struct s_ms
 {
-	int		num_tokens;
-	char	**paths;
-	char	**env;
-	int		env_nbr_ptr;
+	int			num_tokens;
+	char		**paths;
+	char		**env;
+	int			env_nbr_ptr;
+	long long	status;
 }	t_ms;
 
 typedef struct s_token
@@ -41,7 +43,6 @@ typedef struct s_token
 	char			type;
 	int				fd[2];
 	pid_t			pid;
-	int				status;
 	struct s_ms		*ms;
 	struct s_token	*next;
 }	t_token;
