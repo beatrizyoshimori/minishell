@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/10 18:44:00 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/10 21:27:03 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	exit_command(t_token *token_list, t_ms *ms)
 		exit_status = get_exit_status(token_list);
 		if (exit_status != 1)
 		{
-			printf("exit status: %lld\n", exit_status);
 			printf("exit\n");
 			if (exit_status == 2)
 				printf("bash: exit: %s: numeric argument required\n",
@@ -85,6 +84,7 @@ void	exit_command(t_token *token_list, t_ms *ms)
 			free_token_list(&token_list);
 			free_ptrptr(ms->paths);
 			free_ptrptr(ms->env);
+			free_ptrptr(ms->env_export);
 			free(ms);
 			exit(exit_status);
 		}
