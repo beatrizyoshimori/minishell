@@ -31,7 +31,8 @@ BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	echo.c \
 														exit.c \
 														pwd.c \
 														env.c \
-														export.c)
+														export.c \
+														export_utils.c)
 
 SOURCES			=		minishell.c \
 						$(LEXER) \

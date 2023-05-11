@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/10 18:39:05 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/10 22:22:12 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef struct s_ms
 	int			num_tokens;
 	char		**paths;
 	char		**env;
+	char		**env_export;
 	int			env_nbr_ptr;
+	int			env_exp_nbr_ptr;
 	long long	status;
 }	t_ms;
 
@@ -68,6 +70,7 @@ void	set_tokens(char **tokens, t_token **token_list, t_ms *ms);
 // envp utils
 void	get_paths(char **envp, t_ms *ms);
 void	copy_envp(char **envp, t_ms *ms);
+char	*copy_env_export(char *envp_i);
 
 // free functions
 void	free_ptrptr(char **tokens);
@@ -81,10 +84,21 @@ void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
 void	exit_program(t_token **token_list, t_ms *ms);
 
 // built-in functions
+
+// echo functions
 void	echo(t_token *token_list);
+
+// exit_command functions
 void	exit_command(t_token *token_list, t_ms *ms);
+
+// pwd functions
 void	pwd(t_token *token_list);
+
+// env functions
 void	env(t_token *token_list);
+
+// export functions
 void	export(t_token *token_list);
+char	**copy_env(t_ms *ms);
 
 #endif
