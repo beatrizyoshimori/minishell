@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:10:15 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/09 20:07:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:46:35 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	echo(t_token *token_list)
 	flag = 0;
 	if (!ft_strncmp(token_list->token[i], "echo", 5))
 	{
-			i++;
+		i++;
 		if (token_list->token[i] && check_n_flag(token_list->token[i]))
 		{
 			i++;
