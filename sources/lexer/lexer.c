@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/09 18:49:16 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:27:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	check_ctrl_d(char *prompt, t_ms *ms)
 	{
 		free_ptrptr(ms->paths);
 		free_ptrptr(ms->env);
+		free_ptrptr(ms->env_export);
 		free(ms);
 		exit (0);
 	}
