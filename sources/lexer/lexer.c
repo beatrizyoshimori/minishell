@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/10 19:27:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/13 13:15:54 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	check_ctrl_d(char *prompt, t_ms *ms)
 	{
 		free_ptrptr(ms->paths);
 		free_ptrptr(ms->env);
-		free_ptrptr(ms->env_export);
 		free(ms);
 		exit (0);
 	}

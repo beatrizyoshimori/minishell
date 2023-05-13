@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/10 21:27:03 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/13 13:16:08 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	exit_command(t_token *token_list, t_ms *ms)
 			free_token_list(&token_list);
 			free_ptrptr(ms->paths);
 			free_ptrptr(ms->env);
-			free_ptrptr(ms->env_export);
 			free(ms);
 			exit(exit_status);
 		}
