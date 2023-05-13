@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 22:20:17 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/12 22:05:26 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/13 13:09:31 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,22 @@ static int	update_when_exists(char **env, char *token_i, int length)
 	j = 0;
 	while (env[j])
 	{	
-		if ((!ft_strncmp(env[j], token_i, length) && env[j][length] == '='))
-			return (1);
-		if (!ft_strncmp(env[j], token_i, length)
-			|| (!ft_strncmp(env[j], token_i, length - 1)
-				&& !env[j][length - 1]))
+		if (ft_strchr(token_i, '='))
 		{
-			free(env[j]);
-			env[j] = ft_strdup(token_i);
-			return (1);
+			if (!ft_strncmp(env[j], token_i, length)
+				|| (!ft_strncmp(env[j], token_i, length - 1)
+					&& env[j][length - 1] == '\0'))
+			{
+				free(env[j]);
+				env[j] = ft_strdup(token_i);
+				return (1);
+			}
+		}
+		else
+		{
+			if (!ft_strncmp(env[j], token_i, length)
+				&& (env[j][length] == '\0' || env[j][length] == '='))
+				return (1);
 		}
 		j++;
 	}
@@ -38,10 +45,11 @@ int	check_if_exists(t_token *token_list, int i)
 {
 	int	length;
 
-	length = ft_strlen(token_list->token[i]);
 	if (ft_strchr(token_list->token[i], '='))
 		length = ft_strchr(token_list->token[i], '=')
 			- &token_list->token[i][0] + 1;
+	else
+		length = ft_strlen(token_list->token[i]);
 	return (update_when_exists(token_list->ms->env,
 			token_list->token[i], length));
 }
