@@ -20,7 +20,8 @@ LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
 														quotes.c)
 
 PARSER			=		$(addprefix $(PARSER_PATH)/,	parser.c \
-														parser_utils.c)
+														parser_utils.c \
+														parser_var_expansion.c)
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
 

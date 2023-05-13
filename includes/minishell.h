@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 13:27:08 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/13 19:25:15 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@
 # define PIPE_QUOTES -2
 # define L_RDCT_QUOTES -3
 # define R_RDCT_QUOTES -4
-# define DOLLAR_QUOTES -5
+# define DOLLAR_VAR -5
 # define SPACE_OUT_QUOTES -6
 # define LL_MAX 9223372036854775807
 
 typedef struct s_ms
 {
-	int			num_tokens;
-	char		**paths;
-	char		**env;
-	int			env_nbr_ptr;
-	long long	status;
+	int		num_tokens;
+	char	**paths;
+	char	**env;
+	int		env_nbr_ptr;
+	int		exit_status;
 }	t_ms;
 
 typedef struct s_token
@@ -76,6 +76,8 @@ void	free_token_list(t_token **token_list);
 // parser functions
 void	parser(t_token **token_list, t_ms *ms);
 void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
+void	change_dollar_back(t_token *token_list);
+void	expand_variable(t_token *token_list);
 
 // exit functions
 void	exit_program(t_token **token_list, t_ms *ms);

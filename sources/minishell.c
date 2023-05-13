@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 13:27:13 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/13 19:11:53 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,17 @@ void	create_prompt(t_token **token_list, t_ms *ms)
 	}
 }
 
-		//print_list(token_list);
-
+		// print_list(token_list);
 int	main(int argc, char **argv, char **envp)
 {
 	t_token	*token_list;
 	t_ms	*ms;
 
-	(void)argc;
+	if (argc != 1)
+		return (1);
 	(void)argv;
 	ms = (t_ms *)malloc(sizeof(t_ms));
+	ms->exit_status = 0;
 	copy_envp(envp, ms);
 	get_paths(envp, ms);
 	token_list = NULL;
