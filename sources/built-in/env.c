@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:37:22 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/10 19:27:50 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/12 21:11:29 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	env(t_token *token_list)
 		i = 0;
 		while (token_list->ms->env[i])
 		{
-			printf("%s\n", token_list->ms->env[i]);
+			if (ft_strchr(token_list->ms->env[i], '='))
+				printf("%s\n", token_list->ms->env[i]);
 			i++;
 		}
 	}
