@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 14:22:35 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:28:06 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static long long	get_exit_status(t_token *token_list)
 		return (status);
 }
 
-void	exit_command(t_token *token_list, t_ms *ms)
+void	exit_command(t_token *token_list)
 {
 	long long	exit_status;
 
@@ -82,9 +82,8 @@ void	exit_command(t_token *token_list, t_ms *ms)
 					token_list->token[1]);
 			rl_clear_history();
 			free_token_list(&token_list);
-			free_ptrptr(ms->paths);
-			free_ptrptr(ms->env);
-			free(ms);
+			free_ptrptr(g_ms.paths);
+			free_ptrptr(g_ms.env);
 			exit(exit_status);
 		}
 		printf("exit\n");

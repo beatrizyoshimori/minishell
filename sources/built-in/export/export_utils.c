@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 22:20:17 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/13 13:09:31 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:38:05 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_if_exists(t_token *token_list, int i)
 			- &token_list->token[i][0] + 1;
 	else
 		length = ft_strlen(token_list->token[i]);
-	return (update_when_exists(token_list->ms->env,
+	return (update_when_exists(g_ms.env,
 			token_list->token[i], length));
 }
 
@@ -69,15 +69,15 @@ int	check_isname(char *env_i)
 	return (0);
 }
 
-static void	print_quotes(t_token *token_list, int i, int j)
+static void	print_quotes(int i, int j)
 {
-	if (token_list->ms->env[i][j] == '=')
+	if (g_ms.env[i][j] == '=')
 	{
 		ft_putstr_fd("=\"", 1);
 		j++;
-		while (token_list->ms->env[i][j])
+		while (g_ms.env[i][j])
 		{
-			ft_putchar_fd(token_list->ms->env[i][j], 1);
+			ft_putchar_fd(g_ms.env[i][j], 1);
 			j++;
 		}
 		ft_putchar_fd('\"', 1);
@@ -92,17 +92,17 @@ void	check_only_export(t_token *token_list)
 	if (!token_list->token[1])
 	{
 		i = 0;
-		while (token_list->ms->env[i])
+		while (g_ms.env[i])
 		{
 			ft_putstr_fd("declare -x ", 1);
 			j = 0;
-			while (token_list->ms->env[i][j]
-				&& token_list->ms->env[i][j] != '=')
+			while (g_ms.env[i][j]
+				&& g_ms.env[i][j] != '=')
 			{
-				ft_putchar_fd(token_list->ms->env[i][j], 1);
+				ft_putchar_fd(g_ms.env[i][j], 1);
 				j++;
 			}
-			print_quotes(token_list, i, j);
+			print_quotes(i, j);
 			ft_putchar_fd('\n', 1);
 			i++;
 		}

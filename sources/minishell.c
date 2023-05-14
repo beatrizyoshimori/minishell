@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 19:11:53 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:29:11 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_ms	g_ms;
 
 void	print_list(t_token **token_list)
 {
@@ -42,7 +44,7 @@ void	signal_handler(int signal)
 	}
 }
 
-void	create_prompt(t_token **token_list, t_ms *ms)
+void	create_prompt(t_token **token_list)
 {
 	char	*prompt;
 	char	**tokens;
@@ -52,17 +54,17 @@ void	create_prompt(t_token **token_list, t_ms *ms)
 	while (1)
 	{
 		prompt = readline("bilu> ");
-		check_ctrl_d(prompt, ms);
+		check_ctrl_d(prompt);
 		check_whitespaces_enter(&prompt);
 		add_history(prompt);
 		lexer(&prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
-		set_tokens(tokens, token_list, ms);
+		set_tokens(tokens, token_list);
 		free(prompt);
 		free_ptrptr(tokens);
-		parser(token_list, ms);
+		parser(token_list);
 		echo(*token_list);
-		exit_command(*token_list, ms);
+		exit_command(*token_list);
 		pwd(*token_list);
 		env(*token_list);
 		export(*token_list);
@@ -74,18 +76,16 @@ void	create_prompt(t_token **token_list, t_ms *ms)
 int	main(int argc, char **argv, char **envp)
 {
 	t_token	*token_list;
-	t_ms	*ms;
 
 	if (argc != 1)
 		return (1);
 	(void)argv;
-	ms = (t_ms *)malloc(sizeof(t_ms));
-	ms->exit_status = 0;
-	copy_envp(envp, ms);
-	get_paths(envp, ms);
+	g_ms = (t_ms){0};
+	copy_envp(envp);
+	get_paths(envp);
 	token_list = NULL;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	create_prompt(&token_list, ms);
+	create_prompt(&token_list);
 	return (0);
 }

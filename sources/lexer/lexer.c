@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 14:51:42 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:27:55 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_ctrl_d(char *prompt, t_ms *ms)
+void	check_ctrl_d(char *prompt)
 {
 	if (prompt == NULL)
 	{
-		free_ptrptr(ms->paths);
-		free_ptrptr(ms->env);
-		free(ms);
+		free_ptrptr(g_ms.paths);
+		free_ptrptr(g_ms.env);
 		exit (0);
 	}
 }

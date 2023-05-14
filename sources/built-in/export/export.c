@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:52:15 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/13 13:09:39 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:37:41 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ static char	**copy_env(char **env, int nbr_ptr)
 	return (aux);
 }
 
-static int	dup_env(t_token *token_list)
+static int	dup_env(void)
 {
 	int		i;
 	char	**aux;
 
-	aux = copy_env(token_list->ms->env, token_list->ms->env_nbr_ptr);
-	free_ptrptr(token_list->ms->env);
-	token_list->ms->env = (char **)
-		ft_calloc(token_list->ms->env_nbr_ptr + 1, sizeof(char *));
+	aux = copy_env(g_ms.env, g_ms.env_nbr_ptr);
+	free_ptrptr(g_ms.env);
+	g_ms.env = (char **)
+		ft_calloc(g_ms.env_nbr_ptr + 1, sizeof(char *));
 	i = 0;
 	while (aux[i])
 	{
-		token_list->ms->env[i] = ft_strdup(aux[i]);
+		g_ms.env[i] = ft_strdup(aux[i]);
 		i++;
 	}
 	free_ptrptr(aux);
@@ -52,9 +52,9 @@ static void	update_env(t_token *token_list, int j)
 
 	if (check_if_exists(token_list, j))
 		return ;
-	token_list->ms->env_nbr_ptr++;
-	i = dup_env(token_list);
-	token_list->ms->env[i] = ft_strdup(token_list->token[j]);
+	g_ms.env_nbr_ptr++;
+	i = dup_env();
+	g_ms.env[i] = ft_strdup(token_list->token[j]);
 }
 
 void	export(t_token *token_list)

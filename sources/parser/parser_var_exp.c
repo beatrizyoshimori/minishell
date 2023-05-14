@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 18:24:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:37:04 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	try_find_variable(char **token_i, char **env, int *j)
 		not_found_variable(token_i, &j, &length);
 }
 
-static void	try_find_dollar(t_token *token_list, char **aux_token_i)
+static void	try_find_dollar(char **aux_token_i)
 {
 	int	j;
 
@@ -67,9 +67,9 @@ static void	try_find_dollar(t_token *token_list, char **aux_token_i)
 			if ((*aux_token_i)[j + 1])
 				j++;
 			if ((*aux_token_i)[j] == '?')
-				put_exit_status(token_list->ms->exit_status, aux_token_i, &j);
+				put_exit_status(g_ms.exit_status, aux_token_i, &j);
 			else
-				try_find_variable(aux_token_i, token_list->ms->env, &j);
+				try_find_variable(aux_token_i, g_ms.env, &j);
 		}
 		if (*aux_token_i)
 			j++;
@@ -87,7 +87,7 @@ void	expand_variable(t_token *token_list)
 		i = 0;
 		while (aux->token[i])
 		{
-			try_find_dollar(token_list, &aux->token[i]);
+			try_find_dollar(&aux->token[i]);
 			i++;
 		}
 		aux = aux->next;

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 18:53:09 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:28:48 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ typedef struct s_token
 	char			type;
 	int				fd[2];
 	pid_t			pid;
-	struct s_ms		*ms;
 	struct s_token	*next;
 }	t_token;
 
+extern t_ms	g_ms;
+
 // lexer functions
-void	check_ctrl_d(char *prompt, t_ms *ms);
+void	check_ctrl_d(char *prompt);
 void	check_whitespaces_enter(char **prompt);
 void	lexer(char **prompt);
 
@@ -64,19 +65,19 @@ void	find_metachar_dollar(char *prompt);
 void	change_metachar_back(char *prompt);
 
 // token list utils
-void	set_tokens(char **tokens, t_token **token_list, t_ms *ms);
+void	set_tokens(char **tokens, t_token **token_list);
 
 // envp utils
-void	get_paths(char **envp, t_ms *ms);
-void	copy_envp(char **envp, t_ms *ms);
+void	get_paths(char **envp);
+void	copy_envp(char **envp);
 
 // free functions
 void	free_ptrptr(char **tokens);
 void	free_token_list(t_token **token_list);
 
 // parser functions
-void	parser(t_token **token_list, t_ms *ms);
-void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
+void	parser(t_token **token_list);
+void	print_syntax_error(t_token **token_list, char c);
 void	remove_quotes(t_token *token_list);
 void	expand_variable(t_token *token_list);
 int		get_length_after_dollar(char *token_i, int *j);
@@ -84,7 +85,7 @@ void	found_variable(char **token_i, char *env_i, int **j, int *length);
 void	not_found_variable(char **token_i, int **j, int *length);
 
 // exit functions
-void	exit_program(t_token **token_list, t_ms *ms);
+void	exit_program(t_token **token_list);
 
 // built-in functions
 
@@ -92,7 +93,7 @@ void	exit_program(t_token **token_list, t_ms *ms);
 void	echo(t_token *token_list);
 
 // exit_command functions
-void	exit_command(t_token *token_list, t_ms *ms);
+void	exit_command(t_token *token_list);
 
 // pwd functions
 void	pwd(t_token *token_list);
