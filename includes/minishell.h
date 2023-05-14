@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:28:48 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:43:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	free_ptrptr(char **tokens);
 void	free_token_list(t_token **token_list);
 
 // parser functions
-void	parser(t_token **token_list);
-void	print_syntax_error(t_token **token_list, char c);
+void	parser(t_token *token_list);
+void	print_syntax_error(t_token *token_list, char c);
 void	remove_quotes(t_token *token_list);
 void	expand_variable(t_token *token_list);
 int		get_length_after_dollar(char *token_i, int *j);

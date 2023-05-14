@@ -6,17 +6,17 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:57:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:16:37 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:43:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	check_pipe_error(t_token **token_list)
+static void	check_pipe_error(t_token *token_list)
 {
 	t_token	*aux;
 
-	aux = *token_list;
+	aux = token_list;
 	if (aux->token[0][0] == '|')
 		print_syntax_error(token_list, '|');
 	while (aux)
@@ -28,12 +28,12 @@ static void	check_pipe_error(t_token **token_list)
 	}
 }
 
-static void	check_redirections_error(t_token **token_list)
+static void	check_redirections_error(t_token *token_list)
 {
 	int		i;
 	t_token	*aux;
 
-	aux = *token_list;
+	aux = token_list;
 	while (aux)
 	{
 		i = 0;
@@ -54,7 +54,7 @@ static void	check_redirections_error(t_token **token_list)
 	}
 }
 
-static void	aux_check_quotes(t_token **token_list, char *a, int *j)
+static void	aux_check_quotes(t_token *token_list, char *a, int *j)
 {
 	char	c;
 
@@ -73,13 +73,13 @@ static void	aux_check_quotes(t_token **token_list, char *a, int *j)
 	}
 }
 
-static void	check_quotes_error(t_token **token_list)
+static void	check_quotes_error(t_token *token_list)
 {
 	int		i;
 	int		j;
 	t_token	*aux;
 
-	aux = *token_list;
+	aux = token_list;
 	while (aux)
 	{
 		i = 0;
@@ -93,11 +93,11 @@ static void	check_quotes_error(t_token **token_list)
 	}
 }
 
-void	parser(t_token **token_list)
+void	parser(t_token *token_list)
 {
 	check_pipe_error(token_list);
 	check_redirections_error(token_list);
 	check_quotes_error(token_list);
-	expand_variable(*token_list);
-	remove_quotes(*token_list);
+	expand_variable(token_list);
+	remove_quotes(token_list);
 }

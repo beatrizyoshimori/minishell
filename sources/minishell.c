@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:29:11 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:43:32 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	create_prompt(t_token **token_list)
 		set_tokens(tokens, token_list);
 		free(prompt);
 		free_ptrptr(tokens);
-		parser(token_list);
+		parser(*token_list);
 		echo(*token_list);
 		exit_command(*token_list);
 		pwd(*token_list);
