@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 00:36:11 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 19:13:21 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 19:38:08 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;
@@ -35,6 +35,5 @@ char	*ft_strjoin(char *s1, char const *s2)
 		i++;
 	}
 	s3[i] = '\0';
-	free(s1);
 	return (s3);
 }
