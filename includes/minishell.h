@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 19:25:15 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:08:31 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ void	parser(t_token **token_list, t_ms *ms);
 void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
 void	change_dollar_back(t_token *token_list);
 void	expand_variable(t_token *token_list);
+int		get_length_after_dollar(char *token_i, int *j);
+void	found_variable(char **token_i, char *env_i, int **j, int *length);
+void	not_found_variable(char **token_i, int **j, int *length);
 
 // exit functions
 void	exit_program(t_token **token_list, t_ms *ms);

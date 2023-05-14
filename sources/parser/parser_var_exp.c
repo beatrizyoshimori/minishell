@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_var_expansion.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 19:38:52 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:06:06 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,56 +34,55 @@ static void	put_exit_status(int exit_status, char **token_i, int *j)
 	free(aux);
 }
 
-static void	get_variable_name(char **token_i, char **env, int *j)
+static void	try_find_variable(char **token_i, char **env, int *j)
 {
 	int		i;
 	int		length;
-	char	*aux;
 
-	length = 0;
-	while ((*token_i)[*j] == '_' || ft_isalnum((*token_i)[*j]))
-	{
-		length++;
-		(*j)++;
-	}
+	length = get_length_after_dollar(*token_i, j);
 	i = 0;
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], &(*token_i)[*j - length], length)
 			&& env[i][length] == '=')
 		{
-			aux = (char *)ft_calloc(ft_strlen(*token_i)
-					+ ft_strlen(env[i]), sizeof(char));
-			ft_strlcpy(aux, *token_i, *j - length);
-			ft_strlcpy(&aux[*j - length - 1], &env[i][length + 1],
-				ft_strlen(env[i]) - length);
-			ft_strlcpy(&aux[*j - 2 * length + ft_strlen(env[i]) - 2],
-				&(*token_i)[*j], ft_strlen(*token_i) - *j + 1);
-			free(*token_i);
-			*token_i = ft_strdup(aux);
-			*j = *j + ft_strlen(env[i]) - 2 * (length + 1) - 1;
-			free(aux);
+			found_variable(token_i, env[i], &j, &length);
 			break ;
 		}
 		i++;
 	}
 	if (!env[i])
+		not_found_variable(token_i, &j, &length);
+}
+
+static void	try_find_dollar(t_token *token_list, char **aux_token_i)
+{
+	int	j;
+
+	j = 0;
+	while ((*aux_token_i)[j])
 	{
-		aux = (char *)ft_calloc(ft_strlen(*token_i), sizeof(char));
-		ft_strlcpy(aux, *token_i, *j - length);
-		ft_strlcpy(&aux[*j - length - 1],
-			&(*token_i)[*j], ft_strlen(*token_i) - *j + 1);
-		free(*token_i);
-		*token_i = ft_strdup(aux);
-		*j = *j - length - 2;
-		free(aux);
+		if ((*aux_token_i)[j] == DOLLAR_VAR)
+		{
+			if ((*aux_token_i)[j + 1])
+			{
+				j++;
+				if ((*aux_token_i)[j] == DOLLAR_VAR)
+					j--;
+			}
+			if ((*aux_token_i)[j] == '?')
+				put_exit_status(token_list->ms->exit_status, aux_token_i, &j);
+			else if ((*aux_token_i)[j] != DOLLAR_VAR)
+				try_find_variable(aux_token_i, token_list->ms->env, &j);
+		}
+		if (*aux_token_i)
+			j++;
 	}
 }
 
 void	expand_variable(t_token *token_list)
 {
 	int		i;
-	int		j;
 	t_token	*aux;
 
 	aux = token_list;
@@ -92,26 +91,7 @@ void	expand_variable(t_token *token_list)
 		i = 0;
 		while (aux->token[i])
 		{
-			j = 0;
-			while (aux->token[i][j])
-			{
-				if (aux->token[i][j] == DOLLAR_VAR)
-				{
-					if (aux->token[i][j + 1])
-					{
-						j++;
-						if (aux->token[i][j] == DOLLAR_VAR)
-							j--;
-					}
-					if (aux->token[i][j] == '_' || ft_isalpha(aux->token[i][j]))
-						get_variable_name(&aux->token[i], aux->ms->env, &j);
-					else if (aux->token[i][j] == '?')
-						put_exit_status(token_list->ms->exit_status,
-							&aux->token[i], &j);
-				}
-				if (aux->token[i])
-					j++;
-			}
+			try_find_dollar(token_list, &aux->token[i]);
 			i++;
 		}
 		aux = aux->next;
