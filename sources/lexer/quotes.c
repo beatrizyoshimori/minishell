@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/14 18:28:58 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 19:29:26 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	find_metachar_dollar(char *prompt)
 		if (prompt[i] != '\0')
 			i++;
 	}
-	printf("prompt: %s\n", prompt);
 }
 
 void	change_metachar_back(char *prompt)
