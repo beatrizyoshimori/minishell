@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 18:30:03 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 19:26:00 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,58 @@ void	print_syntax_error(t_token **token_list, t_ms *ms, char c)
 		ft_putstr_fd("'\n", 2);
 	}
 	exit_program(token_list, ms);
+}
+
+void	remove_quotes_aux(char **token_i)
+{
+	int		i;
+	char	**aux_rem;
+
+	aux_rem = ft_split(*token_i, REMOVE_QUOTES);
+	free(*token_i);
+	*token_i = (char *)ft_calloc(1, sizeof(char));
+	i = 0;
+	while (aux_rem[i])
+	{
+		*token_i = ft_strjoin(*token_i, aux_rem[i]);
+		i++;
+	}
+	free_ptrptr(aux_rem);
+}
+
+static void	mark_quotes(char **token_i, int *j)
+{
+	char	c;
+	
+	c = (*token_i)[*j];
+	(*token_i)[*j] = REMOVE_QUOTES;
+	while ((*token_i)[*j] != c)
+		(*j)++;
+	(*token_i)[*j] = REMOVE_QUOTES;
+}
+
+void	remove_quotes(t_token *token_list)
+{
+	int		i;
+	int		j;
+	t_token	*aux;
+
+	aux = token_list;
+	while (aux)
+	{
+		i = 0;
+		while (aux->token[i])
+		{
+			j = 0;
+			while (aux->token[i][j])
+			{
+				if (aux->token[i][j] == '\'' || aux->token[i][j] == '\"')
+					mark_quotes(&aux->token[i], &j);
+				j++;
+			}
+			remove_quotes_aux(&aux->token[i]);
+			i++;
+		}
+		aux = aux->next;
+	}
 }

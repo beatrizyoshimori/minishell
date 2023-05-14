@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 18:29:57 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:53:09 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define R_RDCT_QUOTES -4
 # define DOLLAR_VAR -5
 # define SPACE_OUT_QUOTES -6
+# define REMOVE_QUOTES -7
 # define LL_MAX 9223372036854775807
 
 typedef struct s_ms
@@ -76,6 +77,7 @@ void	free_token_list(t_token **token_list);
 // parser functions
 void	parser(t_token **token_list, t_ms *ms);
 void	print_syntax_error(t_token **token_list, t_ms *ms, char c);
+void	remove_quotes(t_token *token_list);
 void	expand_variable(t_token *token_list);
 int		get_length_after_dollar(char *token_i, int *j);
 void	found_variable(char **token_i, char *env_i, int **j, int *length);
