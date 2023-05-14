@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 19:26:00 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:02:21 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,22 @@ void	print_syntax_error(t_token **token_list, t_ms *ms, char c)
 void	remove_quotes_aux(char **token_i)
 {
 	int		i;
-	char	**aux_rem;
+	char	*aux;
+	char	**split;
 
-	aux_rem = ft_split(*token_i, REMOVE_QUOTES);
-	free(*token_i);
-	*token_i = (char *)ft_calloc(1, sizeof(char));
+	aux = (char *)ft_calloc(1, sizeof(char));
+	split = ft_split(*token_i, REMOVE_QUOTES);
 	i = 0;
-	while (aux_rem[i])
+	while (split[i])
 	{
-		*token_i = ft_strjoin(*token_i, aux_rem[i]);
+		free(*token_i);
+		*token_i = ft_strjoin(aux, split[i]);
+		free(aux);
+		aux = ft_strdup(*token_i);
 		i++;
 	}
-	free_ptrptr(aux_rem);
+	free(aux);
+	free_ptrptr(split);
 }
 
 static void	mark_quotes(char **token_i, int *j)
