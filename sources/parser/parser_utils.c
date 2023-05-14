@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:16:49 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 20:39:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	remove_quotes_aux(char **token_i)
 static void	mark_quotes(char **token_i, int *j)
 {
 	char	c;
-	
+
 	c = (*token_i)[*j];
 	(*token_i)[*j] = REMOVE_QUOTES;
 	while ((*token_i)[*j] != c)
