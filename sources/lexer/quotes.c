@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/13 14:57:51 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:28:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	mark_metachar_inside_quotes(char *prompt)
 
 static void	mark_metachar_dollar(char *c)
 {
-	if (*c == '$')
+	if (*c == '$' && *(c + 1) != '$' && *(c + 1) && !ft_iswhitespace(*(c + 1)))
 		*c = DOLLAR_VAR;
 }
 
@@ -73,6 +73,7 @@ void	find_metachar_dollar(char *prompt)
 		if (prompt[i] != '\0')
 			i++;
 	}
+	printf("prompt: %s\n", prompt);
 }
 
 void	change_metachar_back(char *prompt)
