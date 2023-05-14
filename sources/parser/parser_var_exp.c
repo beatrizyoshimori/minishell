@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_var_expansion.c                             :+:      :+:    :+:   */
+/*   parser_var_exp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 18:06:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:24:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,10 @@ static void	try_find_dollar(t_token *token_list, char **aux_token_i)
 		if ((*aux_token_i)[j] == DOLLAR_VAR)
 		{
 			if ((*aux_token_i)[j + 1])
-			{
 				j++;
-				if ((*aux_token_i)[j] == DOLLAR_VAR)
-					j--;
-			}
 			if ((*aux_token_i)[j] == '?')
 				put_exit_status(token_list->ms->exit_status, aux_token_i, &j);
-			else if ((*aux_token_i)[j] != DOLLAR_VAR)
+			else
 				try_find_variable(aux_token_i, token_list->ms->env, &j);
 		}
 		if (*aux_token_i)
