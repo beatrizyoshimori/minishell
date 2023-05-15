@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 16:46:28 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:47:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	make_command(t_token *token_list)
 	aux = token_list;
 	while (aux)
 	{
-		if (!ft_strncmp(aux->token[0], "echo", 5))
-			echo(aux->token);
-		else if (!ft_strncmp(aux->token[0], "pwd", 4))
-			pwd();
-		else if (!ft_strncmp(aux->token[0], "export", 7))
+		if (!ft_strncmp(aux->token[0], "export", 7))
 			export(aux->token);
+		else if (!ft_strncmp(aux->token[0], "echo", 5))
+			echo(aux->token);
 		else if (!ft_strncmp(aux->token[0], "env", 4))
 			env(aux->token);
 		else if (!ft_strncmp(aux->token[0], "exit", 5))
 			exit_command(token_list);
+		else if (!ft_strncmp(aux->token[0], "pwd", 4))
+			pwd();
 		aux = aux->next;
 	}
 }

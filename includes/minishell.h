@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 16:46:16 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:45:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,63 +49,76 @@ typedef struct s_token
 
 extern t_ms	g_ms;
 
-// lexer functions
-void	check_ctrl_d(char *prompt);
-void	check_whitespaces_enter(char **prompt);
-void	lexer(char **prompt);
-
-// space functions
-void	create_spaces(char **prompt);
-void	mark_pipe_spaces(char *prompt);
-void	mark_token_spaces(char *prompt);
-
-// quote functions
-void	mark_metachar_inside_quotes(char *prompt);
-void	find_metachar_dollar(char *prompt);
-void	change_metachar_back(char *prompt);
-
-// token list utils
-void	set_tokens(char **tokens, t_token **token_list);
-
-// envp utils
-void	get_paths(char **envp);
-void	copy_envp(char **envp);
-
-// free functions
-void	free_ptrptr(char **tokens);
-void	free_token_list(t_token **token_list);
-
-// parser functions
-void	parser(t_token *token_list);
-void	print_syntax_error(t_token *token_list, char c);
-void	remove_quotes(t_token *token_list);
-void	expand_variable(t_token *token_list);
-int		get_length_after_dollar(char *token_i, int *j, int *length);
-void	found_variable(char **token_i, char *env_i, int **j, int *length);
-void	not_found_variable(char **token_i, int **j, int *length);
-
-// exit functions
-void	exit_program(t_token **token_list);
-
-// built-in functions
-
-// echo functions
-void	echo(char **token);
-
-// pwd functions
-void	pwd(void);
-
-// export functions
-void	export(char **token);
+// built-in folder
+// export folder
+// export_utils.c functions
 int		check_if_exists(char **token, int i);
 int		check_isname(char *token_i);
 void	check_only_export(char **token);
 
-// env functions
+// export.c functions
+void	export(char **token);
+
+// echo.c functions
+void	echo(char **token);
+
+// env.c functions
 void	env(char **token);
 
-// exit_command functions
+// exit_command.c functions
 void	exit_command(t_token *token_list);
+
+// pwd.c functions
+void	pwd(void);
+
+// envp_utils folder
+// envp utils
+void	get_paths(char **envp);
+void	copy_envp(char **envp);
+
+// exit_free folder
+// exit_program.c functions
+void	exit_program(t_token **token_list);
+
+// free_utils.c functions
+void	free_ptrptr(char **tokens);
+void	free_token_list(t_token **token_list);
+
+// lexer folder
+// lexer.c functions
+void	check_ctrl_d(char *prompt);
+void	check_whitespaces_enter(char **prompt);
+void	lexer(char **prompt);
+
+// quote.c functions
+void	mark_metachar_inside_quotes(char *prompt);
+void	find_metachar_dollar(char *prompt);
+void	change_metachar_back(char *prompt);
+
+// space.c functions
+void	create_spaces(char **prompt);
+void	mark_pipe_spaces(char *prompt);
+void	mark_token_spaces(char *prompt);
+
+// parser folder
+// parser_utils.c functions
+void	print_syntax_error(t_token *token_list, char c);
+void	remove_quotes(t_token *token_list);
+
+// parser_var_exp_utils.c functions
+int		get_length_after_dollar(char *token_i, int *j, int *length);
+void	found_variable(char **token_i, char *env_i, int **j, int *length);
+void	not_found_variable(char **token_i, int **j, int *length);
+
+// parser_var_exp.c functions
+void	expand_variable(t_token *token_list);
+
+// parser.c functions
+void	parser(t_token *token_list);
+
+// token folder
+// token_utils.c functions
+void	set_tokens(char **tokens, t_token **token_list);
 
 // non ms functions
 void	print_list(t_token **token_list);
