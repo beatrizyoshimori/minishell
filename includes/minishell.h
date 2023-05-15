@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 16:06:00 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:46:16 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,22 @@ void	exit_program(t_token **token_list);
 // built-in functions
 
 // echo functions
-void	echo(t_token *token_list);
+void	echo(char **token);
+
+// pwd functions
+void	pwd(void);
+
+// export functions
+void	export(char **token);
+int		check_if_exists(char **token, int i);
+int		check_isname(char *token_i);
+void	check_only_export(char **token);
+
+// env functions
+void	env(char **token);
 
 // exit_command functions
 void	exit_command(t_token *token_list);
-
-// pwd functions
-void	pwd(t_token *token_list);
-
-// env functions
-void	env(t_token *token_list);
-
-// export functions
-void	export(t_token *token_list);
-int		check_if_exists(t_token *token_list, int i);
-int		check_isname(char *env_i);
-void	check_only_export(t_token *token_list);
 
 // non ms functions
 void	print_list(t_token **token_list);

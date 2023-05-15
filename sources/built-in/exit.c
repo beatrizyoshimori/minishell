@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:28:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:54:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ static long long	get_exit_status(t_token *token_list)
 	if (token_list->token[1])
 	{
 		status = check_first_parameter(token_list, &flag);
-		if (token_list->token[2]
-			&& status != (unsigned long long)LL_MAX + 2)
+		if (token_list->token[2] && status != (unsigned long long)LL_MAX + 2)
 			status = 1;
 		else if (status == (unsigned long long)LL_MAX + 2)
 		{
@@ -71,23 +70,20 @@ void	exit_command(t_token *token_list)
 	long long	exit_status;
 
 	exit_status = 0;
-	if (!ft_strncmp(token_list->token[0], "exit", 5))
+	exit_status = get_exit_status(token_list);
+	if (exit_status != 1)
 	{
-		exit_status = get_exit_status(token_list);
-		if (exit_status != 1)
-		{
-			printf("exit\n");
-			if (exit_status == 2)
-				printf("bash: exit: %s: numeric argument required\n",
-					token_list->token[1]);
-			rl_clear_history();
-			free_token_list(&token_list);
-			free_ptrptr(g_ms.paths);
-			free_ptrptr(g_ms.env);
-			exit(exit_status);
-		}
 		printf("exit\n");
-		printf("bash: exit: too many arguments\n");
-		return ;
+		if (exit_status == 2)
+			printf("bash: exit: %s: numeric argument required\n",
+				token_list->token[1]);
+		rl_clear_history();
+		free_token_list(&token_list);
+		free_ptrptr(g_ms.paths);
+		free_ptrptr(g_ms.env);
+		exit(exit_status);
 	}
+	printf("exit\n");
+	printf("bash: exit: too many arguments\n");
+	return ;
 }

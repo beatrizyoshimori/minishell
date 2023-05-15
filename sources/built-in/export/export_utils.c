@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 22:20:17 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/14 20:38:05 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:52:06 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	update_when_exists(char **env, char *token_i, int length)
 		}
 		else
 		{
-			if (!ft_strncmp(env[j], token_i, length)
+			if (!ft_strncmp(env[j], token_i, length) 
 				&& (env[j][length] == '\0' || env[j][length] == '='))
 				return (1);
 		}
@@ -41,30 +41,28 @@ static int	update_when_exists(char **env, char *token_i, int length)
 	return (0);
 }
 
-int	check_if_exists(t_token *token_list, int i)
+int	check_if_exists(char **token, int i)
 {
 	int	length;
 
-	if (ft_strchr(token_list->token[i], '='))
-		length = ft_strchr(token_list->token[i], '=')
-			- &token_list->token[i][0] + 1;
+	if (ft_strchr(token[i], '='))
+		length = ft_strchr(token[i], '=') - &token[i][0] + 1;
 	else
-		length = ft_strlen(token_list->token[i]);
-	return (update_when_exists(g_ms.env,
-			token_list->token[i], length));
+		length = ft_strlen(token[i]);
+	return (update_when_exists(g_ms.env, token[i], length));
 }
 
-int	check_isname(char *env_i)
+int	check_isname(char *token_i)
 {
 	int	j;
 
 	j = 0;
-	if (env_i[j] != '_' && !ft_isalpha(env_i[j]))
+	if (token_i[j] != '_' && !ft_isalpha(token_i[j]))
 		return (0);
 	j++;
-	while ((env_i[j] == '_' || ft_isalnum(env_i[j])) && env_i[j] != '=')
+	while ((token_i[j] == '_' || ft_isalnum(token_i[j])) && token_i[j] != '=')
 		j++;
-	if (!env_i[j] || env_i[j] == '=')
+	if (!token_i[j] || token_i[j] == '=')
 		return (1);
 	return (0);
 }
@@ -84,20 +82,19 @@ static void	print_quotes(int i, int j)
 	}
 }
 
-void	check_only_export(t_token *token_list)
+void	check_only_export(char **token)
 {
 	int	i;
 	int	j;
 
-	if (!token_list->token[1])
+	if (!token[1])
 	{
 		i = 0;
 		while (g_ms.env[i])
 		{
 			ft_putstr_fd("declare -x ", 1);
 			j = 0;
-			while (g_ms.env[i][j]
-				&& g_ms.env[i][j] != '=')
+			while (g_ms.env[i][j] && g_ms.env[i][j] != '=')
 			{
 				ft_putchar_fd(g_ms.env[i][j], 1);
 				j++;

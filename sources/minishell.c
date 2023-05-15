@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 15:56:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:46:28 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,27 @@ void	signal_handler(int signal)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+}
+
+void	make_command(t_token *token_list)
+{
+	t_token	*aux;
+
+	aux = token_list;
+	while (aux)
+	{
+		if (!ft_strncmp(aux->token[0], "echo", 5))
+			echo(aux->token);
+		else if (!ft_strncmp(aux->token[0], "pwd", 4))
+			pwd();
+		else if (!ft_strncmp(aux->token[0], "export", 7))
+			export(aux->token);
+		else if (!ft_strncmp(aux->token[0], "env", 4))
+			env(aux->token);
+		else if (!ft_strncmp(aux->token[0], "exit", 5))
+			exit_command(token_list);
+		aux = aux->next;
 	}
 }
 
@@ -44,11 +65,7 @@ void	create_prompt(t_token **token_list)
 		free(prompt);
 		free_ptrptr(tokens);
 		parser(*token_list);
-		echo(*token_list);
-		pwd(*token_list);
-		export(*token_list);
-		env(*token_list);
-		exit_command(*token_list);
+		make_command(*token_list);
 		free_token_list(token_list);
 	}
 }

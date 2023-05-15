@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:10:15 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/13 18:06:21 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:31:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,27 @@ static int	check_n_flag(char *token)
 	return (0);
 }
 
-void	echo(t_token *token_list)
+void	echo(char **token)
 {
 	int	i;
 	int	flag;
 
-	i = 0;
+	i = 1;
 	flag = 0;
-	if (!ft_strncmp(token_list->token[i], "echo", 5))
+	if (token[i] && check_n_flag(token[i]))
 	{
 		i++;
-		if (token_list->token[i] && check_n_flag(token_list->token[i]))
-		{
-			i++;
-			flag = 1;
-		}
-		if (!token_list->token[i] && !flag)
+		flag = 1;
+	}
+	if (!token[i] && !flag)
+		printf("\n");
+	while (token[i])
+	{
+		printf("%s", token[i]);
+		i++;
+		if (token[i])
+			printf(" ");
+		else if (!flag)
 			printf("\n");
-		while (token_list->token[i])
-		{
-			printf("%s", token_list->token[i]);
-			i++;
-			if (token_list->token[i])
-				printf(" ");
-			else if (!flag)
-				printf("\n");
-		}
 	}
 }
