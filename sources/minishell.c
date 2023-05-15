@@ -6,32 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:43:32 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:56:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_ms	g_ms;
-
-void	print_list(t_token **token_list)
-{
-	int		i;
-	t_token	*aux;
-
-	aux = *token_list;
-	while (aux)
-	{
-		i = 0;
-		while (aux->token[i])
-		{
-			printf("%s\n", aux->token[i]);
-			i++;
-		}
-		printf("\n");
-		aux = aux->next;
-	}
-}
 
 void	signal_handler(int signal)
 {
@@ -64,10 +45,10 @@ void	create_prompt(t_token **token_list)
 		free_ptrptr(tokens);
 		parser(*token_list);
 		echo(*token_list);
-		exit_command(*token_list);
 		pwd(*token_list);
-		env(*token_list);
 		export(*token_list);
+		env(*token_list);
+		exit_command(*token_list);
 		free_token_list(token_list);
 	}
 }

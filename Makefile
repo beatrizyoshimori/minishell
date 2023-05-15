@@ -40,7 +40,8 @@ BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	echo.c \
 														env.c \
 														$(EXPORT))
 
-SOURCES			=		minishell.c \
+SOURCES			=		non_ms_functions.c \
+						minishell.c \
 						$(LEXER) \
 						$(PARSER) \
 						$(TOKEN) \

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:43:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:58:15 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,8 @@ void	export(t_token *token_list);
 int		check_if_exists(t_token *token_list, int i);
 int		check_isname(char *env_i);
 void	check_only_export(t_token *token_list);
+
+// non ms functions
+void	print_list(t_token **token_list);
 
 #endif
