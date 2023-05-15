@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 22:20:17 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/15 16:52:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:29:36 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	update_when_exists(char **env, char *token_i, int length)
 		}
 		else
 		{
-			if (!ft_strncmp(env[j], token_i, length) 
+			if (!ft_strncmp(env[j], token_i, length)
 				&& (env[j][length] == '\0' || env[j][length] == '='))
 				return (1);
 		}
