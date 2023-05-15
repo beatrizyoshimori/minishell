@@ -34,11 +34,12 @@ EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
 EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export.c \
 														export_utils.c)
 
-BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	echo.c \
+BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(EXPORT) \
+														echo.c \
+														env.c \
 														exit.c \
 														pwd.c \
-														env.c \
-														$(EXPORT))
+														unset.c)
 
 SOURCES			=		non_ms_functions.c \
 						minishell.c \

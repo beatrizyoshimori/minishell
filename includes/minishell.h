@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 17:45:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:25:02 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ extern t_ms	g_ms;
 // built-in folder
 // export folder
 // export_utils.c functions
-int		check_if_exists(char **token, int i);
-int		check_isname(char *token_i);
+int		check_if_exists_exp(char **token, int i);
+int		check_isname_exp(char *token_i);
 void	check_only_export(char **token);
 
 // export.c functions
@@ -70,6 +70,9 @@ void	exit_command(t_token *token_list);
 
 // pwd.c functions
 void	pwd(void);
+
+// unset.c functions
+void	unset(char **token);
 
 // envp_utils folder
 // envp utils
