@@ -6,34 +6,32 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:06:35 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/14 18:08:35 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:04:26 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_length_after_dollar(char *token_i, int *j)
+int	get_length_after_dollar(char *token_i, int *j, int *length)
 {
-	int	length;
-
-	length = 0;
 	if (token_i[*j] == '_' || ft_isalpha(token_i[*j]))
 	{
 		while (token_i[*j] == '_' || ft_isalnum(token_i[*j]))
 		{
-			length++;
+			(*length)++;
 			(*j)++;
 		}
+		return (1);
 	}
 	else
 	{
 		while (token_i[*j] && token_i[*j] != '_' && !ft_isalpha(token_i[*j]))
 		{
-			length++;
+			(*length)++;
 			(*j)++;
 		}
+		return (0);
 	}
-	return (length);
 }
 
 void	found_variable(char **token_i, char *env_i, int **j, int *length)

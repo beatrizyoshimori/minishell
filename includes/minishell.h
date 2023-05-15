@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 15:58:15 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:06:00 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	parser(t_token *token_list);
 void	print_syntax_error(t_token *token_list, char c);
 void	remove_quotes(t_token *token_list);
 void	expand_variable(t_token *token_list);
-int		get_length_after_dollar(char *token_i, int *j);
+int		get_length_after_dollar(char *token_i, int *j, int *length);
 void	found_variable(char **token_i, char *env_i, int **j, int *length);
 void	not_found_variable(char **token_i, int **j, int *length);
 

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 20:37:04 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:08:44 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,27 @@ static void	put_exit_status(int exit_status, char **token_i, int *j)
 
 static void	try_find_variable(char **token_i, char **env, int *j)
 {
-	int		i;
-	int		length;
+	int	i;
+	int	length;
+	int	isname;
 
-	length = get_length_after_dollar(*token_i, j);
 	i = 0;
-	while (env[i])
+	length = 0;
+	isname = get_length_after_dollar(*token_i, j, &length);
+	if (isname)
 	{
-		if (!ft_strncmp(env[i], &(*token_i)[*j - length], length)
-			&& env[i][length] == '=')
+		while (env[i])
 		{
-			found_variable(token_i, env[i], &j, &length);
-			break ;
+			if (!ft_strncmp(env[i], &(*token_i)[*j - length], length)
+				&& env[i][length] == '=')
+			{
+				found_variable(token_i, env[i], &j, &length);
+				break ;
+			}
+			i++;
 		}
-		i++;
 	}
-	if (!env[i])
+	if (!env[i] || !isname)
 		not_found_variable(token_i, &j, &length);
 }
 
