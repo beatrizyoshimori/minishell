@@ -6,20 +6,20 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 16:08:44 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:34:24 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	put_exit_status(int exit_status, char **token_i, int *j)
+static void	put_exit_status(char **token_i, int *j)
 {
 	int		length;
 	char	*exit_st;
 	char	*aux;
 
 	(*j)++;
-	exit_st = ft_itoa(exit_status);
+	exit_st = ft_itoa(g_ms.exit_status);
 	length = ft_strlen(exit_st);
 	aux = (char *)ft_calloc(ft_strlen(*token_i)
 			+ length - 1, sizeof(char));
@@ -34,7 +34,7 @@ static void	put_exit_status(int exit_status, char **token_i, int *j)
 	free(aux);
 }
 
-static void	try_find_variable(char **token_i, char **env, int *j)
+static void	try_find_variable(char **token_i, int *j)
 {
 	int	i;
 	int	length;
@@ -45,18 +45,18 @@ static void	try_find_variable(char **token_i, char **env, int *j)
 	isname = get_length_after_dollar(*token_i, j, &length);
 	if (isname)
 	{
-		while (env[i])
+		while (g_ms.env[i])
 		{
-			if (!ft_strncmp(env[i], &(*token_i)[*j - length], length)
-				&& env[i][length] == '=')
+			if (!ft_strncmp(g_ms.env[i], &(*token_i)[*j - length], length)
+				&& g_ms.env[i][length] == '=')
 			{
-				found_variable(token_i, env[i], &j, &length);
+				found_variable(token_i, g_ms.env[i], &j, &length);
 				break ;
 			}
 			i++;
 		}
 	}
-	if (!env[i] || !isname)
+	if (!g_ms.env[i] || !isname)
 		not_found_variable(token_i, &j, &length);
 }
 
@@ -72,9 +72,9 @@ static void	try_find_dollar(char **aux_token_i)
 			if ((*aux_token_i)[j + 1])
 				j++;
 			if ((*aux_token_i)[j] == '?')
-				put_exit_status(g_ms.exit_status, aux_token_i, &j);
+				put_exit_status(aux_token_i, &j);
 			else
-				try_find_variable(aux_token_i, g_ms.env, &j);
+				try_find_variable(aux_token_i, &j);
 		}
 		if (*aux_token_i)
 			j++;

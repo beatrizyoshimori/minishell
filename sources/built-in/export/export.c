@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:52:15 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/15 17:29:22 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:25:02 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	update_env(char **token, int j)
 {
 	int	i;
 
-	if (check_if_exists(token, j))
+	if (check_if_exists_exp(token, j))
 		return ;
 	g_ms.env_nbr_ptr++;
 	i = dup_env();
@@ -65,11 +65,8 @@ void	export(char **token)
 	i = 1;
 	while (token[i])
 	{
-		if (!check_isname(token[i]))
-		{
-			printf("bash: export: '%s': not a valid identifier\n",
-				token[i]);
-		}
+		if (!check_isname_exp(token[i]))
+			printf("bash: export: '%s': not a valid identifier\n", token[i]);
 		else
 			update_env(token, i);
 		i++;

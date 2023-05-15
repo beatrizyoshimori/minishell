@@ -6,34 +6,34 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 22:20:17 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/15 17:29:36 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:31:39 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	update_when_exists(char **env, char *token_i, int length)
+static int	update_when_exists(char *token_i, int length)
 {
 	int	j;
 
 	j = 0;
-	while (env[j])
+	while (g_ms.env[j])
 	{	
 		if (ft_strchr(token_i, '='))
 		{
-			if (!ft_strncmp(env[j], token_i, length)
-				|| (!ft_strncmp(env[j], token_i, length - 1)
-					&& env[j][length - 1] == '\0'))
+			if (!ft_strncmp(g_ms.env[j], token_i, length)
+				|| (!ft_strncmp(g_ms.env[j], token_i, length - 1)
+					&& g_ms.env[j][length - 1] == '\0'))
 			{
-				free(env[j]);
-				env[j] = ft_strdup(token_i);
+				free(g_ms.env[j]);
+				g_ms.env[j] = ft_strdup(token_i);
 				return (1);
 			}
 		}
 		else
 		{
-			if (!ft_strncmp(env[j], token_i, length)
-				&& (env[j][length] == '\0' || env[j][length] == '='))
+			if (!ft_strncmp(g_ms.env[j], token_i, length)
+				&& (g_ms.env[j][length] == '\0' || g_ms.env[j][length] == '='))
 				return (1);
 		}
 		j++;
@@ -41,7 +41,7 @@ static int	update_when_exists(char **env, char *token_i, int length)
 	return (0);
 }
 
-int	check_if_exists(char **token, int i)
+int	check_if_exists_exp(char **token, int i)
 {
 	int	length;
 
@@ -49,10 +49,10 @@ int	check_if_exists(char **token, int i)
 		length = ft_strchr(token[i], '=') - &token[i][0] + 1;
 	else
 		length = ft_strlen(token[i]);
-	return (update_when_exists(g_ms.env, token[i], length));
+	return (update_when_exists(token[i], length));
 }
 
-int	check_isname(char *token_i)
+int	check_isname_exp(char *token_i)
 {
 	int	j;
 
@@ -60,7 +60,7 @@ int	check_isname(char *token_i)
 	if (token_i[j] != '_' && !ft_isalpha(token_i[j]))
 		return (0);
 	j++;
-	while ((token_i[j] == '_' || ft_isalnum(token_i[j])) && token_i[j] != '=')
+	while (token_i[j] == '_' || ft_isalnum(token_i[j]))
 		j++;
 	if (!token_i[j] || token_i[j] == '=')
 		return (1);
