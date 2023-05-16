@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 19:34:24 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:16:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ static void	try_find_variable(char **token_i, int *j)
 			if (!ft_strncmp(g_ms.env[i], &(*token_i)[*j - length], length)
 				&& g_ms.env[i][length] == '=')
 			{
-				found_variable(token_i, g_ms.env[i], &j, &length);
+				found_variable(token_i, g_ms.env[i], j, &length);
 				break ;
 			}
 			i++;
 		}
 	}
 	if (!g_ms.env[i] || !isname)
-		not_found_variable(token_i, &j, &length);
+		not_found_variable(token_i, j, &length);
 }
 
 static void	try_find_dollar(char **aux_token_i)
@@ -93,6 +93,7 @@ void	expand_variable(t_token *token_list)
 		while (aux->token[i])
 		{
 			try_find_dollar(&aux->token[i]);
+			try_find_tilde(&aux->token[i]);
 			i++;
 		}
 		aux = aux->next;
