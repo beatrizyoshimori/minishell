@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/14 19:29:26 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:11:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,22 @@ void	mark_metachar_inside_quotes(char *prompt)
 	}
 }
 
+static void	mark_metachar_dollar_and_tilde(char *c)
+{
+	if (*c == '$' && *(c + 1) != '$' && *(c + 1) && !ft_iswhitespace(*(c + 1)))
+		*c = DOLLAR_VAR;
+	else if (*c == '~' && ft_iswhitespace(*(c - 1)) && *(c + 1) != '~'
+		&& (!*(c + 1) || ft_iswhitespace(*(c + 1)) || *(c + 1) == '/'))
+		*c = TILDE_VAR;
+}
+
 static void	mark_metachar_dollar(char *c)
 {
 	if (*c == '$' && *(c + 1) != '$' && *(c + 1) && !ft_iswhitespace(*(c + 1)))
 		*c = DOLLAR_VAR;
 }
 
-void	find_metachar_dollar(char *prompt)
+void	find_metachar_dollar_and_tilde(char *prompt)
 {
 	int	i;
 
@@ -69,10 +78,11 @@ void	find_metachar_dollar(char *prompt)
 			}
 		}
 		else
-			mark_metachar_dollar(&prompt[i]);
+			mark_metachar_dollar_and_tilde(&prompt[i]);
 		if (prompt[i] != '\0')
 			i++;
 	}
+	printf("prompt: %s\n", prompt);
 }
 
 void	change_metachar_back(char *prompt)

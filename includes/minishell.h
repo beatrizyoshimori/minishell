@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 21:40:42 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 17:49:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 # define L_RDCT_QUOTES -3
 # define R_RDCT_QUOTES -4
 # define DOLLAR_VAR -5
-# define SPACE_OUT_QUOTES -6
-# define REMOVE_QUOTES -7
+# define TILDE_VAR -6
+# define SPACE_OUT_QUOTES -7
+# define REMOVE_QUOTES -8
 # define LL_MAX 9223372036854775807
 
 typedef struct s_ms
@@ -98,7 +99,7 @@ void	lexer(char **prompt);
 
 // quote.c functions
 void	mark_metachar_inside_quotes(char *prompt);
-void	find_metachar_dollar(char *prompt);
+void	find_metachar_dollar_and_tilde(char *prompt);
 void	change_metachar_back(char *prompt);
 
 // space.c functions
