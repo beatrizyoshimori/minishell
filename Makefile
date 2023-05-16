@@ -16,13 +16,14 @@ BUILT-IN_PATH	=		built-in
 EXPORT_PATH		=		export
 
 LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
-														spaces.c \
-														quotes.c)
+														quotes.c \
+														spaces.c)
 
-PARSER			=		$(addprefix $(PARSER_PATH)/,	parser.c \
+PARSER			=		$(addprefix $(PARSER_PATH)/,	parser_tilde_exp.c \
 														parser_utils.c \
+														parser_var_exp_utils.c \
 														parser_var_exp.c \
-														parser_var_exp_utils.c)
+														parser.c)
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
 
@@ -31,8 +32,8 @@ ENVP			=		$(addprefix $(ENVP_PATH)/,		envp_utils.c)
 EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
 														free_utils.c)
 
-EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export.c \
-														export_utils.c)
+EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export_utils.c \
+														export.c)
 
 BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(EXPORT) \
 														cd.c \
@@ -44,12 +45,12 @@ BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(EXPORT) \
 
 SOURCES			=		non_ms_functions.c \
 						minishell.c \
-						$(LEXER) \
-						$(PARSER) \
-						$(TOKEN) \
+						$(BUILT-IN) \
 						$(ENVP) \
 						$(EXIT) \
-						$(BUILT-IN)
+						$(LEXER) \
+						$(PARSER) \
+						$(TOKEN)
 
 SOURCES_PATH	=		sources
 

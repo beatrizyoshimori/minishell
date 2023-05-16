@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/16 17:49:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:34:48 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <error.h>
+# include <errno.h>
 
 # define PIPE_SPACE -1
 # define PIPE_QUOTES -2
@@ -34,6 +36,7 @@ typedef struct s_ms
 	int		num_tokens;
 	char	**paths;
 	char	**env;
+	char	*home;
 	int		env_nbr_ptr;
 	int		exit_status;
 }	t_ms;
@@ -108,14 +111,17 @@ void	mark_pipe_spaces(char *prompt);
 void	mark_token_spaces(char *prompt);
 
 // parser folder
+// parser_tilde_exp.c functions
+void	try_find_tilde(char **aux_token_i);
+
 // parser_utils.c functions
 void	print_syntax_error(t_token *token_list, char c);
 void	remove_quotes(t_token *token_list);
 
 // parser_var_exp_utils.c functions
 int		get_length_after_dollar(char *token_i, int *j, int *length);
-void	found_variable(char **token_i, char *env_i, int **j, int *length);
-void	not_found_variable(char **token_i, int **j, int *length);
+void	found_variable(char **token_i, char *env_i, int *j, int *length);
+void	not_found_variable(char **token_i, int *j, int *length);
 
 // parser_var_exp.c functions
 void	expand_variable(t_token *token_list);
