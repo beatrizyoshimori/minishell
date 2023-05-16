@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 16:54:58 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:39:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,16 @@ void	exit_command(t_token *token_list)
 	{
 		printf("exit\n");
 		if (exit_status == 2)
-			printf("bash: exit: %s: numeric argument required\n",
+			printf("bilu: exit: %s: numeric argument required\n",
 				token_list->token[1]);
 		rl_clear_history();
 		free_token_list(&token_list);
 		free_ptrptr(g_ms.paths);
 		free_ptrptr(g_ms.env);
+		free(g_ms.home);
 		exit(exit_status);
 	}
 	printf("exit\n");
-	printf("bash: exit: too many arguments\n");
+	printf("bilu: exit: too many arguments\n");
 	return ;
 }
