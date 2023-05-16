@@ -35,6 +35,7 @@ EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export.c \
 														export_utils.c)
 
 BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(EXPORT) \
+														cd.c \
 														echo.c \
 														env.c \
 														exit.c \

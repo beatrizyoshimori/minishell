@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 19:09:04 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 21:40:09 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	make_command(t_token *token_list)
 	aux = token_list;
 	while (aux)
 	{
-		if (!ft_strncmp(aux->token[0], "export", 7))
+		if (!ft_strncmp(aux->token[0], "cd", 2))
+			cd(aux->token);
+		else if (!ft_strncmp(aux->token[0], "export", 7))
 			export(aux->token);
 		else if (!ft_strncmp(aux->token[0], "echo", 5))
 			echo(aux->token);

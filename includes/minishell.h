@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 19:25:02 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/15 21:40:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	check_only_export(char **token);
 
 // export.c functions
 void	export(char **token);
+
+// cd.c functions
+void	cd(char **token);
 
 // echo.c functions
 void	echo(char **token);
