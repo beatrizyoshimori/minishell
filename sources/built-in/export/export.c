@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:52:15 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/15 19:25:02 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:39:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	export(char **token)
 	while (token[i])
 	{
 		if (!check_isname_exp(token[i]))
-			printf("bash: export: '%s': not a valid identifier\n", token[i]);
+			printf("bilu: export: '%s': not a valid identifier\n", token[i]);
 		else
 			update_env(token, i);
 		i++;

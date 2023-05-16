@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:07:38 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/15 20:04:43 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:39:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	unset(char **token)
 	while (token[i])
 	{
 		if (!check_isname_unset(token[i]))
-			printf("bash: export: '%s': not a valid identifier\n", token[i]);
+			printf("bilu: export: '%s': not a valid identifier\n", token[i]);
 		else
 		{
 			j = 0;
