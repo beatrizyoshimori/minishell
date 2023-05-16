@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:06:04 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/15 21:49:15 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:02:25 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,24 @@ static char	*get_home(void)
 
 void	cd(char **token)
 {
+	char	*path;
+
 	if (!token[1])
 	{
-		chdir(get_home());
+		path = get_home();
+		if (!path)
+		{
+			printf("bilu: cd: HOME not set\n");
+			return ;
+		}
+		if (chdir(path) == -1)
+			printf("bilu: cd: %s: %s\n", path, strerror(errno));
 	}
+	else if (!token[2])
+	{
+		if (chdir(token[1]) == -1)
+			printf("bilu: cd: %s: %s\n", token[1], strerror(errno));
+	}
+	else
+		printf("bilu: cd: too many arguments\n");
 }
