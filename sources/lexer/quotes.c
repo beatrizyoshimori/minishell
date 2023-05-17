@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/16 18:23:38 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 22:13:52 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,26 @@ void	mark_metachar_inside_quotes(char *prompt)
 	}
 }
 
-static void	mark_metachar_dollar_and_tilde(char *c)
+static void	mark_metachar_dollar_and_tilde(char *prompt, int i)
 {
-	if (*c == '$' && *(c + 1) != '$' && *(c + 1) && !ft_iswhitespace(*(c + 1)))
-		*c = DOLLAR_VAR;
-	else if (*c == '~' && ft_iswhitespace(*(c - 1)) && *(c + 1) != '~'
-		&& (!*(c + 1) || ft_iswhitespace(*(c + 1)) || *(c + 1) == '/'))
-		*c = TILDE_VAR;
+	if (prompt[i] == '$' && prompt[i + 1] != '$'
+		&& prompt[i + 1] && !ft_iswhitespace(prompt[i + 1]))
+		prompt[i] = DOLLAR_VAR;
+	else if (prompt[i] == '~' && (i == 0 || ft_iswhitespace(prompt[i - 1]))
+		&& prompt[i + 1] != '~' && (!prompt[i + 1]
+			|| ft_iswhitespace(prompt[i + 1]) || prompt[i + 1] == '/'))
+		prompt[i] = TILDE_VAR;
+	else if (prompt[i] == '~' && prompt[i - 1] == '=' && prompt[i + 1] != '~'
+		&& (!prompt[i + 1] || ft_iswhitespace(prompt[i + 1])
+			|| prompt[i + 1] == '/'))
+		prompt[i] = TILDE_VAR_EXPORT;
 }
 
-static void	mark_metachar_dollar(char *c)
+static void	mark_metachar_dollar(char *prompt, int i)
 {
-	if (*c == '$' && *(c + 1) != '$' && *(c + 1) && !ft_iswhitespace(*(c + 1)))
-		*c = DOLLAR_VAR;
+	if (prompt[i] == '$' && prompt[i + 1] != '$' && prompt[i + 1]
+		&& !ft_iswhitespace(prompt[i + 1]))
+		prompt[i] = DOLLAR_VAR;
 }
 
 void	find_metachar_dollar_and_tilde(char *prompt)
@@ -73,12 +80,12 @@ void	find_metachar_dollar_and_tilde(char *prompt)
 			i++;
 			while (prompt[i] && prompt[i] != '\"')
 			{
-				mark_metachar_dollar(&prompt[i]);
+				mark_metachar_dollar(prompt, i);
 				i++;
 			}
 		}
 		else
-			mark_metachar_dollar_and_tilde(&prompt[i]);
+			mark_metachar_dollar_and_tilde(prompt, i);
 		if (prompt[i] != '\0')
 			i++;
 	}

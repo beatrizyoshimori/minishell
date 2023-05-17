@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 18:40:02 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/16 19:12:19 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/16 22:13:16 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	expand_tilde(char **token_i, char *home, int *j)
 
 	aux = (char *)ft_calloc(ft_strlen(*token_i)
 			+ ft_strlen(home), sizeof(char));
+	ft_strlcpy(aux, *token_i, *j + 1);
 	ft_strlcpy(&aux[*j], home, ft_strlen(home) + 1);
 	ft_strlcpy(&aux[*j + ft_strlen(home)],
 		&(*token_i)[*j + 1], ft_strlen(*token_i) - *j);
@@ -48,15 +49,18 @@ static void	try_find_home(char **token_i, int *j)
 	free(home);
 }
 
-void	try_find_tilde(char **aux_token_i)
+void	try_find_tilde(char **aux_token_i, int exp)
 {
 	int	j;
 
 	j = 0;
 	while ((*aux_token_i)[j])
 	{
-		if ((*aux_token_i)[j] == TILDE_VAR)
+		if ((*aux_token_i)[j] == TILDE_VAR
+			|| ((*aux_token_i)[j] == TILDE_VAR_EXPORT && exp == 1))
 			try_find_home(aux_token_i, &j);
+		else if ((*aux_token_i)[j] == TILDE_VAR_EXPORT && exp == 0)
+			(*aux_token_i)[j] = '~';
 		if ((*aux_token_i)[j])
 			j++;
 	}
