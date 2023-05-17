@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 18:40:02 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/16 22:13:16 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:42:21 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,32 @@ static void	expand_tilde(char **token_i, char *home, int *j)
 	free(aux);
 }
 
+static int	check_isname_tilde(char *token_i, int *j)
+{
+	int	i;
+
+	if (token_i[0] != '_' && !ft_isalpha(token_i[0]))
+		return (0);
+	i = 1;
+	while (i < *j - 1)
+	{
+		if (token_i[i] != '_' && !ft_isalnum(token_i[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static void	try_find_home(char **token_i, int *j)
 {
 	int		i;
 	char	*home;
 
+	if (*j != 0 && !check_isname_tilde(*token_i, j))
+	{
+		(*token_i)[*j] = '~';
+		return ;
+	}
 	i = 0;
 	while (g_ms.env[i])
 	{
@@ -49,18 +70,15 @@ static void	try_find_home(char **token_i, int *j)
 	free(home);
 }
 
-void	try_find_tilde(char **aux_token_i, int exp)
+void	try_find_tilde(char **aux_token_i)
 {
 	int	j;
 
 	j = 0;
 	while ((*aux_token_i)[j])
 	{
-		if ((*aux_token_i)[j] == TILDE_VAR
-			|| ((*aux_token_i)[j] == TILDE_VAR_EXPORT && exp == 1))
+		if ((*aux_token_i)[j] == TILDE_VAR)
 			try_find_home(aux_token_i, &j);
-		else if ((*aux_token_i)[j] == TILDE_VAR_EXPORT && exp == 0)
-			(*aux_token_i)[j] = '~';
 		if ((*aux_token_i)[j])
 			j++;
 	}

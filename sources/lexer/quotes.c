@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/16 22:13:52 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:48:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,10 @@ static void	mark_metachar_dollar_and_tilde(char *prompt, int i)
 	if (prompt[i] == '$' && prompt[i + 1] != '$'
 		&& prompt[i + 1] && !ft_iswhitespace(prompt[i + 1]))
 		prompt[i] = DOLLAR_VAR;
-	else if (prompt[i] == '~' && (i == 0 || ft_iswhitespace(prompt[i - 1]))
-		&& prompt[i + 1] != '~' && (!prompt[i + 1]
-			|| ft_iswhitespace(prompt[i + 1]) || prompt[i + 1] == '/'))
+	else if (prompt[i] == '~' && (i == 0 || ft_iswhitespace(prompt[i - 1])
+			|| prompt[i - 1] == '=') && (ft_iswhitespace(prompt[i + 1])
+			|| !prompt[i + 1] || prompt[i + 1] == '/' || prompt[i + 1] == ':'))
 		prompt[i] = TILDE_VAR;
-	else if (prompt[i] == '~' && prompt[i - 1] == '=' && prompt[i + 1] != '~'
-		&& (!prompt[i + 1] || ft_iswhitespace(prompt[i + 1])
-			|| prompt[i + 1] == '/'))
-		prompt[i] = TILDE_VAR_EXPORT;
 }
 
 static void	mark_metachar_dollar(char *prompt, int i)

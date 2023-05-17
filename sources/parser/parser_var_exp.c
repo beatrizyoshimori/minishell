@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/16 22:05:22 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:13:22 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	expand_variable(t_token *token_list)
 		while (aux->token[i])
 		{
 			try_find_dollar(&aux->token[i]);
-			try_find_tilde(&aux->token[i], exp);
+			try_find_tilde(&aux->token[i]);
 			i++;
 		}
 		aux = aux->next;

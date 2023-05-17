@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/16 21:58:26 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:13:09 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@
 # define R_RDCT_QUOTES -4
 # define DOLLAR_VAR -5
 # define TILDE_VAR -6
-# define TILDE_VAR_EXPORT -7
-# define SPACE_OUT_QUOTES -8
-# define REMOVE_QUOTES -9
+# define SPACE_OUT_QUOTES -7
+# define REMOVE_QUOTES -8
 # define LL_MAX 9223372036854775807
 
 typedef struct s_ms
@@ -113,7 +112,7 @@ void	mark_token_spaces(char *prompt);
 
 // parser folder
 // parser_tilde_exp.c functions
-void	try_find_tilde(char **aux_token_i, int exp);
+void	try_find_tilde(char **aux_token_i);
 
 // parser_utils.c functions
 void	print_syntax_error(t_token *token_list, char c);
