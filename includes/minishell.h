@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/17 16:13:09 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:40:29 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	unset(char **token);
 
 // envp_utils folder
 // envp utils
+int		dup_env(void);
 void	get_paths(char **envp);
 void	copy_envp(char **envp);
 
