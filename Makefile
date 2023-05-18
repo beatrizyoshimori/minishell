@@ -1,19 +1,21 @@
 
 NAME			=		minishell
 
-LEXER_PATH		=		lexer
+BUILT-IN_PATH	=		built-in
 
-PARSER_PATH		=		parser
+EXPORT_PATH		=		export
 
-TOKEN_PATH		=		token
+CD_PATH			=		cd
 
 ENVP_PATH		=		envp_utils
 
 EXIT_PATH		=		exit_free
 
-BUILT-IN_PATH	=		built-in
+LEXER_PATH		=		lexer
 
-EXPORT_PATH		=		export
+PARSER_PATH		=		parser
+
+TOKEN_PATH		=		token
 
 LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
 														quotes.c \
@@ -35,8 +37,11 @@ EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
 EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export_utils.c \
 														export.c)
 
-BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(EXPORT) \
-														cd.c \
+CD				=		$(addprefix $(CD_PATH)/,		cd_utils.c \
+														cd.c)
+
+BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(CD) \
+														$(EXPORT) \
 														echo.c \
 														env.c \
 														exit.c \
@@ -93,7 +98,8 @@ $(OBJECTS_PATH):
 						$(OBJECTS_PATH)/$(ENVP_PATH) \
 						$(OBJECTS_PATH)/$(EXIT_PATH) \
 						$(OBJECTS_PATH)/$(BUILT-IN_PATH) \
-						$(OBJECTS_PATH)/$(BUILT-IN_PATH)/$(EXPORT_PATH)
+						$(OBJECTS_PATH)/$(BUILT-IN_PATH)/$(EXPORT_PATH) \
+						$(OBJECTS_PATH)/$(BUILT-IN_PATH)/$(CD_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 						@$(CC) $(C_FLAGS) -c $< -o $@

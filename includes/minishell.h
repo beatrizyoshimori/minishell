@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/18 17:42:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/18 18:19:57 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void	check_only_export(char **token);
 
 // export.c functions
 void	export(char **token);
+
+// cd folder
+// cd_utils.c functions
+void	update_pwd_or_oldpwd(char *pwd, char *variable, int length);
+char	*get_path(char *variable, int length);
 
 // cd.c functions
 void	cd(char **token);
