@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:06:04 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/18 18:28:03 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:52:45 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	cd_parameter_update(char *old_pwd, char *new_pwd, int dash)
 {
 	new_pwd = getcwd(NULL, 0);
 	if (dash)
-		new_pwdprintf("%s\n", new_pwd);
+		printf("%s\n", new_pwd);
 	update_pwd_or_oldpwd(new_pwd, "PWD=", 4);
 	update_pwd_or_oldpwd(old_pwd, "OLDPWD=", 7);
 	free(new_pwd);
