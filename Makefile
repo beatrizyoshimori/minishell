@@ -50,6 +50,7 @@ BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(CD) \
 
 SOURCES			=		non_ms_functions.c \
 						minishell.c \
+						redirect.c \
 						$(BUILT-IN) \
 						$(ENVP) \
 						$(EXIT) \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/18 18:19:57 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/20 18:19:49 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 # define PIPE_SPACE -1
 # define PIPE_QUOTES -2
@@ -137,6 +140,9 @@ void	parser(t_token *token_list);
 // token folder
 // token_utils.c functions
 void	set_tokens(char **tokens, t_token **token_list);
+
+// redirect.c functions
+void	redirect_output(t_token *token_list);
 
 // non ms functions
 void	print_list(t_token **token_list);
