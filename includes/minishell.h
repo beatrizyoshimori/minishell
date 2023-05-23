@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/20 18:19:49 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/22 22:00:52 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 
 # define PIPE_SPACE -1
@@ -32,6 +33,9 @@
 # define SPACE_OUT_QUOTES -7
 # define REMOVE_QUOTES -8
 # define LL_MAX 9223372036854775807
+# define REDIRECT_INPUT 2
+# define REDIRECT_OUTPUT 3
+# define REDIRECT_BOTH 6
 
 typedef struct s_ms
 {
@@ -39,6 +43,7 @@ typedef struct s_ms
 	char	**paths;
 	char	**env;
 	char	*home;
+	int		*pipe_fd;
 	int		env_nbr_ptr;
 	int		exit_status;
 }	t_ms;
@@ -47,7 +52,7 @@ typedef struct s_token
 {
 	char			**token;
 	char			*pathname;
-	char			type;
+	int				redirect;
 	int				fd[2];
 	pid_t			pid;
 	struct s_token	*next;
@@ -87,6 +92,10 @@ void	pwd(void);
 
 // unset.c functions
 void	unset(char **token);
+
+// execution folder
+// execution.c functions
+void	start_processes(t_token *token_list);
 
 // envp_utils folder
 // envp utils
@@ -137,12 +146,12 @@ void	expand_variable(t_token *token_list);
 // parser.c functions
 void	parser(t_token *token_list);
 
+// redirect.c functions
+void	redirect_output(t_token *token_list);
+
 // token folder
 // token_utils.c functions
 void	set_tokens(char **tokens, t_token **token_list);
-
-// redirect.c functions
-void	redirect_output(t_token *token_list);
 
 // non ms functions
 void	print_list(t_token **token_list);
