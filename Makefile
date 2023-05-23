@@ -17,6 +17,8 @@ PARSER_PATH		=		parser
 
 TOKEN_PATH		=		token
 
+EXECUTION_PATH	=		execution
+
 LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
 														quotes.c \
 														spaces.c)
@@ -25,9 +27,12 @@ PARSER			=		$(addprefix $(PARSER_PATH)/,	parser_tilde_exp.c \
 														parser_utils.c \
 														parser_var_exp_utils.c \
 														parser_var_exp.c \
-														parser.c)
+														parser.c \
+														redirect.c)
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
+
+EXECUTION		=		$(addprefix $(EXECUTION_PATH)/,	execution.c)
 
 ENVP			=		$(addprefix $(ENVP_PATH)/,		envp_utils.c)
 
@@ -50,13 +55,13 @@ BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(CD) \
 
 SOURCES			=		non_ms_functions.c \
 						minishell.c \
-						redirect.c \
 						$(BUILT-IN) \
 						$(ENVP) \
 						$(EXIT) \
 						$(LEXER) \
 						$(PARSER) \
-						$(TOKEN)
+						$(TOKEN) \
+						$(EXECUTION)
 
 SOURCES_PATH	=		sources
 
@@ -98,6 +103,7 @@ $(OBJECTS_PATH):
 						$(OBJECTS_PATH)/$(TOKEN_PATH) \
 						$(OBJECTS_PATH)/$(ENVP_PATH) \
 						$(OBJECTS_PATH)/$(EXIT_PATH) \
+						$(OBJECTS_PATH)/$(EXECUTION_PATH) \
 						$(OBJECTS_PATH)/$(BUILT-IN_PATH) \
 						$(OBJECTS_PATH)/$(BUILT-IN_PATH)/$(EXPORT_PATH) \
 						$(OBJECTS_PATH)/$(BUILT-IN_PATH)/$(CD_PATH)
