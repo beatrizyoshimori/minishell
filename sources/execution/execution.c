@@ -52,7 +52,7 @@ static void	set_fd(t_token *token, int i)
 	if (token->redirect % 2 == 0)
 		dup2(token->fd[0], 0);
 	else if (i > 0)
-		dup2(g_ms.pipe_fd[2 * i], 0);
+		dup2(g_ms.pipe_fd[2 * i - 2], 0);
 	if (token->redirect % 3 == 0)
 		dup2(token->fd[1], 1);
 	else if (i < (g_ms.num_tokens + 1) / 2 - 1)
@@ -127,7 +127,6 @@ void	start_processes(t_token *token_list)
 	pid = (pid_t *)ft_calloc(num_proc + 1, sizeof(pid_t));
 	aux = token_list;
 	i = 0;
-		printf("oi\n");
 	while (i < num_proc)
 	{
 		pid[i] = fork();
@@ -142,9 +141,10 @@ void	start_processes(t_token *token_list)
 			}
 			else
 				set_pathname(aux);
-			printf("path: %s\n", aux->pathname);
 			if (aux->token[0])
 				exec_command(token_list, aux);
+			close_fd(token_list);
+			// exit(0);
 		}
 		i++;
 		if (i != num_proc)
@@ -152,7 +152,7 @@ void	start_processes(t_token *token_list)
 	}
 	close_fd(token_list);
 	i = 0;
-	while (i < num_proc - 1)
+	while (i < num_proc)
 	{
 		waitpid(pid[i], NULL, 0);
 		i++;
