@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/22 22:00:52 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/24 22:06:21 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define SPACE_OUT_QUOTES -7
 # define REMOVE_QUOTES -8
 # define LL_MAX 9223372036854775807
+# define NO_REDIRECT 1
 # define REDIRECT_INPUT 2
 # define REDIRECT_OUTPUT 3
 # define REDIRECT_BOTH 6
@@ -43,7 +44,7 @@ typedef struct s_ms
 	char	**paths;
 	char	**env;
 	char	*home;
-	int		*pipe_fd;
+	int		prev_fd;
 	int		env_nbr_ptr;
 	int		exit_status;
 }	t_ms;
