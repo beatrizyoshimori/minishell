@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/24 21:24:48 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:18:21 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,31 @@ void	make_command(t_token *token_list)
 	}
 }
 
+static void	exec_command(t_token *token_list)
+{
+	if (!ft_strncmp(token_list->token[0], "cd", 3))
+		cd(token_list->token);
+	else if (!ft_strncmp(token_list->token[0], "export", 7))
+		export(token_list->token);
+	else if (!ft_strncmp(token_list->token[0], "echo", 5))
+		echo(token_list->token);
+	else if (!ft_strncmp(token_list->token[0], "env", 4))
+		env(token_list->token);
+	else if (!ft_strncmp(token_list->token[0], "exit", 5))
+		exit_command(token_list);
+	else if (!ft_strncmp(token_list->token[0], "pwd", 4))
+		pwd();
+	else if (!ft_strncmp(token_list->token[0], "unset", 6))
+		unset(token_list->token);
+	else
+		start_processes(token_list);
+}
+
 void	create_prompt(t_token **token_list)
 {
 	char	*prompt;
 	char	**tokens;
 
-	prompt = NULL;
-	tokens = NULL;
 	while (1)
 	{
 		prompt = readline("bilu> ");
@@ -69,18 +87,14 @@ void	create_prompt(t_token **token_list)
 		lexer(&prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
 		set_tokens(tokens, token_list);
-		//printf("tokens: %i\n", g_ms.num_tokens);
 		free(prompt);
 		free_ptrptr(tokens);
 		parser(*token_list);
-		print_list(token_list);
-		if (!ft_strncmp((*token_list)->token[0], "exit", 5) && !(*token_list)->next)
-			break ;
-		start_processes(*token_list);
+		exec_command(*token_list);
 		free_token_list(token_list);
 	}
-	exit_command(*token_list);
 }
+		//print_list(token_list);
 
 int	main(int argc, char **argv, char **envp)
 {
