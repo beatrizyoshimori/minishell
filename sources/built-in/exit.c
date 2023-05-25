@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/24 20:07:54 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:19:07 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ static long long	get_exit_status(t_token *token_list)
 	{
 		status = check_first_parameter(token_list, &flag);
 		if (token_list->token[2] && status != (unsigned long long)LL_MAX + 2)
-			status = 1;
+			status = -1;
 		else if (status == (unsigned long long)LL_MAX + 2)
 		{
-			status = 2;
+			status = -2;
 			flag = 1;
 		}
 	}
@@ -67,24 +67,28 @@ static long long	get_exit_status(t_token *token_list)
 
 void	exit_command(t_token *token_list)
 {
-	long long	exit_status;
-
-	exit_status = 0;
-	exit_status = get_exit_status(token_list);
-	if (exit_status != 1)
+	g_ms.exit_status = 0;
+	g_ms.exit_status = get_exit_status(token_list);
+	if (g_ms.exit_status != -1)
 	{
-		printf("exit\n");
-		if (exit_status == 2)
-			printf("bilu: exit: %s: numeric argument required\n",
-				token_list->token[1]);
+		ft_putstr_fd("exit\n", 1);
+		if (g_ms.exit_status == -2)
+		{
+			ft_putstr_fd("bilu: exit:", 2);
+			ft_putstr_fd(token_list->token[1], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd("numeric argument required\n", 2);
+			g_ms.exit_status = 2;
+		}
 		rl_clear_history();
 		free_token_list(&token_list);
 		free_ptrptr(g_ms.paths);
 		free_ptrptr(g_ms.env);
 		free(g_ms.home);
-		exit(exit_status);
+		exit(g_ms.exit_status);
 	}
-	printf("exit\n");
-	printf("bilu: exit: too many arguments\n");
+	g_ms.exit_status = 1;
+	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("bilu: exit: too many arguments\n", 2);
 	return ;
 }
