@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/22 22:17:32 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/24 19:20:56 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	redirect_output(t_token *token_list)
 				else
 					aux->fd[1] = open(aux->token[i + 1],
 							O_RDWR | O_CREAT | O_APPEND, 0644);
-				if (aux->redirect == 1)
+				if (aux->redirect == NO_REDIRECT)
 					aux->redirect = REDIRECT_OUTPUT;
 				else if (aux->redirect == REDIRECT_INPUT)
 					aux->redirect = REDIRECT_BOTH;
@@ -90,7 +90,7 @@ void	redirect_input(t_token *token_list)
 				}
 				else
 					//heredoc
-				if (aux->redirect == 1)
+				if (aux->redirect == NO_REDIRECT)
 					aux->redirect = REDIRECT_INPUT;
 				else if (aux->redirect == REDIRECT_OUTPUT)
 					aux->redirect = REDIRECT_BOTH;
