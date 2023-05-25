@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/22 22:12:14 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:08:06 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	check_ctrl_d(char *prompt)
 		free_ptrptr(g_ms.paths);
 		free_ptrptr(g_ms.env);
 		free(g_ms.home);
-		free(g_ms.pipe_fd);
 		exit (0);
 	}
 }

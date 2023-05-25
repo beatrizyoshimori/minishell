@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:12:43 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/22 22:12:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:07:41 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	copy_envp(char **envp)
 		if (!ft_strncmp(envp[i], "HOME=", 5))
 		{
 			free(g_ms.home);
-			free(g_ms.pipe_fd);
 			g_ms.home = ft_strdup(envp[i] + 5);
 		}
 		i++;
