@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/22 22:11:46 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/24 20:07:54 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	exit_command(t_token *token_list)
 		free_ptrptr(g_ms.paths);
 		free_ptrptr(g_ms.env);
 		free(g_ms.home);
-		free(g_ms.pipe_fd);
 		exit(exit_status);
 	}
 	printf("exit\n");
