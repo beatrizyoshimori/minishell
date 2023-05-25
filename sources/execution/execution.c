@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/24 22:09:48 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:12:45 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,33 @@ static void	create_pipes(t_token *token_list)
 	}
 }
 
-static void	set_fd(t_token *token, int i)
+static void	set_fd(t_token *token, int i, int prev_fd)
 {
 	if (token->redirect % REDIRECT_INPUT == 0)
 		dup2(token->fd[0], 0);
 	else if (i > 0)
-		dup2(g_ms.prev_fd, 0);
+		dup2(prev_fd, 0);
 	if (token->redirect % REDIRECT_OUTPUT == 0)
 		dup2(token->fd[1], 1);
 	else if (i < (g_ms.num_tokens + 1) / 2 - 1)
 		dup2(token->next->fd[1], 1);
 }
 
-static void	exec_command(t_token *token_list, t_token *token)
+static void	exit_builtin(t_token *token_list)
 {
-	if (!ft_strncmp(token->token[0], "cd", 2))
+	close(0);
+	close(1);
+	rl_clear_history();
+	free_token_list(&token_list);
+	free_ptrptr(g_ms.paths);
+	free_ptrptr(g_ms.env);
+	free(g_ms.home);
+	exit(g_ms.exit_status);
+}
+
+static void	exec_command_child(t_token *token_list, t_token *token)
+{
+	if (!ft_strncmp(token->token[0], "cd", 3))
 		cd(token->token);
 	else if (!ft_strncmp(token->token[0], "export", 7))
 		export(token->token);
@@ -74,7 +86,7 @@ static void	exec_command(t_token *token_list, t_token *token)
 		unset(token->token);
 	else
 		execve(token->pathname, token->token, g_ms.env);
-	exit_command(token_list);
+	exit_builtin(token_list);
 }
 
 // void	check_execution_permission(char *pathname, t_data *data)
@@ -117,6 +129,8 @@ void	start_processes(t_token *token_list)
 {
 	int		i;
 	int		num_proc;
+	int		prev_fd;
+	int		status;
 	pid_t	*pid;
 	t_token	*aux;
 	
@@ -128,14 +142,12 @@ void	start_processes(t_token *token_list)
 	while (i < num_proc)
 	{
 		if (aux->next)
-			g_ms.prev_fd = aux->next->fd[0];
+			prev_fd = aux->next->fd[0];
 		pid[i] = fork();
 		if (!pid[i])
 		{
-			set_fd(aux, i);
-			//printf("prev fd: %i\n", g_ms.prev_fd);
+			set_fd(aux, i, prev_fd);
 			close_fd(token_list);
-			close(g_ms.prev_fd);
 			if (access(aux->token[0], F_OK) == 0)
 			{
 				// check_execution_permission(aux->token[0]);
@@ -145,7 +157,7 @@ void	start_processes(t_token *token_list)
 				set_pathname(aux);
 			free(pid);
 			if (aux->token[0])
-				exec_command(token_list, aux);
+				exec_command_child(token_list, aux);
 		}
 		i++;
 		if (i != num_proc)
@@ -155,7 +167,9 @@ void	start_processes(t_token *token_list)
 	i = 0;
 	while (i < num_proc)
 	{
-		waitpid(pid[i], NULL, 0);
+		waitpid(pid[i], &status, 0);
+		if (WIFEXITED(status))
+			g_ms.exit_status = WEXITSTATUS(status);
 		i++;
 	}
 	free(pid);
