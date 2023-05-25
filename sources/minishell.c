@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/22 21:49:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:24:48 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,17 @@ void	create_prompt(t_token **token_list)
 		lexer(&prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
 		set_tokens(tokens, token_list);
-		printf("tokens: %i\n", g_ms.num_tokens);
+		//printf("tokens: %i\n", g_ms.num_tokens);
 		free(prompt);
 		free_ptrptr(tokens);
 		parser(*token_list);
 		print_list(token_list);
+		if (!ft_strncmp((*token_list)->token[0], "exit", 5) && !(*token_list)->next)
+			break ;
 		start_processes(*token_list);
 		free_token_list(token_list);
 	}
+	exit_command(*token_list);
 }
 
 int	main(int argc, char **argv, char **envp)
