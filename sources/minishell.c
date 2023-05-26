@@ -20,7 +20,7 @@ void	signal_handler(int signal)
 	{
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -73,10 +73,11 @@ void	create_prompt(t_token **token_list)
 		free(prompt);
 		free_ptrptr(tokens);
 		parser(*token_list);
-		print_list(token_list);
-		if (!ft_strncmp((*token_list)->token[0], "exit", 5) && !(*token_list)->next)
+		// print_list(token_list);
+		if ((*token_list)->token[0] && !ft_strncmp((*token_list)->token[0], "exit", 5) && !(*token_list)->next)
 			break ;
-		start_processes(*token_list);
+		if ((*token_list)->token[0])
+			start_processes(*token_list);
 		free_token_list(token_list);
 	}
 	exit_command(*token_list);
