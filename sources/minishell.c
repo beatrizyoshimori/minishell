@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 18:27:29 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:43:08 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,8 @@ void	signal_handler(int signal)
 	{
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
-	}
-}
-
-void	make_command(t_token *token_list)
-{
-	t_token	*aux;
-
-	aux = token_list;
-	while (aux)
-	{
-		if (aux->token[0])
-		{
-			if (!ft_strncmp(aux->token[0], "cd", 2))
-				cd(aux->token);
-			else if (!ft_strncmp(aux->token[0], "export", 7))
-				export(aux->token);
-			else if (!ft_strncmp(aux->token[0], "echo", 5))
-				echo(aux->token);
-			else if (!ft_strncmp(aux->token[0], "env", 4))
-				env(aux->token);
-			else if (!ft_strncmp(aux->token[0], "exit", 5))
-				exit_command(token_list);
-			else if (!ft_strncmp(aux->token[0], "pwd", 4))
-				pwd();
-			else if (!ft_strncmp(aux->token[0], "unset", 6))
-				unset(aux->token);
-		}
-		aux = aux->next;
 	}
 }
 
@@ -96,11 +68,8 @@ void	create_prompt(t_token **token_list)
 		free_ptrptr(tokens);
 		parser(*token_list);
 		// print_list(token_list);
-		if ((*token_list)->token[0] && !ft_strncmp((*token_list)->token[0], "exit", 5) && !(*token_list)->next)
-			break ;
 		if ((*token_list)->token[0])
-			start_processes(*token_list);
-		exec_command(*token_list);
+			exec_command(*token_list);
 		free_token_list(token_list);
 	}
 }
