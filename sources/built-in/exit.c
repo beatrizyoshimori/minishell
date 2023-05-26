@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/25 18:19:07 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:10:02 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	exit_command(t_token *token_list)
 		ft_putstr_fd("exit\n", 1);
 		if (g_ms.exit_status == -2)
 		{
-			ft_putstr_fd("bilu: exit:", 2);
+			ft_putstr_fd("bilu: exit: ", 2);
 			ft_putstr_fd(token_list->token[1], 2);
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd("numeric argument required\n", 2);
@@ -82,6 +82,7 @@ void	exit_command(t_token *token_list)
 		}
 		rl_clear_history();
 		free_token_list(&token_list);
+		free(g_ms.pipe_fd);
 		free_ptrptr(g_ms.paths);
 		free_ptrptr(g_ms.env);
 		free(g_ms.home);
