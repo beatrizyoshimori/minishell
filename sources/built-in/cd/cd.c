@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:06:04 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/25 20:09:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:47:53 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	cd_parameter_update(char *old_pwd, char *new_pwd, int dash)
 
 static void	print_error_cd(char *token_i)
 {
-	ft_putstr_fd("bilu: cd:", 2);
+	ft_putstr_fd("bilu: cd: ", 2);
 	ft_putstr_fd(token_i, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(strerror(errno), 2);
@@ -76,7 +76,7 @@ static void	cd_home(char *old_pwd)
 	}
 	if (chdir(new_pwd) == -1)
 	{
-		ft_putstr_fd("bilu: cd:", 2);
+		ft_putstr_fd("bilu: cd: ", 2);
 		ft_putstr_fd(new_pwd, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);

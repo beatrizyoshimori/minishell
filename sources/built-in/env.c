@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:37:22 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/25 18:19:52 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:47:29 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	env(char **token)
 	}
 	else if (!ft_strncmp(token[0], "env", 4))
 	{
-		ft_putstr_fd("bilu: env:", 2);
+		ft_putstr_fd("bilu: env: ", 2);
 		ft_putstr_fd(token[1], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd("No such file or directory\n", 2);

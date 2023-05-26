@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:52:15 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/25 18:00:19 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:48:00 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	export(char **token)
 	{
 		if (!check_isname_exp(token[i]))
 		{
-			ft_putstr_fd("bilu: export:", 2);
+			ft_putstr_fd("bilu: export: ", 2);
 			ft_putstr_fd(token[1], 2);
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd("not a valid identifier\n", 2);

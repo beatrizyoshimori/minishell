@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:07:38 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/25 18:07:46 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:47:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	remove_if_exists(char *token_i, int j, int length)
 
 static void	print_error_unset(char *token_i)
 {
-	ft_putstr_fd("bilu: unset:", 2);
+	ft_putstr_fd("bilu: unset: ", 2);
 	ft_putstr_fd(token_i, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("not a valid identifier\n", 2);
