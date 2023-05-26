@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 17:06:44 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:29:47 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void	expand_variable(t_token *token_list);
 void	parser(t_token *token_list);
 
 // redirect.c functions
+void	redirect_input(t_token *token_list);
 void	redirect_output(t_token *token_list);
 
 // token folder
