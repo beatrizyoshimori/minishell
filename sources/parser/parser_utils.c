@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/15 17:37:30 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:30:35 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,14 @@ static void	remove_quotes_aux(char **token_i)
 	char	*aux;
 	char	**split;
 
-	aux = (char *)ft_calloc(1, sizeof(char));
 	split = ft_split(*token_i, REMOVE_QUOTES);
+	if (!split[0])
+	{
+		free(*token_i);
+		*token_i = (char *)ft_calloc(1, sizeof(char));
+		return ;
+	}
+	aux = (char *)ft_calloc(1, sizeof(char));
 	i = 0;
 	while (split[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:10:15 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/24 20:29:04 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:51:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	echo(char **token)
 	int	i;
 	int	flag;
 
+	g_ms.exit_status = 0;
 	i = 1;
 	flag = 0;
 	if (token[i] && check_n_flag(token[i]))
@@ -41,14 +42,14 @@ void	echo(char **token)
 		flag = 1;
 	}
 	if (!token[i] && !flag)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	while (token[i])
 	{
-		printf("%s", token[i]);
+		ft_putstr_fd(token[i], 1);
 		i++;
 		if (token[i])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		else if (!flag)
-			printf("\n");
+			ft_putstr_fd("\n", 1);
 	}
 }
