@@ -99,6 +99,7 @@ void	parser(t_token *token_list)
 	check_redirections_error(token_list);
 	check_quotes_error(token_list);
 	expand_variable(token_list);
+	redirect_input(token_list);
 	redirect_output(token_list);
 	remove_quotes(token_list);
 }
