@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/17 16:13:22 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:49:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,11 @@ static void	try_find_dollar(char **aux_token_i)
 void	expand_variable(t_token *token_list)
 {
 	int		i;
-	int		exp;
 	t_token	*aux;
 
-	exp = 0;
 	aux = token_list;
 	while (aux)
 	{
-		if (!ft_strncmp(aux->token[0], "export", 7))
-			exp = 1;
 		i = 0;
 		while (aux->token[i])
 		{
