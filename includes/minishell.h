@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/25 18:30:27 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:06:44 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@
 typedef struct s_ms
 {
 	int			num_tokens;
+	int			env_nbr_ptr;
+	int			*pipe_fd;
 	char		**paths;
 	char		**env;
 	char		*home;
-	int			env_nbr_ptr;
 	long long	exit_status;
 }	t_ms;
 

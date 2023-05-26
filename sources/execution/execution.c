@@ -6,54 +6,57 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/25 18:12:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:10:08 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_fd(t_token *token_list)
+static void	close_fd(t_token *token_list)
 {
+	int		i;
 	t_token	*aux;
 
 	aux = token_list;
 	while (aux)
 	{
-		if (aux->redirect % REDIRECT_INPUT == 0)
+		if (aux->redirect % 2 == 0)
 			close(aux->fd[0]);
-		if (aux->redirect % REDIRECT_OUTPUT == 0)
+		if (aux->redirect % 3 == 0)
 			close(aux->fd[1]);
-		if (aux->token[0][0] == '|')
-		{
-			close(aux->fd[0]);
-			close(aux->fd[1]);
-		}
 		aux = aux->next;
 	}
-}
-
-static void	create_pipes(t_token *token_list)
-{
-	t_token *aux;
-
-	aux = token_list->next;
-	while (aux)
+	i = 0;
+	while (i < g_ms.num_tokens - 1)
 	{
-		pipe(aux->fd);
-		aux = aux->next->next;
+		close(g_ms.pipe_fd[i]);
+		i++;
 	}
 }
 
-static void	set_fd(t_token *token, int i, int prev_fd)
+static void	create_pipes(void)
 {
-	if (token->redirect % REDIRECT_INPUT == 0)
+	int	i;
+
+	g_ms.pipe_fd = (int *)ft_calloc(g_ms.num_tokens, sizeof(int));
+	i = 0;
+	while (i < g_ms.num_tokens - 1)
+	{
+		pipe(&g_ms.pipe_fd[i]);
+		i += 2;
+	}
+}
+
+static void	set_fd(t_token *token, int i)
+{
+	if (token->redirect % 2 == 0)
 		dup2(token->fd[0], 0);
 	else if (i > 0)
-		dup2(prev_fd, 0);
-	if (token->redirect % REDIRECT_OUTPUT == 0)
+		dup2(g_ms.pipe_fd[2 * (i - 1)], 0);
+	if (token->redirect % 3 == 0)
 		dup2(token->fd[1], 1);
 	else if (i < (g_ms.num_tokens + 1) / 2 - 1)
-		dup2(token->next->fd[1], 1);
+		dup2(g_ms.pipe_fd[2 * i + 1], 1);
 }
 
 static void	exit_builtin(t_token *token_list)
@@ -62,6 +65,7 @@ static void	exit_builtin(t_token *token_list)
 	close(1);
 	rl_clear_history();
 	free_token_list(&token_list);
+	free(g_ms.pipe_fd);
 	free_ptrptr(g_ms.paths);
 	free_ptrptr(g_ms.env);
 	free(g_ms.home);
@@ -129,24 +133,21 @@ void	start_processes(t_token *token_list)
 {
 	int		i;
 	int		num_proc;
-	int		prev_fd;
 	int		status;
 	pid_t	*pid;
 	t_token	*aux;
 	
-	create_pipes(token_list);
+	create_pipes();
 	num_proc = (g_ms.num_tokens + 1) / 2;
 	pid = (pid_t *)ft_calloc(num_proc + 1, sizeof(pid_t));
 	aux = token_list;
 	i = 0;
 	while (i < num_proc)
 	{
-		if (aux->next)
-			prev_fd = aux->next->fd[0];
 		pid[i] = fork();
 		if (!pid[i])
 		{
-			set_fd(aux, i, prev_fd);
+			set_fd(aux, i);
 			close_fd(token_list);
 			if (access(aux->token[0], F_OK) == 0)
 			{
