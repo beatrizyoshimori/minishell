@@ -12,7 +12,28 @@
 
 #include "minishell.h"
 
-static void	update_token(char **token)
+void	heredoc(t_token *token, int i)
+{
+	int		fd_heredoc;
+	char	*prompt;
+
+	fd_heredoc = open("heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	prompt = NULL;
+	while (1)
+	{
+		prompt = readline("> ");
+		if (!ft_strncmp(prompt, token->token[i + 1], ft_strlen(token->token[i + 1]) + 1))
+			break ;
+		write(fd_heredoc, prompt, ft_strlen(prompt));
+		write(fd_heredoc, "\n", 1);
+		free(prompt);
+	}
+	free(prompt);
+	printf("fd heredoc: %i\n", fd_heredoc);
+	// return (fd_heredoc);
+}
+
+static void	update_token(char **token, char redirect)
 {
 	int	i;
 	int	j;
@@ -20,7 +41,7 @@ static void	update_token(char **token)
 	i = 0;
 	while (token[i])
 	{
-		if (token[i][0] == '>' || token[i][0] == '<')
+		if (token[i][0] == redirect)
 		{
 			free(token[i]);
 			free(token[i + 1]);
@@ -66,7 +87,7 @@ void	redirect_output(t_token *token_list)
 			}
 			i++;
 		}
-		update_token(aux->token);
+		update_token(aux->token, '>');
 		aux = aux->next;
 	}
 }
@@ -89,7 +110,10 @@ void	redirect_input(t_token *token_list)
 					aux->fd[0] = open(aux->token[i + 1], O_RDONLY);
 				}
 				else
-					//heredoc
+				{
+					heredoc(aux, i);
+					aux->fd[0] = open("heredoc", O_RDONLY);
+				}
 				if (aux->redirect == NO_REDIRECT)
 					aux->redirect = REDIRECT_INPUT;
 				else if (aux->redirect == REDIRECT_OUTPUT)
@@ -97,7 +121,7 @@ void	redirect_input(t_token *token_list)
 			}
 			i++;
 		}
-		update_token(aux->token);
+		update_token(aux->token, '<');
 		aux = aux->next;
 	}
 }
