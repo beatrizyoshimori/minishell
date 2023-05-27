@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 18:29:47 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_ms
 	int			num_tokens;
 	int			env_nbr_ptr;
 	int			*pipe_fd;
+	int			print_error;
 	char		**paths;
 	char		**env;
 	char		*home;
@@ -51,10 +52,11 @@ typedef struct s_ms
 
 typedef struct s_token
 {
-	char			**token;
-	char			*pathname;
 	int				redirect;
 	int				fd[2];
+	int				exec;
+	char			**token;
+	char			*pathname;
 	pid_t			pid;
 	struct s_token	*next;
 }	t_token;
@@ -148,8 +150,7 @@ void	expand_variable(t_token *token_list);
 void	parser(t_token *token_list);
 
 // redirect.c functions
-void	redirect_input(t_token *token_list);
-void	redirect_output(t_token *token_list);
+void	redirect_in_out(t_token *token_list);
 
 // token folder
 // token_utils.c functions
