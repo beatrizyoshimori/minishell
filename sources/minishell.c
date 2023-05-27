@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 19:35:28 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	signal_handler(int signal)
 
 static void	exec_command(t_token *token_list)
 {
-	if (g_ms.num_tokens == 1 && !token_list->no_exec)
+	if (g_ms.num_tokens == 1 && !token_list->exec)
 	{
 		if (!ft_strncmp(token_list->token[0], "cd", 3))
 			cd(token_list->token);
