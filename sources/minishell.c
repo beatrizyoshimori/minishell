@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 18:43:08 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/26 22:31:38 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,13 @@ void	create_prompt(t_token **token_list)
 		free(prompt);
 		free_ptrptr(tokens);
 		parser(*token_list);
-		// print_list(token_list);
 		if ((*token_list)->token[0])
 			exec_command(*token_list);
 		free_token_list(token_list);
 	}
 }
-		//print_list(token_list);
 
+		// print_list(token_list);
 int	main(int argc, char **argv, char **envp)
 {
 	t_token	*token_list;
