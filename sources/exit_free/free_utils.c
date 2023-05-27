@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:12:32 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/24 19:37:10 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:48:45 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	free_token_list(t_token **token_list)
 		free(*token_list);
 		(*token_list) = aux;
 	}
+	unlink(".h*e*r*e*d*o*c*");
 }
