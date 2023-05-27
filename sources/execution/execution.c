@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 17:10:08 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	set_fd(t_token *token, int i)
 		dup2(g_ms.pipe_fd[2 * i + 1], 1);
 }
 
-static void	exit_builtin(t_token *token_list)
+static void	exit_execve(t_token *token_list)
 {
 	close(0);
 	close(1);
@@ -88,20 +88,35 @@ static void	exec_command_child(t_token *token_list, t_token *token)
 		pwd();
 	else if (!ft_strncmp(token->token[0], "unset", 6))
 		unset(token->token);
-	else
-		execve(token->pathname, token->token, g_ms.env);
-	exit_builtin(token_list);
+	else if (token->pathname)
+	{
+		if (execve(token->pathname, token->token, g_ms.env) == -1)
+		{
+			if (!g_ms.print_error)
+			{
+				ft_putstr_fd(token->token[0], 2);
+				ft_putstr_fd(": ", 2);
+				ft_putstr_fd(strerror(errno), 2);
+				ft_putstr_fd("\n", 2);
+				g_ms.exit_status = errno;
+			}
+		}
+	}
+	else if (!token->pathname)
+	{
+		ft_putstr_fd(token->token[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		g_ms.exit_status = 127;
+	}
 }
 
-// void	check_execution_permission(char *pathname, t_data *data)
+// void	check_execution_permission(t_token *token_list, t_token *token)
 // {
-// 	if (access(pathname, X_OK) == -1)
+// 	if (access(token->pathname, X_OK) == -1)
 // 	{
-// 		close(data->fd[0]);
-// 		close(data->fd[1]);
-// 		perror(pathname);
-// 		free_all(data);
-// 		exit(126);
+// 		token->exec = 1;
+// 		g_ms.exit_status = 126;
+// 		exit_execve(token_list);
 // 	}
 // }
 
@@ -119,7 +134,7 @@ static void	set_pathname(t_token *token)
 			free(tmp);
 		if (access(token->pathname, F_OK) == 0)
 		{
-			// check_execution_permission(token->pathname, data);
+			// check_execution_permission(token_list, token);
 			return ;
 		}
 		if (token->pathname)
@@ -127,6 +142,35 @@ static void	set_pathname(t_token *token)
 		i++;
 	}
 	token->pathname = NULL;
+}
+
+static int	ft_isdirectory(char *token_cmd)
+{
+	struct stat	statbuf;
+
+	if (stat(token_cmd, &statbuf) != 0)
+		return (0);
+	if (S_ISDIR(statbuf.st_mode))
+	{
+		if (*token_cmd == '.')
+			token_cmd++;
+		if (*token_cmd == '.')
+			token_cmd++;
+		if (*token_cmd == '/')
+			return (1);
+	}
+	return (0);
+}
+
+static int	ft_isfile(char *token_cmd)
+{
+	if (*token_cmd == '.')
+		token_cmd++;
+	if (*token_cmd == '.')
+		token_cmd++;
+	if (*token_cmd == '/')
+		return (1);
+	return (0);
 }
 
 void	start_processes(t_token *token_list)
@@ -149,16 +193,37 @@ void	start_processes(t_token *token_list)
 		{
 			set_fd(aux, i);
 			close_fd(token_list);
-			if (access(aux->token[0], F_OK) == 0)
+			if (!ft_isdirectory(aux->token[0]))
 			{
-				// check_execution_permission(aux->token[0]);
-				aux->pathname = ft_strdup(aux->token[0]);
+				if (aux->token[0][0] == '/' && access(aux->token[0], F_OK) == 0)
+				{
+					// check_execution_permission(token_list, aux);
+					aux->pathname = ft_strdup(aux->token[0]);
+				}
+				else if (ft_isfile(aux->token[0]) && access(aux->token[0], F_OK) == -1)
+				{
+					ft_putstr_fd("bilu: ", 2);
+					ft_putstr_fd(aux->token[0], 2);
+					ft_putstr_fd(": ", 2);
+					ft_putstr_fd(strerror(errno), 2);
+					ft_putstr_fd("\n", 2);
+					aux->exec = 1;
+					g_ms.exit_status = 127;
+				}
+				else
+					set_pathname(aux);
+				if (!aux->exec)
+					exec_command_child(token_list, aux);
 			}
 			else
-				set_pathname(aux);
+			{
+				ft_putstr_fd("bilu: ", 2);
+				ft_putstr_fd(aux->token[0], 2);
+				ft_putstr_fd(": Is a directory\n", 2);
+				g_ms.exit_status = 126;
+			}
 			free(pid);
-			if (aux->token[0])
-				exec_command_child(token_list, aux);
+			exit_execve(token_list);
 		}
 		i++;
 		if (i != num_proc)
