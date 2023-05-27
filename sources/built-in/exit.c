@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 17:10:02 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:35:31 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static unsigned long long	check_first_parameter(t_token *token_list, int *f)
 	return (st);
 }
 
-static long long	get_exit_status(t_token *token_list)
+static long long	get_exit_status(t_token *token_list, int *ver)
 {
 	int					flag;
 	unsigned long long	status;
@@ -52,10 +52,14 @@ static long long	get_exit_status(t_token *token_list)
 	{
 		status = check_first_parameter(token_list, &flag);
 		if (token_list->token[2] && status != (unsigned long long)LL_MAX + 2)
-			status = -1;
+		{
+			*ver = 1;
+			status = 1;
+		}
 		else if (status == (unsigned long long)LL_MAX + 2)
 		{
-			status = -2;
+			*ver = 2;
+			status = 2;
 			flag = 1;
 		}
 	}
@@ -65,19 +69,27 @@ static long long	get_exit_status(t_token *token_list)
 		return (status);
 }
 
+static void	print_error_exit(char *token_i)
+{
+	ft_putstr_fd("bilu: exit: ", 2);
+	ft_putstr_fd(token_i, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd("numeric argument required\n", 2);
+}
+
 void	exit_command(t_token *token_list)
 {
+	int	ver;
+
+	ver = 0;
 	g_ms.exit_status = 0;
-	g_ms.exit_status = get_exit_status(token_list);
-	if (g_ms.exit_status != -1)
+	g_ms.exit_status = get_exit_status(token_list, &ver);
+	if (ver != 1)
 	{
 		ft_putstr_fd("exit\n", 1);
-		if (g_ms.exit_status == -2)
+		if (ver == 2)
 		{
-			ft_putstr_fd("bilu: exit: ", 2);
-			ft_putstr_fd(token_list->token[1], 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd("numeric argument required\n", 2);
+			print_error_exit(token_list->token[1]);
 			g_ms.exit_status = 2;
 		}
 		rl_clear_history();
