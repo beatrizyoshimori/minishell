@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:57:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 22:22:16 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:06:30 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,5 @@ void	parser(t_token *token_list)
 	check_quotes_error(token_list);
 	expand_variable(token_list);
 	remove_quotes(token_list);
-	redirect_input(token_list);
-	redirect_output(token_list);
+	redirect_in_out(token_list);
 }
