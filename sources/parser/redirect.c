@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 22:24:41 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	heredoc(t_token *token, int i)
 	close(fd_heredoc);
 }
 
-static void	update_token(char **token, char redirect)
+static void	update_token(char **token)
 {
 	int	i;
 	int	j;
@@ -40,7 +40,8 @@ static void	update_token(char **token, char redirect)
 	i = 0;
 	while (token[i])
 	{
-		if (token[i][0] == redirect && (token[i][1] == redirect || !token[i][1]))
+		if ((token[i][0] == '>' && (token[i][1] == '>' || !token[i][1]))
+			|| (token[i][0] == '<' && (token[i][1] == '<' || !token[i][1])))
 		{
 			free(token[i]);
 			free(token[i + 1]);
@@ -60,7 +61,7 @@ static void	update_token(char **token, char redirect)
 	}
 }
 
-void	redirect_output(t_token *token_list)
+void	redirect_in_out(t_token *token_list)
 {
 	int		i;
 	t_token	*aux;
@@ -79,12 +80,17 @@ void	redirect_output(t_token *token_list)
 							O_RDWR | O_CREAT | O_TRUNC, 0644);
 					if (aux->fd[1] == -1)
 					{
-						ft_putstr_fd("bilu: ", 2);
-						ft_putstr_fd(aux->token[i + 1], 2);
-						ft_putstr_fd(": ", 2);
-						ft_putstr_fd(strerror(errno), 2);
-						ft_putstr_fd("\n", 2);
+						if (!g_ms.print_error)
+						{
+							ft_putstr_fd("bilu: ", 2);
+							ft_putstr_fd(aux->token[i + 1], 2);
+							ft_putstr_fd(": ", 2);
+							ft_putstr_fd(strerror(errno), 2);
+							ft_putstr_fd("\n", 2);
+						}
 						g_ms.exit_status = 1;
+						g_ms.print_error = 1;
+						aux->exec = 1;
 						break ;
 					}
 				}
@@ -94,12 +100,17 @@ void	redirect_output(t_token *token_list)
 							O_RDWR | O_CREAT | O_APPEND, 0644);
 					if (aux->fd[1] == -1)
 					{
-						ft_putstr_fd("bilu: ", 2);
-						ft_putstr_fd(aux->token[i + 1], 2);
-						ft_putstr_fd(": ", 2);
-						ft_putstr_fd(strerror(errno), 2);
-						ft_putstr_fd("\n", 2);
+						if (!g_ms.print_error)
+						{
+							ft_putstr_fd("bilu: ", 2);
+							ft_putstr_fd(aux->token[i + 1], 2);
+							ft_putstr_fd(": ", 2);
+							ft_putstr_fd(strerror(errno), 2);
+							ft_putstr_fd("\n", 2);
+						}
 						g_ms.exit_status = 1;
+						g_ms.print_error = 1;
+						aux->exec = 1;
 						break ;
 					}
 				}
@@ -108,37 +119,24 @@ void	redirect_output(t_token *token_list)
 				else if (aux->redirect == REDIRECT_INPUT)
 					aux->redirect = REDIRECT_BOTH;
 			}
-			i++;
-		}
-		update_token(aux->token, '>');
-		aux = aux->next;
-	}
-}
-
-void	redirect_input(t_token *token_list)
-{
-	int		i;
-	t_token	*aux;
-
-	aux = token_list;
-	while (aux)
-	{
-		i = 0;
-		while (aux->token[i])
-		{
-			if (aux->token[i][0] == '<')
+			else if (aux->token[i][0] == '<')
 			{
 				if (!aux->token[i][1])
 				{
 					aux->fd[0] = open(aux->token[i + 1], O_RDONLY);
 					if (aux->fd[0] == -1)
 					{
-						ft_putstr_fd("bilu: ", 2);
-						ft_putstr_fd(aux->token[i + 1], 2);
-						ft_putstr_fd(": ", 2);
-						ft_putstr_fd(strerror(errno), 2);
-						ft_putstr_fd("\n", 2);
+						if (!g_ms.print_error)
+						{
+							ft_putstr_fd("bilu: ", 2);
+							ft_putstr_fd(aux->token[i + 1], 2);
+							ft_putstr_fd(": ", 2);
+							ft_putstr_fd(strerror(errno), 2);
+							ft_putstr_fd("\n", 2);
+						}
 						g_ms.exit_status = 1;
+						g_ms.print_error = 1;
+						aux->exec = 1;
 						break ;
 					}
 				}
@@ -154,7 +152,7 @@ void	redirect_input(t_token *token_list)
 			}
 			i++;
 		}
-		update_token(aux->token, '<');
+		update_token(aux->token);
 		aux = aux->next;
 	}
 }
