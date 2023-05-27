@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 15:49:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/27 14:43:03 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,31 @@ static void	try_find_dollar(char **aux_token_i)
 	}
 }
 
+static void	check_empty_string(char **token)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (token[i])
+	{
+		if (!token[i][0])
+		{
+			j = i + 1;
+			while (token[j])
+			{
+				free(token[j - 1]);
+				token[j - 1] = ft_strdup(token[j]);
+				j++;
+			}
+			free(token[j - 1]);
+			token[j - 1] = NULL;
+			i--;
+		}
+		i++;
+	}
+}
+
 void	expand_variable(t_token *token_list)
 {
 	int		i;
@@ -96,6 +121,7 @@ void	expand_variable(t_token *token_list)
 			try_find_tilde(&aux->token[i]);
 			i++;
 		}
+		check_empty_string(aux->token);
 		aux = aux->next;
 	}
 }
