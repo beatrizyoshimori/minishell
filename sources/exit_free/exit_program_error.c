@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exit_program_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 21:37:22 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 19:12:22 by lucade-s         ###   ########.fr       */
+/*   Created: 2023/05/01 17:04:10 by byoshimo          #+#    #+#             */
+/*   Updated: 2023/05/29 19:10:19 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(char **token)
+void	exit_program(t_token **token_list)
 {
-	int	i;
+	rl_clear_history();
+	free(g_ms.pipe_fd);
+	free_ptrptr(g_ms.paths);
+	free_ptrptr(g_ms.env);
+	free(g_ms.home);
+	free_token_list(token_list);
+	exit(1);
+}
 
-	g_ms.exit_status = 0;
-	if (!token[1])
-	{
-		i = 0;
-		while (g_ms.env[i])
-		{
-			if (ft_strchr(g_ms.env[i], '='))
-			{
-				ft_putstr_fd(g_ms.env[i], 1);
-				ft_putstr_fd("\n", 1);
-			}
-			i++;
-		}
-	}
-	else if (!ft_strncmp(token[0], "env", 4))
-	{
-		print_error("bilu: env: ", token[1], "No such file or directory");
-		g_ms.exit_status = 127;
-	}
+void	print_error(char *str1, char *str2, char *str3)
+{
+	ft_putstr_fd(str1, 2);
+	ft_putstr_fd(str2, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(str3, 2);
+	ft_putstr_fd("\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:06:04 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/26 16:47:53 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:19:31 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ static void	cd_parameter_update(char *old_pwd, char *new_pwd, int dash)
 	update_pwd_or_oldpwd(new_pwd, "PWD=", 4);
 	update_pwd_or_oldpwd(old_pwd, "OLDPWD=", 7);
 	free(new_pwd);
-}
-
-static void	print_error_cd(char *token_i)
-{
-	ft_putstr_fd("bilu: cd: ", 2);
-	ft_putstr_fd(token_i, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("\n", 2);
 }
 
 static void	cd_parameter(char **token, char *old_pwd)
@@ -56,7 +47,7 @@ static void	cd_parameter(char **token, char *old_pwd)
 	}
 	if (chdir(token[1]) == -1)
 	{
-		print_error_cd(token[1]);
+		print_error("bilu: cd: ", token[1], strerror(errno));
 		g_ms.exit_status = 1;
 	}
 	else
@@ -76,11 +67,7 @@ static void	cd_home(char *old_pwd)
 	}
 	if (chdir(new_pwd) == -1)
 	{
-		ft_putstr_fd("bilu: cd: ", 2);
-		ft_putstr_fd(new_pwd, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		print_error("bilu: cd: ", new_pwd, strerror(errno));
 		g_ms.exit_status = 1;
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 19:35:31 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:29:00 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,19 @@ static long long	get_exit_status(t_token *token_list, int *ver)
 		return (status);
 }
 
-static void	print_error_exit(char *token_i)
-{
-	ft_putstr_fd("bilu: exit: ", 2);
-	ft_putstr_fd(token_i, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd("numeric argument required\n", 2);
-}
-
 void	exit_command(t_token *token_list)
 {
 	int	ver;
 
 	ver = 0;
-	g_ms.exit_status = 0;
 	g_ms.exit_status = get_exit_status(token_list, &ver);
 	if (ver != 1)
 	{
 		ft_putstr_fd("exit\n", 1);
 		if (ver == 2)
 		{
-			print_error_exit(token_list->token[1]);
+			print_error("bilu: exit: ", token_list->token[1],
+				"numeric argument required");
 			g_ms.exit_status = 2;
 		}
 		rl_clear_history();
