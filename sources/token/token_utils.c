@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:23:56 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	set_tokens(char **tokens, t_token **token_list)
 	{
 		new = (t_token *)malloc(sizeof(t_token));
 		new->token = ft_split(tokens[g_ms.num_tokens], SPACE_OUT_QUOTES);
-		new->redirect = 1;
-		new->exec = 0;
+		new->redirect = NO_REDIRECT;
+		new->no_exec = 0;
+		new->type = 0;
 		new->pathname = NULL;
 		new->next = NULL;
 		ft_tokenadd_back(token_list, new);
