@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:23:32 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,50 @@ void	signal_handler(int signal)
 	}
 }
 
+static int	ft_isbuiltin(t_token *token_list)
+{
+	if (!ft_strncmp(token_list->token[0], "cd", 3))
+		token_list->type = CD;
+	else if (!ft_strncmp(token_list->token[0], "echo", 5))
+		token_list->type = ECHO;
+	else if (!ft_strncmp(token_list->token[0], "env", 4))
+		token_list->type = ENV;
+	else if (!ft_strncmp(token_list->token[0], "exit", 5))
+		token_list->type = EXIT;
+	else if (!ft_strncmp(token_list->token[0], "export", 7))
+		token_list->type = EXPORT;
+	else if (!ft_strncmp(token_list->token[0], "pwd", 4))
+		token_list->type = PWD;
+	else if (!ft_strncmp(token_list->token[0], "unset", 6))
+		token_list->type = UNSET;
+	if (token_list->type >= CD && token_list->type <= UNSET)
+		return (1);
+	return (0);
+}
+
 static void	exec_command(t_token *token_list)
 {
-	if (g_ms.num_tokens == 1 && !token_list->exec)
+	if (g_ms.num_tokens == 1 && !token_list->no_exec)
 	{
-		if (!ft_strncmp(token_list->token[0], "cd", 3))
-			cd(token_list->token);
-		else if (!ft_strncmp(token_list->token[0], "export", 7))
-			export(token_list->token);
-		else if (!ft_strncmp(token_list->token[0], "echo", 5))
-			echo(token_list->token);
-		else if (!ft_strncmp(token_list->token[0], "env", 4))
-			env(token_list->token);
-		else if (!ft_strncmp(token_list->token[0], "exit", 5))
-			exit_command(token_list);
-		else if (!ft_strncmp(token_list->token[0], "pwd", 4))
-			pwd();
-		else if (!ft_strncmp(token_list->token[0], "unset", 6))
-			unset(token_list->token);
+		if (ft_isbuiltin(token_list))
+		{
+			set_fd_builtin(token_list->redirect, token_list->fd);
+			if (token_list->type == CD)
+				cd(token_list->token);
+			else if (token_list->type == ECHO)
+				echo(token_list->token);
+			else if (token_list->type == ENV)
+				env(token_list->token);
+			else if (token_list->type == EXIT)
+				exit_command(token_list);
+			else if (token_list->type == EXPORT)
+				export(token_list->token);
+			else if (token_list->type == PWD)
+				pwd();
+			else if (token_list->type == UNSET)
+				unset(token_list->token);
+			change_fd_back(token_list->redirect);
+		}
 		else
 			start_processes(token_list);
 	}
@@ -81,6 +107,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	(void)argv;
 	g_ms = (t_ms){0};
+	g_ms.backup_fd[0] = dup(0);
+	g_ms.backup_fd[1] = dup(1);
 	copy_envp(envp);
 	get_paths(envp);
 	token_list = NULL;
