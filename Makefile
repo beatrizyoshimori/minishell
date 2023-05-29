@@ -36,7 +36,7 @@ EXECUTION		=		$(addprefix $(EXECUTION_PATH)/,	execution.c)
 
 ENVP			=		$(addprefix $(ENVP_PATH)/,		envp_utils.c)
 
-EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program.c \
+EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program_error.c \
 														free_utils.c)
 
 EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export_utils.c \
@@ -51,7 +51,8 @@ BUILT-IN		=		$(addprefix $(BUILT-IN_PATH)/,	$(CD) \
 														env.c \
 														exit.c \
 														pwd.c \
-														unset.c)
+														unset.c \
+														built-in_utils.c)
 
 SOURCES			=		non_ms_functions.c \
 						minishell.c \
