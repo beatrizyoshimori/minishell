@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:33:01 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:37:37 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_ms	g_ms;
 
-void	signal_handler(int signal)
+static void	signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -23,27 +23,6 @@ void	signal_handler(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-}
-
-static int	ft_isbuiltin(t_token *token_list)
-{
-	if (!ft_strncmp(token_list->token[0], "cd", 3))
-		token_list->type = CD;
-	else if (!ft_strncmp(token_list->token[0], "echo", 5))
-		token_list->type = ECHO;
-	else if (!ft_strncmp(token_list->token[0], "env", 4))
-		token_list->type = ENV;
-	else if (!ft_strncmp(token_list->token[0], "exit", 5))
-		token_list->type = EXIT;
-	else if (!ft_strncmp(token_list->token[0], "export", 7))
-		token_list->type = EXPORT;
-	else if (!ft_strncmp(token_list->token[0], "pwd", 4))
-		token_list->type = PWD;
-	else if (!ft_strncmp(token_list->token[0], "unset", 6))
-		token_list->type = UNSET;
-	if (token_list->type >= CD && token_list->type <= UNSET)
-		return (1);
-	return (0);
 }
 
 static void	exec_command(t_token *token_list)
@@ -59,7 +38,7 @@ static void	exec_command(t_token *token_list)
 		start_processes(token_list);
 }
 
-void	create_prompt(t_token **token_list)
+static void	create_prompt(t_token **token_list)
 {
 	char	*prompt;
 	char	**tokens;

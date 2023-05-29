@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:52:49 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 20:34:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:37:20 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,25 @@ void	exec_builtin(t_token *token_list)
 	else if (token_list->type == UNSET)
 		unset(token_list->token);
 	change_fd_back(token_list->redirect);
+}
+
+int	ft_isbuiltin(t_token *token_list)
+{
+	if (!ft_strncmp(token_list->token[0], "cd", 3))
+		token_list->type = CD;
+	else if (!ft_strncmp(token_list->token[0], "echo", 5))
+		token_list->type = ECHO;
+	else if (!ft_strncmp(token_list->token[0], "env", 4))
+		token_list->type = ENV;
+	else if (!ft_strncmp(token_list->token[0], "exit", 5))
+		token_list->type = EXIT;
+	else if (!ft_strncmp(token_list->token[0], "export", 7))
+		token_list->type = EXPORT;
+	else if (!ft_strncmp(token_list->token[0], "pwd", 4))
+		token_list->type = PWD;
+	else if (!ft_strncmp(token_list->token[0], "unset", 6))
+		token_list->type = UNSET;
+	if (token_list->type >= CD && token_list->type <= UNSET)
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:34:44 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:37:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	free_token_list(t_token **token_list);
 
 // built-in_utils.c
 void	exec_builtin(t_token *token_list);
+int		ft_isbuiltin(t_token *token_list);
 
 // lexer folder
 // lexer.c functions
