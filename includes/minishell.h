@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:37:58 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:41:19 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_ms
 	int			*pipe_fd;
 	int			printed_error;
 	int			backup_fd[2];
+	int			on_fork;
 	char		**paths;
 	char		**env;
 	char		*home;

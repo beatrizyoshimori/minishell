@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:37:37 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:41:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ t_ms	g_ms;
 
 static void	signal_handler(int signal)
 {
-	if (signal == SIGINT)
+	if (signal == SIGINT && !g_ms.on_fork)
 	{
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	else if (signal == SIGINT && g_ms.on_fork)
+		ft_putchar_fd('\n', 1);
 }
 
 static void	exec_command(t_token *token_list)
