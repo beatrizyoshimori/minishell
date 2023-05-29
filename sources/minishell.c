@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 19:23:32 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:33:01 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,7 @@ static void	exec_command(t_token *token_list)
 	if (g_ms.num_tokens == 1 && !token_list->no_exec)
 	{
 		if (ft_isbuiltin(token_list))
-		{
-			set_fd_builtin(token_list->redirect, token_list->fd);
-			if (token_list->type == CD)
-				cd(token_list->token);
-			else if (token_list->type == ECHO)
-				echo(token_list->token);
-			else if (token_list->type == ENV)
-				env(token_list->token);
-			else if (token_list->type == EXIT)
-				exit_command(token_list);
-			else if (token_list->type == EXPORT)
-				export(token_list->token);
-			else if (token_list->type == PWD)
-				pwd();
-			else if (token_list->type == UNSET)
-				unset(token_list->token);
-			change_fd_back(token_list->redirect);
-		}
+			exec_builtin(token_list);
 		else
 			start_processes(token_list);
 	}

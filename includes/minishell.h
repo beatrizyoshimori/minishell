@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:15:30 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:34:44 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,7 @@ void	free_ptrptr(char **tokens);
 void	free_token_list(t_token **token_list);
 
 // built-in_utils.c
-void	set_fd_builtin(int redirect, int fd[2]);
-void	change_fd_back(int redirect);
+void	exec_builtin(t_token *token_list);
 
 // lexer folder
 // lexer.c functions
