@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:23:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,21 @@
 # define REDIRECT_INPUT 2
 # define REDIRECT_OUTPUT 3
 # define REDIRECT_BOTH 6
+# define CD 1
+# define ECHO 2
+# define ENV 3
+# define EXIT 4
+# define EXPORT 5
+# define PWD 6
+# define UNSET 7
 
 typedef struct s_ms
 {
 	int			num_tokens;
 	int			env_nbr_ptr;
 	int			*pipe_fd;
-	int			print_error;
+	int			printed_error;
+	int			backup_fd[2];
 	char		**paths;
 	char		**env;
 	char		*home;
@@ -54,7 +62,8 @@ typedef struct s_token
 {
 	int				redirect;
 	int				fd[2];
-	int				exec;
+	int				no_exec;
+	int				type;
 	char			**token;
 	char			*pathname;
 	pid_t			pid;
@@ -107,12 +116,17 @@ void	get_paths(char **envp);
 void	copy_envp(char **envp);
 
 // exit_free folder
-// exit_program.c functions
+// exit_program_error.c functions
 void	exit_program(t_token **token_list);
+void	print_error(char *str1, char *str2, char *str3);
 
 // free_utils.c functions
 void	free_ptrptr(char **tokens);
 void	free_token_list(t_token **token_list);
+
+// built-in_utils.c
+void	set_fd_builtin(int redirect, int fd[2]);
+void	change_fd_back(int redirect);
 
 // lexer folder
 // lexer.c functions
