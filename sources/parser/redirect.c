@@ -6,31 +6,11 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 19:57:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:14:54 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	heredoc(t_token *token, int i)
-{
-	int		fd_heredoc;
-	char	*prompt;
-
-	fd_heredoc = open(".h*e*r*e*d*o*c*", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	prompt = NULL;
-	while (1)
-	{
-		prompt = readline("> ");
-		if (!ft_strncmp(prompt, token->token[i + 1], ft_strlen(token->token[i + 1]) + 1))
-			break ;
-		write(fd_heredoc, prompt, ft_strlen(prompt));
-		write(fd_heredoc, "\n", 1);
-		free(prompt);
-	}
-	free(prompt);
-	close(fd_heredoc);
-}
 
 static void	update_token(char **token)
 {
@@ -61,95 +41,80 @@ static void	update_token(char **token)
 	}
 }
 
+static void	set_redirect_fd(t_token *token, int i, int red_open, int *ver)
+{
+	int	index;
+
+	index = 1;
+	if (red_open == RED_OUT_TRUNC)
+		token->fd[1] = open(token->token[i + 1],
+				O_RDWR | O_CREAT | O_TRUNC, 0644);
+	else if (red_open == RED_OUT_APPEND)
+		token->fd[1] = open(token->token[i + 1],
+				O_RDWR | O_CREAT | O_APPEND, 0644);
+	else
+	{
+		token->fd[0] = open(token->token[i + 1], O_RDONLY);
+		index = 0;
+	}
+	if (token->fd[index] == -1)
+	{
+		if (!g_ms.printed_error)
+			print_error("bilu: ", token->token[i + 1], strerror(errno));
+		g_ms.exit_status = 1;
+		g_ms.printed_error = 1;
+		token->no_exec = 1;
+		*ver = 1;
+		return ;
+	}
+}
+
+static void	redirect_output(t_token *token, int i, int *ver)
+{
+	if (!token->token[i][1])
+		set_redirect_fd(token, i, RED_OUT_TRUNC, ver);
+	else if (token->token[i][1] == '>' && !token->token[i][2])
+		set_redirect_fd(token, i, RED_OUT_APPEND, ver);
+	if (token->redirect == NO_REDIRECT)
+		token->redirect = REDIRECT_OUTPUT;
+	else if (token->redirect == REDIRECT_INPUT)
+		token->redirect = REDIRECT_BOTH;
+}
+
+static void	redirect_input(t_token *token, int i, int *ver)
+{
+	if (!token->token[i][1])
+		set_redirect_fd(token, i, RED_IN, ver);
+	else if (token->token[i][1] == '<' && !token->token[i][2])
+	{
+		heredoc(token, i);
+		token->fd[0] = open(".h*e*r*e*d*o*c*", O_RDONLY);
+	}
+	if (token->redirect == NO_REDIRECT)
+		token->redirect = REDIRECT_INPUT;
+	else if (token->redirect == REDIRECT_OUTPUT)
+		token->redirect = REDIRECT_BOTH;
+}
+
 void	redirect_in_out(t_token *token_list)
 {
 	int		i;
+	int		ver;
 	t_token	*aux;
 
 	aux = token_list;
 	while (aux)
 	{
+		ver = 0;
 		i = 0;
-		while (aux->token[i])
+		while (aux->token[i] && !ver)
 		{
-			if (aux->token[i][0] == '>')
-			{
-				if (!aux->token[i][1])
-				{
-					aux->fd[1] = open(aux->token[i + 1],
-							O_RDWR | O_CREAT | O_TRUNC, 0644);
-					if (aux->fd[1] == -1)
-					{
-						if (!g_ms.print_error)
-						{
-							ft_putstr_fd("bilu: ", 2);
-							ft_putstr_fd(aux->token[i + 1], 2);
-							ft_putstr_fd(": ", 2);
-							ft_putstr_fd(strerror(errno), 2);
-							ft_putstr_fd("\n", 2);
-						}
-						g_ms.exit_status = 1;
-						g_ms.print_error = 1;
-						aux->exec = 1;
-						break ;
-					}
-				}
-				else if (aux->token[i][1] == '>')
-				{
-					aux->fd[1] = open(aux->token[i + 1],
-							O_RDWR | O_CREAT | O_APPEND, 0644);
-					if (aux->fd[1] == -1)
-					{
-						if (!g_ms.print_error)
-						{
-							ft_putstr_fd("bilu: ", 2);
-							ft_putstr_fd(aux->token[i + 1], 2);
-							ft_putstr_fd(": ", 2);
-							ft_putstr_fd(strerror(errno), 2);
-							ft_putstr_fd("\n", 2);
-						}
-						g_ms.exit_status = 1;
-						g_ms.print_error = 1;
-						aux->exec = 1;
-						break ;
-					}
-				}
-				if (aux->redirect == NO_REDIRECT)
-					aux->redirect = REDIRECT_OUTPUT;
-				else if (aux->redirect == REDIRECT_INPUT)
-					aux->redirect = REDIRECT_BOTH;
-			}
-			else if (aux->token[i][0] == '<')
-			{
-				if (!aux->token[i][1])
-				{
-					aux->fd[0] = open(aux->token[i + 1], O_RDONLY);
-					if (aux->fd[0] == -1)
-					{
-						if (!g_ms.print_error)
-						{
-							ft_putstr_fd("bilu: ", 2);
-							ft_putstr_fd(aux->token[i + 1], 2);
-							ft_putstr_fd(": ", 2);
-							ft_putstr_fd(strerror(errno), 2);
-							ft_putstr_fd("\n", 2);
-						}
-						g_ms.exit_status = 1;
-						g_ms.print_error = 1;
-						aux->exec = 1;
-						break ;
-					}
-				}
-				else if (aux->token[i][1] == '<')
-				{
-					heredoc(aux, i);
-					aux->fd[0] = open(".h*e*r*e*d*o*c*", O_RDONLY);
-				}
-				if (aux->redirect == NO_REDIRECT)
-					aux->redirect = REDIRECT_INPUT;
-				else if (aux->redirect == REDIRECT_OUTPUT)
-					aux->redirect = REDIRECT_BOTH;
-			}
+			if (aux->token[i][0] == '>' && (!aux->token[i][1]
+				|| (aux->token[i][1] == '>' && !aux->token[i][2])))
+				redirect_output(aux, i, &ver);
+			else if (aux->token[i][0] == '<' && (!aux->token[i][1]
+				|| (aux->token[i][1] == '<' && !aux->token[i][2])))
+				redirect_input(aux, i, &ver);
 			i++;
 		}
 		update_token(aux->token);

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 19:23:42 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 20:15:30 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define EXPORT 5
 # define PWD 6
 # define UNSET 7
+# define RED_OUT_TRUNC 1
+# define RED_OUT_APPEND 2
+# define RED_IN 3
 
 typedef struct s_ms
 {
@@ -165,6 +168,9 @@ void	parser(t_token *token_list);
 
 // redirect.c functions
 void	redirect_in_out(t_token *token_list);
+
+// heredoc.c functions
+void	heredoc(t_token *token, int i);
 
 // token folder
 // token_utils.c functions
