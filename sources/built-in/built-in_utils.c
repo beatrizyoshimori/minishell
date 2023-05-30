@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:52:49 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 20:37:20 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 21:10:35 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,23 @@ static void	change_fd_back(int redirect)
 		dup2(g_ms.backup_fd[1], 1);
 }
 
+static void	set_fd_builtin(int redirect, int fd[2])
+{
+	if (redirect % REDIRECT_INPUT == 0)
+	{
+		dup2(fd[0], 0);
+		close(fd[0]);
+	}
+	if (redirect % REDIRECT_OUTPUT == 0)
+	{
+		dup2(fd[1], 1);
+		close(fd[1]);
+	}
+}
+
 void	exec_builtin(t_token *token_list)
 {
-	if (token_list->redirect % REDIRECT_INPUT == 0)
-	{
-		dup2(token_list->fd[0], 0);
-		close(token_list->fd[0]);
-	}
-	if (token_list->redirect % REDIRECT_OUTPUT == 0)
-	{
-		dup2(token_list->fd[1], 1);
-		close(token_list->fd[1]);
-	}
+	set_fd_builtin(token_list->redirect, token_list->fd);
 	if (token_list->type == CD)
 		cd(token_list->token);
 	else if (token_list->type == ECHO)
