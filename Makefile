@@ -33,7 +33,11 @@ PARSER			=		$(addprefix $(PARSER_PATH)/,	parser_tilde_exp.c \
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
 
-EXECUTION		=		$(addprefix $(EXECUTION_PATH)/,	execution.c)
+EXECUTION		=		$(addprefix $(EXECUTION_PATH)/,	execution.c \
+														execution_fd.c \
+														execution_command.c \
+														execution_pathname.c \
+														execution_utils.c)
 
 ENVP			=		$(addprefix $(ENVP_PATH)/,		envp_utils.c)
 

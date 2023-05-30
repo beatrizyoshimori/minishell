@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:41:19 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/29 22:05:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,22 @@ void	unset(char **token);
 // execution folder
 // execution.c functions
 void	start_processes(t_token *token_list);
+
+// execution_fd_utils.c functions
+void	close_fd(t_token *token_list);
+void	create_pipes(void);
+void	set_fd(t_token *token, int i);
+
+// execution_cmd_utils.c functions
+void	exit_execve(t_token *token_list);
+void	exec_command_child(t_token *token_list, t_token *token);
+
+// execution_pathname.c functions
+void	set_pathname(t_token *token);
+
+// execution_utils.c functions
+int		ft_isdirectory(char *token_cmd);
+int		ft_isfile(char *token_cmd);
 
 // envp_utils folder
 // envp utils
