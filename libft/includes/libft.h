@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 00:37:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/14 19:38:24 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:41:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+
+# define LL_MAX 9223372036854775807
 
 typedef struct s_list
 {
