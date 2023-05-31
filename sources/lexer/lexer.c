@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:27:18 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/26 17:10:18 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:11:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	check_ctrl_d(char *prompt)
 	if (prompt == NULL)
 	{
 		free(g_ms.pipe_fd);
+		free(g_ms.pid);
 		free_ptrptr(g_ms.paths);
 		free_ptrptr(g_ms.env);
 		free(g_ms.home);
