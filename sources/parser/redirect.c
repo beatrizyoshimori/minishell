@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 20:14:54 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 20:44:23 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ static void	set_redirect_fd(t_token *token, int i, int red_open, int *ver)
 	}
 	if (token->fd[index] == -1)
 	{
-		if (!g_ms.printed_error)
-			print_error("bilu: ", token->token[i + 1], strerror(errno));
-		g_ms.exit_status = 1;
-		g_ms.printed_error = 1;
+		print_error("bilu: ", token->token[i + 1], strerror(errno), 1);
 		token->no_exec = 1;
 		*ver = 1;
 		return ;
@@ -71,6 +68,13 @@ static void	set_redirect_fd(t_token *token, int i, int red_open, int *ver)
 
 static void	redirect_output(t_token *token, int i, int *ver)
 {
+	if (!token->token[i + 1])
+	{
+		print_error("bilu", "", "ambiguos redirect", 1);
+		token->no_exec = 1;
+		*ver = 1;
+		return ;
+	}
 	if (!token->token[i][1])
 		set_redirect_fd(token, i, RED_OUT_TRUNC, ver);
 	else if (token->token[i][1] == '>' && !token->token[i][2])
@@ -83,6 +87,13 @@ static void	redirect_output(t_token *token, int i, int *ver)
 
 static void	redirect_input(t_token *token, int i, int *ver)
 {
+	if (!token->token[i + 1])
+	{
+		print_error("bilu", "", "ambiguos redirect", 1);
+		token->no_exec = 1;
+		*ver = 1;
+		return ;
+	}
 	if (!token->token[i][1])
 		set_redirect_fd(token, i, RED_IN, ver);
 	else if (token->token[i][1] == '<' && !token->token[i][2])
