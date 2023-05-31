@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 19:21:54 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	free_token_list(t_token **token_list);
 
 // execution folder
 // execution_command.c functions
-void	exit_execve(t_token *token_list);
+void	exit_process(t_token *token_list);
 void	exec_command_child(t_token *token_list, t_token *token);
 
 // execution_fd.c functions

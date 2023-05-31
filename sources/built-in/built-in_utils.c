@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:52:49 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/30 17:08:17 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:35:09 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 static void	change_fd_back(int redirect, int backup_fd[2])
 {
 	if (redirect % REDIRECT_INPUT == 0)
+	{
 		dup2(backup_fd[0], 0);
+		close(backup_fd[0]);
+	}
 	if (redirect % REDIRECT_OUTPUT == 0)
+	{
 		dup2(backup_fd[1], 1);
+		close(backup_fd[1]);
+	}
 }
 
 static void	set_fd_builtin(int redirect, int fd[2], int backup_fd[2])

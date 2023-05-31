@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 18:07:28 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,7 @@ void	exit_command(t_token *token_list, char **token)
 		if (ver == 2)
 			print_error("bilu: exit: ", token[1],
 				"numeric argument required", 2);
-		rl_clear_history();
-		free_token_list(&token_list);
-		free(g_ms.pipe_fd);
-		free(g_ms.pid);
-		free_ptrptr(g_ms.paths);
-		free_ptrptr(g_ms.env);
-		free(g_ms.home);
-		exit(g_ms.exit_status);
+		exit_process(token_list);
 	}
 	if (!g_ms.on_fork)
 		ft_putstr_fd("exit\n", 1);

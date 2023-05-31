@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 17:43:33 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	start_child_process(t_token *token_list, t_token *token, int i)
 	}
 	else
 		print_error("bilu: ", token->token[0], "Is a directory", 126);
-	exit_execve(token_list);
+	exit_process(token_list);
 }
 
 void	start_processes(t_token *token_list)

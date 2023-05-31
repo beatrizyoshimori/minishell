@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:59:18 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/30 19:11:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_execve(t_token *token_list)
+void	exit_process(t_token *token_list)
 {
 	close(0);
 	close(1);
