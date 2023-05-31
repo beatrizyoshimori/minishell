@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 22:02:24 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 22:16:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 20:44:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,18 @@ static void	find_pathname(t_token *token)
 
 void	set_pathname(t_token *token)
 {
-	if (token->token[0][0] == '/' && access(token->token[0], F_OK) == 0)
-		token->pathname = ft_strdup(token->token[0]);
-	else if (ft_isfile(token->token[0]))
+	if (ft_isfile(token->token[0]))
 	{
-		if (access(token->token[0], F_OK | X_OK) == -1)
-		{
-			print_error("bilu: ", token->token[0], strerror(errno));
-			token->no_exec = 1;
-			g_ms.printed_error = 1;
-			if (access(token->token[0], F_OK) == -1)
-				g_ms.exit_status = 127;
-			else if (access(token->token[0], X_OK) == -1)
-				g_ms.exit_status = 126;
-		}
+		if (access(token->token[0], F_OK) == -1)
+			print_error("bilu: ", token->token[0], strerror(errno), 127);
+		else if (access(token->token[0], X_OK) == -1)
+			print_error("bilu: ", token->token[0], strerror(errno), 126);
 		else
+		{
 			token->pathname = ft_strdup(token->token[0]);
+			return ;
+		}
+		token->no_exec = 1;
 	}
 	else
 		find_pathname(token);
