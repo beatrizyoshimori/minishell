@@ -3,41 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 18:25:24 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:54:19 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_token(char **token)
+static void	check_fd_error(t_token *token, int i, int index, int *ver)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (token[i])
+	if (token->fd[index] == -1)
 	{
-		if ((token[i][0] == '>' && (!token[i][1] || (token[i][1] == '>'
-			&& !token[i][2]))) || (token[i][0] == '<' && (!token[i][1]
-			|| (token[i][1] == '<' && !token[i][2]))))
-		{
-			free(token[i]);
-			free(token[i + 1]);
-			token[i] = NULL;
-			token[i + 1] = NULL;
-			j = i + 2;
-			while (token[j])
-			{
-				token[j - 2] = ft_strdup(token[j]);
-				free(token[j]);
-				token[j++] = NULL;
-			}
-			i--;
-		}
-		i++;
+		print_error("bilu: ", token->token[i + 1], strerror(errno), 1);
+		token->no_exec = 1;
+		*ver = 1;
 	}
 }
 
@@ -47,23 +28,27 @@ static void	set_redirect_fd(t_token *token, int i, int red_open, int *ver)
 
 	index = 1;
 	if (red_open == RED_OUT_TRUNC)
+	{
+		if (token->fd[1])
+			close(token->fd[1]);
 		token->fd[1] = open(token->token[i + 1],
 				O_RDWR | O_CREAT | O_TRUNC, 0644);
+	}
 	else if (red_open == RED_OUT_APPEND)
+	{
+		if (token->fd[1])
+			close(token->fd[1]);
 		token->fd[1] = open(token->token[i + 1],
 				O_RDWR | O_CREAT | O_APPEND, 0644);
+	}
 	else
 	{
+		if (token->fd[0])
+			close(token->fd[0]);
 		token->fd[0] = open(token->token[i + 1], O_RDONLY);
 		index = 0;
 	}
-	if (token->fd[index] == -1)
-	{
-		print_error("bilu: ", token->token[i + 1], strerror(errno), 1);
-		token->no_exec = 1;
-		*ver = 1;
-		return ;
-	}
+	check_fd_error(token, i, index, ver);
 }
 
 static void	redirect_output(t_token *token, int i, int *ver)

@@ -62,6 +62,7 @@ PARSER			=		$(addprefix $(PARSER_PATH)/,	parser_tilde_exp.c \
 														parser_var_exp.c \
 														parser.c \
 														redirect.c \
+														redirect_utils.c \
 														heredoc.c)
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
