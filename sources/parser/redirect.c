@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 20:44:23 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:25:24 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_token(char **token)
+void	update_token(char **token)
 {
 	int	i;
 	int	j;
@@ -20,8 +20,9 @@ static void	update_token(char **token)
 	i = 0;
 	while (token[i])
 	{
-		if ((token[i][0] == '>' && (token[i][1] == '>' || !token[i][1]))
-			|| (token[i][0] == '<' && (token[i][1] == '<' || !token[i][1])))
+		if ((token[i][0] == '>' && (!token[i][1] || (token[i][1] == '>'
+			&& !token[i][2]))) || (token[i][0] == '<' && (!token[i][1]
+			|| (token[i][1] == '<' && !token[i][2]))))
 		{
 			free(token[i]);
 			free(token[i + 1]);
@@ -32,8 +33,7 @@ static void	update_token(char **token)
 			{
 				token[j - 2] = ft_strdup(token[j]);
 				free(token[j]);
-				token[j] = NULL;
-				j++;
+				token[j++] = NULL;
 			}
 			i--;
 		}
@@ -85,7 +85,7 @@ static void	redirect_output(t_token *token, int i, int *ver)
 		token->redirect = REDIRECT_BOTH;
 }
 
-static void	redirect_input(t_token *token, int i, int *ver)
+void	redirect_input(t_token *token, int i, int *ver)
 {
 	if (!token->token[i + 1])
 	{
@@ -97,10 +97,7 @@ static void	redirect_input(t_token *token, int i, int *ver)
 	if (!token->token[i][1])
 		set_redirect_fd(token, i, RED_IN, ver);
 	else if (token->token[i][1] == '<' && !token->token[i][2])
-	{
-		heredoc(token, i);
 		token->fd[0] = open(".h*e*r*e*d*o*c*", O_RDONLY);
-	}
 	if (token->redirect == NO_REDIRECT)
 		token->redirect = REDIRECT_INPUT;
 	else if (token->redirect == REDIRECT_OUTPUT)

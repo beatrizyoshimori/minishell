@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 20:52:59 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:00:06 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_syntax_error(char c)
 	g_ms.exit_status = 2;
 }
 
-static void	remove_quotes_aux(char **token_i)
+void	remove_quotes_aux(char **token_i)
 {
 	int		i;
 	char	*aux;
@@ -55,7 +55,7 @@ static void	remove_quotes_aux(char **token_i)
 	free_ptrptr(split);
 }
 
-static void	mark_quotes(char **token_i, int *j)
+void	mark_quotes(char **token_i, int *j)
 {
 	char	c;
 
