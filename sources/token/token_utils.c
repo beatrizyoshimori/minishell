@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:39:12 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 19:23:56 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:57:12 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	set_tokens(char **tokens, t_token **token_list)
 		new->redirect = NO_REDIRECT;
 		new->no_exec = 0;
 		new->type = 0;
+		new->fd[0] = 0;
+		new->fd[1] = 0;
 		new->pathname = NULL;
 		new->next = NULL;
 		ft_tokenadd_back(token_list, new);
