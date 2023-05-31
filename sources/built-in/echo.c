@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:10:15 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/25 16:51:58 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:29:05 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_n_flag(char *token)
 		i++;
 		while (token[i] == 'n')
 			i++;
-		if (token[i] == '\0')
+		if (token[i] == '\0' && i != 1)
 			return (1);
 	}
 	return (0);
