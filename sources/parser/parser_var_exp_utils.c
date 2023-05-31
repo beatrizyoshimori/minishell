@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:06:35 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/16 21:57:38 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 21:39:33 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ int	get_length_after_dollar(char *token_i, int *j, int *length)
 	}
 	else
 	{
-		while (token_i[*j] && token_i[*j] != '_' && !ft_isalpha(token_i[*j]))
-		{
-			(*length)++;
-			(*j)++;
-		}
+		*length = 1;
+		(*j)++;
 		return (0);
 	}
 }

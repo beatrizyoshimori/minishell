@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 14:43:03 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:02:12 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	put_exit_status(char **token_i, int *j)
+void	put_exit_status(char **token_i, int *j)
 {
 	int		length;
 	char	*exit_st;
@@ -34,7 +34,7 @@ static void	put_exit_status(char **token_i, int *j)
 	free(aux);
 }
 
-static void	try_find_variable(char **token_i, int *j)
+void	try_find_variable(char **token_i, int *j)
 {
 	int	i;
 	int	length;
@@ -109,6 +109,7 @@ static void	check_empty_string(char **token)
 void	expand_variable(t_token *token_list)
 {
 	int		i;
+	int		j;
 	t_token	*aux;
 
 	aux = token_list;
@@ -117,7 +118,15 @@ void	expand_variable(t_token *token_list)
 		i = 0;
 		while (aux->token[i])
 		{
-			try_find_dollar(&aux->token[i]);
+			if (i == 0 || (i > 0 && ft_strncmp(aux->token[i - 1], "<<", 3)))
+				try_find_dollar(&aux->token[i]);
+			j = 0;
+			while (aux->token[i][j])
+			{
+				if (aux->token[i][j] == DOLLAR_VAR)
+					aux->token[i][j] = '$';
+				j++;
+			}
 			try_find_tilde(&aux->token[i]);
 			i++;
 		}
