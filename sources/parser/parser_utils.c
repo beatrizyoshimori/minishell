@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/25 18:30:35 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 20:52:59 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_syntax_error(t_token *token_list, char c)
+void	print_syntax_error(char c)
 {
 	ft_putstr_fd("bilu: syntax error near unexpected token ", 2);
 	if (c == '\n')
@@ -23,7 +23,8 @@ void	print_syntax_error(t_token *token_list, char c)
 		ft_putchar_fd(c, 2);
 		ft_putstr_fd("'\n", 2);
 	}
-	exit_program(&token_list);
+	g_ms.syntax_error = 1;
+	g_ms.exit_status = 2;
 }
 
 static void	remove_quotes_aux(char **token_i)
@@ -35,6 +36,7 @@ static void	remove_quotes_aux(char **token_i)
 	split = ft_split(*token_i, REMOVE_QUOTES);
 	if (!split[0])
 	{
+		free_ptrptr(split);
 		free(*token_i);
 		*token_i = (char *)ft_calloc(1, sizeof(char));
 		return ;
