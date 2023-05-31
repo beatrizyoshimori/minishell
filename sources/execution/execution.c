@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 22:20:33 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:43:33 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_processes(t_token *token_list, int num_proc)
+static void	wait_processes(t_token *token_list, int num_proc)
 {
 	int		i;
 	int		status;
@@ -35,7 +35,7 @@ void	wait_processes(t_token *token_list, int num_proc)
 	g_ms.on_fork = 0;
 }
 
-void	start_child_process(t_token *token_list, t_token *token, int i)
+static void	start_child_process(t_token *token_list, t_token *token, int i)
 {
 	set_fd(token, i);
 	close_fd(token_list);
