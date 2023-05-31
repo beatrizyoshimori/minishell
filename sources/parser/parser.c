@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:57:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/27 19:06:30 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:51:08 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@ static void	check_pipe_error(t_token *token_list)
 
 	aux = token_list;
 	if (aux->token[0][0] == '|')
-		print_syntax_error(token_list, '|');
+	{
+		print_syntax_error('|');
+		return ;
+	}
 	while (aux)
 	{
 		if (aux->token[0][0] == '|'
 			&& (aux->next == NULL || aux->next->token[0][0] == '|'))
-			print_syntax_error(token_list, '|');
+		{
+			print_syntax_error('|');
+			return ;
+		}
 		aux = aux->next;
 	}
 }
@@ -43,10 +49,12 @@ static void	check_redirections_error(t_token *token_list)
 			{
 				i++;
 				if (aux->token[i] == NULL)
-					print_syntax_error(token_list, '\n');
+					print_syntax_error('\n');
 				else if (aux->token[i][0] == '<' || aux->token[i][0] == '>'
 					|| aux->token[i][0] == '|')
-					print_syntax_error(token_list, aux->token[i][0]);
+					print_syntax_error(aux->token[i][0]);
+				if (g_ms.syntax_error)
+					return ;
 			}
 			i++;
 		}
@@ -54,20 +62,23 @@ static void	check_redirections_error(t_token *token_list)
 	}
 }
 
-static void	aux_check_quotes(t_token *token_list, char *a, int *j)
+static void	aux_check_quotes(char *aux, int *j)
 {
 	char	c;
 
-	while (a[*j])
+	while (aux[*j])
 	{
-		c = a[*j];
+		c = aux[*j];
 		if (c == '\'' || c == '\"')
 		{
 			(*j)++;
-			while (a[*j] && a[*j] != c)
+			while (aux[*j] && aux[*j] != c)
 				(*j)++;
-			if (a[*j] == '\0')
-				print_syntax_error(token_list, '\n');
+			if (aux[*j] == '\0')
+			{
+				print_syntax_error('\n');
+				return ;
+			}
 		}
 		(*j)++;
 	}
@@ -86,7 +97,9 @@ static void	check_quotes_error(t_token *token_list)
 		while (aux->token[i])
 		{
 			j = 0;
-			aux_check_quotes(token_list, aux->token[i], &j);
+			aux_check_quotes(aux->token[i], &j);
+			if (g_ms.syntax_error)
+				return ;
 			i++;
 		}
 		aux = aux->next;
@@ -96,9 +109,14 @@ static void	check_quotes_error(t_token *token_list)
 void	parser(t_token *token_list)
 {
 	check_pipe_error(token_list);
-	check_redirections_error(token_list);
-	check_quotes_error(token_list);
-	expand_variable(token_list);
-	remove_quotes(token_list);
-	redirect_in_out(token_list);
+	if (!g_ms.syntax_error)
+		check_redirections_error(token_list);
+	if (!g_ms.syntax_error)
+		check_quotes_error(token_list);
+	if (!g_ms.syntax_error)
+	{
+		expand_variable(token_list);
+		remove_quotes(token_list);
+		redirect_in_out(token_list);
+	}
 }
