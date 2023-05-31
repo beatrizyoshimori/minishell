@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:15:08 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 19:16:53 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:15:23 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	pwd(void)
 	g_ms.exit_status = 0;
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-	{
-		print_error("bilu: pwd: ", pwd, strerror(errno));
-		g_ms.exit_status = 1;
-	}
+		print_error("bilu: pwd: ", pwd, strerror(errno), 1);
 	else
 	{
 		ft_putstr_fd(pwd, 1);

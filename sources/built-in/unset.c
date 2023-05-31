@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 19:07:38 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 19:17:55 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:22:06 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ static int	remove_if_exists(char *token_i, int j, int length)
 	return (0);
 }
 
-static void	print_error_unset(char *token_i)
-{
-	print_error("bilu: unset: ", token_i, "not a valid identifier");
-	g_ms.exit_status = 1;
-}
-
 void	unset(char **token)
 {
 	int	i;
@@ -72,7 +66,7 @@ void	unset(char **token)
 	while (token[i])
 	{
 		if (!check_isname_unset(token[i]))
-			print_error_unset(token[i]);
+			print_error("bilu: unset: ", token[i], "not a valid identifier", 1);
 		else
 		{
 			j = 0;

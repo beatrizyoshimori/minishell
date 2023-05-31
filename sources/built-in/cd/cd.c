@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:06:04 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 19:19:31 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:38:33 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,14 @@ static void	cd_parameter(char **token, char *old_pwd)
 		new_pwd = get_path("OLDPWD=", 7);
 		if (!new_pwd)
 		{
-			ft_putstr_fd("bilu: cd: OLDPWD not set\n", 2);
-			g_ms.exit_status = 1;
+			print_error("bilu: ", "cd", "OLDPWD not set", 1);
 			return ;
 		}
 		free(token[1]);
 		token[1] = ft_strdup(new_pwd);
 	}
 	if (chdir(token[1]) == -1)
-	{
-		print_error("bilu: cd: ", token[1], strerror(errno));
-		g_ms.exit_status = 1;
-	}
+		print_error("bilu: cd: ", token[1], strerror(errno), 1);
 	else
 		cd_parameter_update(old_pwd, new_pwd, dash);
 }
@@ -61,15 +57,11 @@ static void	cd_home(char *old_pwd)
 	new_pwd = get_path("HOME=", 5);
 	if (!new_pwd)
 	{
-		ft_putstr_fd("bilu: cd: HOME not set\n", 2);
-		g_ms.exit_status = 1;
+		print_error("bilu: ", "cd", "HOME not set", 1);
 		return ;
 	}
 	if (chdir(new_pwd) == -1)
-	{
-		print_error("bilu: cd: ", new_pwd, strerror(errno));
-		g_ms.exit_status = 1;
-	}
+		print_error("bilu: cd: ", new_pwd, strerror(errno), 1);
 	else
 	{
 		update_pwd_or_oldpwd(new_pwd, "PWD=", 4);
@@ -88,9 +80,6 @@ void	cd(char **token)
 	else if (!token[2])
 		cd_parameter(token, old_pwd);
 	else
-	{
-		ft_putstr_fd("bilu: cd: too many arguments\n", 2);
-		g_ms.exit_status = 1;
-	}
+		print_error("bilu: ", "cd", "too many arguments", 1);
 	free(old_pwd);
 }

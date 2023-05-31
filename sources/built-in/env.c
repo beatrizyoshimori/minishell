@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:37:22 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 19:12:22 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:55:53 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,5 @@ void	env(char **token)
 		}
 	}
 	else if (!ft_strncmp(token[0], "env", 4))
-	{
-		print_error("bilu: env: ", token[1], "No such file or directory");
-		g_ms.exit_status = 127;
-	}
+		print_error("bilu: env: ", token[1], "No such file or directory", 127);
 }
