@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/29 22:05:58 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 21:23:25 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ typedef struct s_ms
 	int			num_tokens;
 	int			env_nbr_ptr;
 	int			*pipe_fd;
-	int			printed_error;
-	int			backup_fd[2];
+	int			syntax_error;
 	int			on_fork;
+	int			print_error;
 	char		**paths;
 	char		**env;
 	char		*home;
+	pid_t		*pid;
 	long long	exit_status;
 }	t_ms;
 
@@ -101,7 +102,7 @@ void	echo(char **token);
 void	env(char **token);
 
 // exit_command.c functions
-void	exit_command(t_token *token_list);
+void	exit_command(t_token *token_list, char **token);
 
 // pwd.c functions
 void	pwd(void);
@@ -136,12 +137,11 @@ void	get_paths(char **envp);
 void	copy_envp(char **envp);
 
 // exit_free folder
-// exit_program_error.c functions
-void	exit_program(t_token **token_list);
-void	print_error(char *str1, char *str2, char *str3);
+// error_utils.c functions
+void	print_error(char *str1, char *str2, char *str3, int exit_status);
 
 // free_utils.c functions
-void	free_ptrptr(char **tokens);
+void	free_ptrptr(char **ptrptr);
 void	free_token_list(t_token **token_list);
 
 // built-in_utils.c
@@ -169,15 +169,17 @@ void	mark_token_spaces(char *prompt);
 void	try_find_tilde(char **aux_token_i);
 
 // parser_utils.c functions
-void	print_syntax_error(t_token *token_list, char c);
+void	print_syntax_error(char c);
 void	remove_quotes(t_token *token_list);
 
 // parser_var_exp_utils.c functions
 int		get_length_after_dollar(char *token_i, int *j, int *length);
-void	found_variable(char **token_i, char *env_i, int *j, int *length);
+void	found_variable(char **tpidoken_i, char *env_i, int *j, int *length);
 void	not_found_variable(char **token_i, int *j, int *length);
 
 // parser_var_exp.c functions
+void	try_find_variable(char **token_i, int *j);
+void	put_exit_status(char **token_i, int *j);
 void	expand_variable(t_token *token_list);
 
 // parser.c functions

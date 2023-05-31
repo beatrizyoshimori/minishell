@@ -9,7 +9,7 @@ CD_PATH			=		cd
 
 ENVP_PATH		=		envp_utils
 
-EXIT_PATH		=		exit_free
+ERROR_PATH		=		error_free
 
 LEXER_PATH		=		lexer
 
@@ -41,7 +41,7 @@ EXECUTION		=		$(addprefix $(EXECUTION_PATH)/,	execution.c \
 
 ENVP			=		$(addprefix $(ENVP_PATH)/,		envp_utils.c)
 
-EXIT			=		$(addprefix $(EXIT_PATH)/,		exit_program_error.c \
+ERROR			=		$(addprefix $(ERROR_PATH)/,		error_utils.c \
 														free_utils.c)
 
 EXPORT			=		$(addprefix $(EXPORT_PATH)/,	export_utils.c \
@@ -63,7 +63,7 @@ SOURCES			=		non_ms_functions.c \
 						minishell.c \
 						$(BUILT-IN) \
 						$(ENVP) \
-						$(EXIT) \
+						$(ERROR) \
 						$(LEXER) \
 						$(PARSER) \
 						$(TOKEN) \
@@ -108,7 +108,7 @@ $(OBJECTS_PATH):
 						$(OBJECTS_PATH)/$(PARSER_PATH) \
 						$(OBJECTS_PATH)/$(TOKEN_PATH) \
 						$(OBJECTS_PATH)/$(ENVP_PATH) \
-						$(OBJECTS_PATH)/$(EXIT_PATH) \
+						$(OBJECTS_PATH)/$(ERROR_PATH) \
 						$(OBJECTS_PATH)/$(EXECUTION_PATH) \
 						$(OBJECTS_PATH)/$(BUILT-IN_PATH) \
 						$(OBJECTS_PATH)/$(BUILT-IN_PATH)/$(EXPORT_PATH) \
