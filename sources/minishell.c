@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 22:29:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:39:30 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	exec_command(t_token *token_list)
 		start_processes(token_list);
 }
 
-static void	create_prompt(t_token **token_list)
+static void	create_prompt(t_token *token_list)
 {
 	char	*prompt;
 	char	**tokens;
@@ -55,13 +55,13 @@ static void	create_prompt(t_token **token_list)
 		add_history(prompt);
 		lexer(&prompt);
 		tokens = ft_split(prompt, PIPE_SPACE);
-		set_tokens(tokens, token_list);
+		set_tokens(tokens, &token_list);
 		free(prompt);
 		free_ptrptr(tokens);
-		parser(*token_list);
-		if ((*token_list)->token[0] && !g_ms.syntax_error)
-			exec_command(*token_list);
-		free_token_list(token_list);
+		parser(token_list);
+		if (token_list->token[0] && !g_ms.syntax_error)
+			exec_command(token_list);
+		free_token_list(&token_list);
 		g_ms.syntax_error = 0;
 	}
 }
@@ -80,6 +80,6 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, signal_handler);
 	signal(SIGUSR1, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	create_prompt(&token_list);
+	create_prompt(token_list);
 	return (0);
 }
