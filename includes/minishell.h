@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 17:36:43 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:21:54 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ void	redirect_heredoc(t_token *token_list);
 void	try_find_tilde(char **aux_token_i);
 
 // parser_utils.c functions
-void	print_syntax_error(char c);
+void	check_pipe_error(t_token *token_list);
+void	print_syntax_error(char *c);
 void	remove_quotes_aux(char **token_i);
 void	mark_quotes(char **token_i, int *j);
 void	remove_quotes(t_token *token_list);

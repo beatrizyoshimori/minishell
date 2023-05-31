@@ -6,23 +6,40 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 20:30:57 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 15:00:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:21:45 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_syntax_error(char c)
+void	check_pipe_error(t_token *token_list)
+{
+	t_token	*aux;
+
+	aux = token_list;
+	if (aux->token[0][0] == '|')
+	{
+		print_syntax_error("|");
+		return ;
+	}
+	while (aux)
+	{
+		if (aux->token[0][0] == '|'
+			&& (aux->next == NULL || aux->next->token[0][0] == '|'))
+		{
+			print_syntax_error("|");
+			return ;
+		}
+		aux = aux->next;
+	}
+}
+
+void	print_syntax_error(char *c)
 {
 	ft_putstr_fd("bilu: syntax error near unexpected token ", 2);
-	if (c == '\n')
-		ft_putstr_fd("'newline'\n", 2);
-	else
-	{
-		ft_putchar_fd('\'', 2);
-		ft_putchar_fd(c, 2);
-		ft_putstr_fd("'\n", 2);
-	}
+	ft_putchar_fd('`', 2);
+	ft_putstr_fd(c, 2);
+	ft_putstr_fd("'\n", 2);
 	g_ms.syntax_error = 1;
 	g_ms.exit_status = 2;
 }

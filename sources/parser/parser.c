@@ -6,35 +6,38 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:57:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 15:03:42 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:24:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	check_pipe_error(t_token *token_list)
+static void	aux_check_redirects(t_token *token, int i)
 {
-	t_token	*aux;
-
-	aux = token_list;
-	if (aux->token[0][0] == '|')
+	if (token->token[i] == NULL)
 	{
-		print_syntax_error('|');
-		return ;
+		if (token->next == NULL)
+			print_syntax_error("newline");
+		else
+			print_syntax_error("|");
 	}
-	while (aux)
+	else if (token->token[i][0] == '<')
 	{
-		if (aux->token[0][0] == '|'
-			&& (aux->next == NULL || aux->next->token[0][0] == '|'))
-		{
-			print_syntax_error('|');
-			return ;
-		}
-		aux = aux->next;
+		if (token->token[i][1] == '<')
+			print_syntax_error("<<");
+		else if (!token->token[i][1])
+			print_syntax_error("<");
+	}
+	else if (token->token[i][0] == '>')
+	{
+		if (token->token[i][1] == '>')
+			print_syntax_error(">>");
+		else if (!token->token[i][1])
+			print_syntax_error(">");
 	}
 }
 
-static void	check_redirections_error(t_token *token_list)
+static void	check_redirects_error(t_token *token_list)
 {
 	int		i;
 	t_token	*aux;
@@ -48,11 +51,7 @@ static void	check_redirections_error(t_token *token_list)
 			if (aux->token[i][0] == '<' || aux->token[i][0] == '>')
 			{
 				i++;
-				if (aux->token[i] == NULL)
-					print_syntax_error('\n');
-				else if (aux->token[i][0] == '<' || aux->token[i][0] == '>'
-					|| aux->token[i][0] == '|')
-					print_syntax_error(aux->token[i][0]);
+				aux_check_redirects(aux, i);
 				if (g_ms.syntax_error)
 					return ;
 			}
@@ -76,7 +75,7 @@ static void	aux_check_quotes(char *aux, int *j)
 				(*j)++;
 			if (aux[*j] == '\0')
 			{
-				print_syntax_error('\n');
+				print_syntax_error("newline");
 				return ;
 			}
 		}
@@ -110,7 +109,7 @@ void	parser(t_token *token_list)
 {
 	check_pipe_error(token_list);
 	if (!g_ms.syntax_error)
-		check_redirections_error(token_list);
+		check_redirects_error(token_list);
 	if (!g_ms.syntax_error)
 		check_quotes_error(token_list);
 	if (!g_ms.syntax_error)
