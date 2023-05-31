@@ -6,39 +6,27 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 19:55:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:07:28 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static unsigned long long	check_first_parameter(char **token, int *f)
+static unsigned long long	check_first_parameter(char **token, int *flag)
 {
 	int					i;
-	unsigned long long	st;
+	unsigned long long	status;
 
 	i = 0;
-	st = 0;
-	if (token[1][0] == '+')
-		*f = 1;
-	else if (token[1][0] == '-')
-		*f = -1;
-	if (*f)
+	status = 0;
+	while ((token[1][i] >= 9 && token[1][i] <= 13) || token[1][i] == 32)
 		i++;
-	while (ft_isdigit(token[1][i]))
-		i++;
-	if (!token[1][i])
-	{
-		if (*f)
-			st = ft_atoull(token[1] + 1);
-		else
-			st = ft_atoull(token[1]);
-	}
-	else
-		st = (unsigned long long)LL_MAX + 2;
-	if ((*f != -1 && st > LL_MAX) || st > (unsigned long long)LL_MAX + 1)
-		st = (unsigned long long)LL_MAX + 2;
-	return (st);
+	if (token[1][i] == '+')
+		*flag = 1;
+	else if (token[1][i] == '-')
+		*flag = -1;
+	status = ft_atoull(token[1]);
+	return (status);
 }
 
 static long long	get_exit_status(char **token, int *ver)
