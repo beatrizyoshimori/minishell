@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:52:15 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 19:20:05 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:16:23 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	export(char **token)
 	while (token[i])
 	{
 		if (!check_isname_exp(token[i]))
-		{
-			print_error("bilu: export: ", token[1], "not a valid identifier");
-			g_ms.exit_status = 1;
-		}
+			print_error("bilu: export: ",
+				token[1], "not a valid identifier", 1);
 		else
 			update_env(token, i);
 		i++;
