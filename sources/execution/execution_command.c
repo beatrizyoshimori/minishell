@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:59:18 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 20:06:00 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	exit_process(t_token *token_list)
 {
-	close(0);
-	close(1);
+	if (g_ms.on_fork)
+	{
+		close(0);
+		close(1);
+	}
 	rl_clear_history();
 	free_token_list(&token_list);
 	free(g_ms.pipe_fd);
