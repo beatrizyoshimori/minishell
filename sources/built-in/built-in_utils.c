@@ -6,29 +6,31 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:52:49 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/29 21:10:35 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:08:17 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	change_fd_back(int redirect)
+static void	change_fd_back(int redirect, int backup_fd[2])
 {
 	if (redirect % REDIRECT_INPUT == 0)
-		dup2(g_ms.backup_fd[0], 0);
+		dup2(backup_fd[0], 0);
 	if (redirect % REDIRECT_OUTPUT == 0)
-		dup2(g_ms.backup_fd[1], 1);
+		dup2(backup_fd[1], 1);
 }
 
-static void	set_fd_builtin(int redirect, int fd[2])
+static void	set_fd_builtin(int redirect, int fd[2], int backup_fd[2])
 {
 	if (redirect % REDIRECT_INPUT == 0)
 	{
+		backup_fd[0] = dup(0);
 		dup2(fd[0], 0);
 		close(fd[0]);
 	}
 	if (redirect % REDIRECT_OUTPUT == 0)
 	{
+		backup_fd[1] = dup(1);
 		dup2(fd[1], 1);
 		close(fd[1]);
 	}
@@ -36,7 +38,9 @@ static void	set_fd_builtin(int redirect, int fd[2])
 
 void	exec_builtin(t_token *token_list)
 {
-	set_fd_builtin(token_list->redirect, token_list->fd);
+	int	backup_fd[2];
+
+	set_fd_builtin(token_list->redirect, token_list->fd, backup_fd);
 	if (token_list->type == CD)
 		cd(token_list->token);
 	else if (token_list->type == ECHO)
@@ -44,14 +48,14 @@ void	exec_builtin(t_token *token_list)
 	else if (token_list->type == ENV)
 		env(token_list->token);
 	else if (token_list->type == EXIT)
-		exit_command(token_list);
+		exit_command(token_list, token_list->token);
 	else if (token_list->type == EXPORT)
 		export(token_list->token);
 	else if (token_list->type == PWD)
 		pwd();
 	else if (token_list->type == UNSET)
 		unset(token_list->token);
-	change_fd_back(token_list->redirect);
+	change_fd_back(token_list->redirect, backup_fd);
 }
 
 int	ft_isbuiltin(t_token *token_list)
