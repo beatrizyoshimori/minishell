@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 21:23:25 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:36:43 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ typedef struct s_token
 extern t_ms	g_ms;
 
 // built-in folder
+// cd folder
+// cd_utils.c functions
+void	update_pwd_or_oldpwd(char *pwd, char *variable, int length);
+char	*get_path(char *variable, int length);
+
+// cd.c functions
+void	cd(char **token);
+
 // export folder
 // export_utils.c functions
 int		check_if_exists_exp(char **token, int i);
@@ -87,13 +95,9 @@ void	check_only_export(char **token);
 // export.c functions
 void	export(char **token);
 
-// cd folder
-// cd_utils.c functions
-void	update_pwd_or_oldpwd(char *pwd, char *variable, int length);
-char	*get_path(char *variable, int length);
-
-// cd.c functions
-void	cd(char **token);
+// built-in_utils.c
+void	exec_builtin(t_token *token_list);
+int		ft_isbuiltin(t_token *token_list);
 
 // echo.c functions
 void	echo(char **token);
@@ -110,18 +114,29 @@ void	pwd(void);
 // unset.c functions
 void	unset(char **token);
 
-// execution folder
-// execution.c functions
-void	start_processes(t_token *token_list);
+// envp_utils folder
+// envp utils
+int		dup_env(void);
+void	get_paths(char **envp);
+void	copy_envp(char **envp);
 
-// execution_fd_utils.c functions
+// error_free folder
+// error_utils.c functions
+void	print_error(char *str1, char *str2, char *str3, int exit_status);
+
+// free_utils.c functions
+void	free_ptrptr(char **ptrptr);
+void	free_token_list(t_token **token_list);
+
+// execution folder
+// execution_command.c functions
+void	exit_execve(t_token *token_list);
+void	exec_command_child(t_token *token_list, t_token *token);
+
+// execution_fd.c functions
 void	close_fd(t_token *token_list);
 void	create_pipes(void);
 void	set_fd(t_token *token, int i);
-
-// execution_cmd_utils.c functions
-void	exit_execve(t_token *token_list);
-void	exec_command_child(t_token *token_list, t_token *token);
 
 // execution_pathname.c functions
 void	set_pathname(t_token *token);
@@ -130,23 +145,8 @@ void	set_pathname(t_token *token);
 int		ft_isdirectory(char *token_cmd);
 int		ft_isfile(char *token_cmd);
 
-// envp_utils folder
-// envp utils
-int		dup_env(void);
-void	get_paths(char **envp);
-void	copy_envp(char **envp);
-
-// exit_free folder
-// error_utils.c functions
-void	print_error(char *str1, char *str2, char *str3, int exit_status);
-
-// free_utils.c functions
-void	free_ptrptr(char **ptrptr);
-void	free_token_list(t_token **token_list);
-
-// built-in_utils.c
-void	exec_builtin(t_token *token_list);
-int		ft_isbuiltin(t_token *token_list);
+// execution.c functions
+void	start_processes(t_token *token_list);
 
 // lexer folder
 // lexer.c functions
@@ -165,11 +165,17 @@ void	mark_pipe_spaces(char *prompt);
 void	mark_token_spaces(char *prompt);
 
 // parser folder
+// heredoc.c functions
+void	heredoc(t_token *token, int i);
+void	redirect_heredoc(t_token *token_list);
+
 // parser_tilde_exp.c functions
 void	try_find_tilde(char **aux_token_i);
 
 // parser_utils.c functions
 void	print_syntax_error(char c);
+void	remove_quotes_aux(char **token_i);
+void	mark_quotes(char **token_i, int *j);
 void	remove_quotes(t_token *token_list);
 
 // parser_var_exp_utils.c functions
@@ -186,16 +192,15 @@ void	expand_variable(t_token *token_list);
 void	parser(t_token *token_list);
 
 // redirect.c functions
+void	update_token(char **token);
+void	redirect_input(t_token *token, int i, int *ver);
 void	redirect_in_out(t_token *token_list);
-
-// heredoc.c functions
-void	heredoc(t_token *token, int i);
 
 // token folder
 // token_utils.c functions
 void	set_tokens(char **tokens, t_token **token_list);
 
 // non ms functions
-void	print_list(t_token **token_list);
+void	print_list(t_token *token_list);
 
 #endif
