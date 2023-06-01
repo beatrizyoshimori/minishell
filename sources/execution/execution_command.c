@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:59:18 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/31 20:10:24 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:51:58 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	exit_process(t_token *token_list)
 {
+	close_fd(token_list);
 	close(0);
 	close(1);
+	close(2);
 	rl_clear_history();
 	free_token_list(&token_list);
 	free(g_ms.pipe_fd);

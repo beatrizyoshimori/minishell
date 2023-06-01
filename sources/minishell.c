@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 21:43:03 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:56:34 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ static void	exec_command(t_token *token_list)
 			exec_builtin(token_list);
 		else
 			start_processes(token_list);
-	}
-	else if (g_ms.num_tokens == 1)
-	{
-		if (token_list->redirect % REDIRECT_INPUT == 0)
-			close(token_list->fd[0]);
-		if (token_list->redirect % REDIRECT_OUTPUT == 0)
-			close(token_list->fd[1]);
 	}
 	else if (g_ms.num_tokens > 1)
 		start_processes(token_list);
