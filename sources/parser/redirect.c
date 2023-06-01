@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:28:40 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 19:54:19 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:23:44 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ void	redirect_input(t_token *token, int i, int *ver)
 	if (!token->token[i][1])
 		set_redirect_fd(token, i, RED_IN, ver);
 	else if (token->token[i][1] == '<' && !token->token[i][2])
+	{
+		if (token->fd[0])
+			close(token->fd[0]);
 		token->fd[0] = open(".h*e*r*e*d*o*c*", O_RDONLY);
+	}
 	if (token->redirect == NO_REDIRECT)
 		token->redirect = REDIRECT_INPUT;
 	else if (token->redirect == REDIRECT_OUTPUT)
