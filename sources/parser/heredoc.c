@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 20:14:37 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/31 18:26:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:24:51 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ void	heredoc(t_token *token, int i)
 	prompt = NULL;
 	while (1)
 	{
-		remove_quotes_heredoc(token->token[i + 1], &quotes);
+		if (ft_strchr(token->token[i + 1], '\"')
+			|| ft_strchr(token->token[i + 1], '\''))
+			remove_quotes_heredoc(token->token[i + 1], &quotes);
 		prompt = readline("> ");
 		if (!ft_strncmp(prompt, token->token[i + 1],
 				ft_strlen(token->token[i + 1]) + 1))
