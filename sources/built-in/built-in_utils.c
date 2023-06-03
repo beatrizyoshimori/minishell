@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built-in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:52:49 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/31 19:35:09 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/03 15:34:54 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,28 @@ static void	set_fd_builtin(int redirect, int fd[2], int backup_fd[2])
 	}
 }
 
-void	exec_builtin(t_token *token_list)
+void	exec_builtin(t_token *token_list, t_token *token)
 {
 	int	backup_fd[2];
 
-	set_fd_builtin(token_list->redirect, token_list->fd, backup_fd);
-	if (token_list->type == CD)
-		cd(token_list->token);
-	else if (token_list->type == ECHO)
-		echo(token_list->token);
-	else if (token_list->type == ENV)
-		env(token_list->token);
-	else if (token_list->type == EXIT)
-		exit_command(token_list, token_list->token);
-	else if (token_list->type == EXPORT)
-		export(token_list->token);
-	else if (token_list->type == PWD)
+	if (!g_ms.on_fork)
+		set_fd_builtin(token->redirect, token->fd, backup_fd);
+	if (token->type == CD)
+		cd(token->token);
+	else if (token->type == ECHO)
+		echo(token->token);
+	else if (token->type == ENV)
+		env(token->token);
+	else if (token->type == EXIT)
+		exit_command(token_list, token->token);
+	else if (token->type == EXPORT)
+		export(token->token);
+	else if (token->type == PWD)
 		pwd();
-	else if (token_list->type == UNSET)
-		unset(token_list->token);
-	change_fd_back(token_list->redirect, backup_fd);
+	else if (token->type == UNSET)
+		unset(token->token);
+	if (!g_ms.on_fork)
+		change_fd_back(token->redirect, backup_fd);
 }
 
 int	ft_isbuiltin(t_token *token_list)
