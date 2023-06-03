@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:59:18 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/03 16:31:17 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:52:16 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exit_process(t_token *token_list)
 	close(0);
 	close(1);
 	close(2);
+	close(g_ms.fd_heredoc);
 	rl_clear_history();
 	free_token_list(&token_list);
 	free(g_ms.pipe_fd);
