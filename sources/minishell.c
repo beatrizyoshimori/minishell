@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/01 16:56:34 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:26:15 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ static void	signal_handler(int signal)
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
 	}
-	else if (signal == SIGINT && g_ms.on_fork)
+	else if (signal == SIGINT && g_ms.on_fork == 1)
 		ft_putchar_fd('\n', 1);
-	else if (signal == SIGUSR1)
-		g_ms.print_error = 1;
+	if (signal == SIGPIPE)
+	{
+		print_error("", "bilu", "Broken pipe", 141);
+		exit_process(g_ms.token_list);
+	}
 }
 
 static void	exec_command(t_token *token_list)
@@ -34,7 +36,7 @@ static void	exec_command(t_token *token_list)
 	if (g_ms.num_tokens == 1 && !token_list->no_exec)
 	{
 		if (ft_isbuiltin(token_list))
-			exec_builtin(token_list);
+			exec_builtin(token_list, token_list);
 		else
 			start_processes(token_list);
 	}
@@ -59,6 +61,8 @@ static void	create_prompt(t_token *token_list)
 		free(prompt);
 		free_ptrptr(tokens);
 		parser(token_list);
+		if (!g_ms.syntax_error)
+			g_ms.token_list = token_list;
 		if (token_list->token[0] && !g_ms.syntax_error)
 			exec_command(token_list);
 		free_token_list(&token_list);
@@ -77,9 +81,9 @@ int	main(int argc, char **argv, char **envp)
 	copy_envp(envp);
 	get_paths(envp);
 	token_list = NULL;
-	signal(SIGINT, signal_handler);
-	signal(SIGUSR1, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
+	signal(SIGPIPE, signal_handler);
 	create_prompt(token_list);
 	return (0);
 }
