@@ -6,30 +6,13 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 19:26:15 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:54:24 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_ms	g_ms;
-
-static void	signal_handler(int signal)
-{
-	if (signal == SIGINT && !g_ms.on_fork)
-	{
-		ft_putchar_fd('\n', 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-	}
-	else if (signal == SIGINT && g_ms.on_fork == 1)
-		ft_putchar_fd('\n', 1);
-	if (signal == SIGPIPE)
-	{
-		print_error("", "bilu", "Broken pipe", 141);
-		exit_process(g_ms.token_list);
-	}
-}
 
 static void	exec_command(t_token *token_list)
 {
