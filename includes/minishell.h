@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 19:13:48 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:41:48 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,11 @@ void	parser(t_token *token_list);
 void	update_token(char **token);
 void	redirect_input(t_token *token, int i, int *ver);
 void	redirect_in_out(t_token *token_list);
+
+// signal folder
+// signal_handlers.c functions
+void	signal_handler_heredoc(int signal);
+void	signal_handler(int signal);
 
 // token folder
 // token_utils.c functions
