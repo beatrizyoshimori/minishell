@@ -24,6 +24,8 @@ LEXER_PATH		=		lexer
 
 PARSER_PATH		=		parser
 
+SIGNAL_PATH		=		signal
+
 TOKEN_PATH		=		token
 
 CD				=		$(addprefix $(CD_PATH)/,		cd_utils.c \
@@ -65,6 +67,8 @@ PARSER			=		$(addprefix $(PARSER_PATH)/,	parser_tilde_exp.c \
 														redirect_utils.c \
 														heredoc.c)
 
+SIGNAL			=		$(addprefix $(SIGNAL_PATH)/,	signal_handlers.c)
+
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
 
 LIBFT_H			=		$(addprefix $(LIBFT_PATH)/, $(HEADER_PATH))
@@ -76,10 +80,11 @@ SOURCES			=		non_ms_functions.c \
 						$(BUILT-IN) \
 						$(ENVP) \
 						$(ERROR) \
+						$(EXECUTION) \
 						$(LEXER) \
 						$(PARSER) \
-						$(TOKEN) \
-						$(EXECUTION)
+						$(SIGNAL) \
+						$(TOKEN)
 
 OBJECT			=		$(addprefix $(OBJECTS_PATH)/, $(SOURCES:.c=.o))
 
@@ -112,6 +117,7 @@ $(OBJECTS_PATH):
 						$(OBJECTS_PATH)/$(EXECUTION_PATH) \
 						$(OBJECTS_PATH)/$(LEXER_PATH) \
 						$(OBJECTS_PATH)/$(PARSER_PATH) \
+						$(OBJECTS_PATH)/$(SIGNAL_PATH) \
 						$(OBJECTS_PATH)/$(TOKEN_PATH)
 
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
