@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 18:58:43 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/03 20:09:39 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,30 @@ static void	start_child_process(t_token *token_list, t_token *token, int i)
 	exit_process(token_list);
 }
 
+static void	start_processes_aux(t_token *token_list, t_token *token, int i)
+{
+	if (!ft_isdirectory(token->token[0]))
+	{
+		set_pathname(token);
+		if (!token->pathname && !token->no_exec && !ft_isbuiltin(token))
+		{
+			print_error("", token->token[0], "command not found", 127);
+			token->no_exec = 1;
+		}
+	}
+	else
+	{
+		print_error("bilu: ", token->token[0], "Is a directory", 126);
+		token->no_exec = 1;
+	}
+	g_ms.pid[i] = fork();
+	if (!g_ms.pid[i])
+	{
+		g_ms.on_fork = 1;
+		start_child_process(token_list, token, i);
+	}
+}
+
 void	start_processes(t_token *token_list)
 {
 	int		i;
@@ -53,26 +77,7 @@ void	start_processes(t_token *token_list)
 	i = 0;
 	while (i < num_proc)
 	{
-		if (!ft_isdirectory(aux->token[0]))
-		{
-			set_pathname(aux);
-			if (!aux->pathname && !aux->no_exec && !ft_isbuiltin(aux))
-			{
-				print_error("", aux->token[0], "command not found", 127);
-				aux->no_exec = 1;
-			}
-		}
-		else
-		{
-			print_error("bilu: ", aux->token[0], "Is a directory", 126);
-			aux->no_exec = 1;
-		}
-		g_ms.pid[i] = fork();
-		if (!g_ms.pid[i])
-		{
-			g_ms.on_fork = 1;
-			start_child_process(token_list, aux, i);
-		}
+		start_processes_aux(token_list, aux, i);
 		i++;
 		if (i != num_proc)
 			aux = aux->next->next;
