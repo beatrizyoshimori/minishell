@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/03 18:58:43 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	wait_processes(t_token *token_list, int num_proc)
 {
 	int		i;
 	int		status;
-	int		exit_status;
 	t_token	*aux;
 
 	aux = token_list;
@@ -25,28 +24,19 @@ static void	wait_processes(t_token *token_list, int num_proc)
 	{
 		waitpid(g_ms.pid[i], &status, 0);
 		if (WIFEXITED(status))
-			exit_status = WEXITSTATUS(status);
+			g_ms.exit_status = WEXITSTATUS(status);
 		i++;
 		if (i != num_proc)
 			aux = aux->next->next;
-		else
-			g_ms.exit_status = exit_status;
 	}
-	g_ms.on_fork = 0;
 }
 
 static void	start_child_process(t_token *token_list, t_token *token, int i)
 {
 	set_fd(token, i);
 	close_fd(token_list);
-	if (!ft_isdirectory(token->token[0]))
-	{
-		set_pathname(token);
-		if (!token->no_exec)
-			exec_command_child(token_list, token);
-	}
-	else
-		print_error("bilu: ", token->token[0], "Is a directory", 126);
+	if (!token->no_exec)
+		exec_command_child(token_list, token);
 	exit_process(token_list);
 }
 
@@ -63,10 +53,26 @@ void	start_processes(t_token *token_list)
 	i = 0;
 	while (i < num_proc)
 	{
-		g_ms.on_fork = 1;
+		if (!ft_isdirectory(aux->token[0]))
+		{
+			set_pathname(aux);
+			if (!aux->pathname && !aux->no_exec && !ft_isbuiltin(aux))
+			{
+				print_error("", aux->token[0], "command not found", 127);
+				aux->no_exec = 1;
+			}
+		}
+		else
+		{
+			print_error("bilu: ", aux->token[0], "Is a directory", 126);
+			aux->no_exec = 1;
+		}
 		g_ms.pid[i] = fork();
 		if (!g_ms.pid[i])
+		{
+			g_ms.on_fork = 1;
 			start_child_process(token_list, aux, i);
+		}
 		i++;
 		if (i != num_proc)
 			aux = aux->next->next;
