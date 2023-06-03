@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 17:12:32 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 18:11:35 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:27:46 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	free_token_list(t_token **token_list)
 		free(*token_list);
 		(*token_list) = aux;
 	}
-	unlink(".h*e*r*e*d*o*c*");
+	if (g_ms.on_fork != 2)
+		unlink(".h*e*r*e*d*o*c*");
 }
