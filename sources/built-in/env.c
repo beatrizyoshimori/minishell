@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 21:37:22 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 19:55:53 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/03 12:59:02 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	env(char **token)
 			i++;
 		}
 	}
-	else if (!ft_strncmp(token[0], "env", 4))
+	else
 		print_error("bilu: env: ", token[1], "No such file or directory", 127);
 }
