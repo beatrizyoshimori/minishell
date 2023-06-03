@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:13:48 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,19 @@
 
 typedef struct s_ms
 {
-	int			num_tokens;
-	int			env_nbr_ptr;
-	int			*pipe_fd;
-	int			syntax_error;
-	int			on_fork;
-	int			print_error;
-	char		**paths;
-	char		**env;
-	char		*home;
-	pid_t		*pid;
-	long long	exit_status;
+	int				num_tokens;
+	int				env_nbr_ptr;
+	int				*pipe_fd;
+	int				syntax_error;
+	int				on_fork;
+	int				print_error;
+	int				fd_heredoc;
+	char			**paths;
+	char			**env;
+	char			*home;
+	pid_t			*pid;
+	long long		exit_status;
+	struct s_token	*token_list;
 }	t_ms;
 
 typedef struct s_token
@@ -96,7 +98,7 @@ void	check_only_export(char **token);
 void	export(char **token);
 
 // built-in_utils.c
-void	exec_builtin(t_token *token_list);
+void	exec_builtin(t_token *token_list, t_token *token);
 int		ft_isbuiltin(t_token *token_list);
 
 // echo.c functions
