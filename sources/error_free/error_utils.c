@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:04:10 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 19:14:52 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:33:38 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,19 @@ void	print_error(char *str1, char *str2, char *str3, int exit_status)
 		ft_putstr_fd("\n", 2);
 	}
 	g_ms.exit_status = exit_status;
+}
+
+void	print_error_heredoc(char *prompt, char *dlmt)
+{
+	int	backup_fd;
+
+	if (!prompt)
+	{
+		backup_fd = dup(1);
+		dup2(2, 1);
+		printf("bilu: warning: here-document delimited ");
+		printf("by end-of-file (wanted '%s')\n", dlmt);
+		dup2(backup_fd, 1);
+		close(backup_fd);
+	}
 }
