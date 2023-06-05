@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 19:41:48 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:22:10 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	copy_envp(char **envp);
 // error_free folder
 // error_utils.c functions
 void	print_error(char *str1, char *str2, char *str3, int exit_status);
+void	print_error_heredoc(char *prompt, char *dlmt);
 
 // free_utils.c functions
 void	free_ptrptr(char **ptrptr);
