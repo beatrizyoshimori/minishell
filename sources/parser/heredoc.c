@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 20:14:37 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/03 20:04:29 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:30:37 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	remove_quotes_heredoc(char *token_i, int *quotes)
 	remove_quotes_aux(&token_i);
 }
 
-static void	heredoc_readline(char *delimeter)
+static void	heredoc_readline(char *dlmt)
 {
 	int		quotes;
 	char	*prompt;
@@ -61,17 +61,17 @@ static void	heredoc_readline(char *delimeter)
 	signal(SIGINT, signal_handler_heredoc);
 	while (1)
 	{
-		if (ft_strchr(delimeter, '\"')
-			|| ft_strchr(delimeter, '\''))
-			remove_quotes_heredoc(delimeter, &quotes);
+		if (ft_strchr(dlmt, '\"') || ft_strchr(dlmt, '\''))
+			remove_quotes_heredoc(dlmt, &quotes);
 		prompt = readline("> ");
-		if (!ft_strncmp(prompt, delimeter,
-				ft_strlen(delimeter) + 1))
+		if (!prompt || !ft_strncmp(prompt, dlmt, ft_strlen(dlmt) + 1))
+		{
+			print_error_heredoc(prompt, dlmt);
 			break ;
+		}
 		if (!quotes)
 			try_find_dollar_heredoc(&prompt);
-		write(g_ms.fd_heredoc, prompt, ft_strlen(prompt));
-		write(g_ms.fd_heredoc, "\n", 1);
+		ft_putendl_fd(prompt, g_ms.fd_heredoc);
 		free(prompt);
 	}
 	free(prompt);
