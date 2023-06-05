@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 21:06:04 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/30 16:38:33 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:20:44 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ static void	cd_parameter(char **token, char *old_pwd)
 		token[1] = ft_strdup(new_pwd);
 	}
 	if (chdir(token[1]) == -1)
+	{
+		if (!token[1][0])
+			return ;
 		print_error("bilu: cd: ", token[1], strerror(errno), 1);
+	}
 	else
 		cd_parameter_update(old_pwd, new_pwd, dash);
 }
