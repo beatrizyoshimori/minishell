@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 20:09:39 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:35:03 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	wait_processes(t_token *token_list, int num_proc)
 		waitpid(g_ms.pid[i], &status, 0);
 		if (WIFEXITED(status))
 			g_ms.exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_ms.exit_status = 128 + WTERMSIG(status);
 		i++;
 		if (i != num_proc)
 			aux = aux->next->next;
