@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 19:40:21 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 19:51:18 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:04:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	signal_handler_heredoc(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		g_ms.exit_status = 148;
-		close(g_ms.fd_heredoc);
-		exit_process(g_ms.token_list);
-	}
-}
 
 void	signal_handler(int signal)
 {
@@ -36,6 +25,17 @@ void	signal_handler(int signal)
 	if (signal == SIGPIPE)
 	{
 		print_error("", "bilu", "Broken pipe", 141);
+		exit_process(g_ms.token_list);
+	}
+}
+
+void	signal_handler_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		g_ms.exit_status = 148;
+		close(g_ms.fd_heredoc);
 		exit_process(g_ms.token_list);
 	}
 }

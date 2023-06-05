@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/05 16:22:10 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:04:45 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	check_only_export(char **token);
 // export.c functions
 void	export(char **token);
 
-// built-in_utils.c
+// built-in_utils.c functions
 void	exec_builtin(t_token *token_list, t_token *token);
 int		ft_isbuiltin(t_token *token_list);
 
@@ -117,7 +117,7 @@ void	pwd(void);
 void	unset(char **token);
 
 // envp_utils folder
-// envp utils
+// envp_utils.c functions
 int		dup_env(void);
 void	get_paths(char **envp);
 void	copy_envp(char **envp);
@@ -145,8 +145,8 @@ void	set_fd(t_token *token, int i);
 void	set_pathname(t_token *token);
 
 // execution_utils.c functions
-int		ft_isdirectory(char *token_cmd);
 int		ft_isfile(char *token_cmd);
+int		ft_isdirectory(char *token_cmd);
 
 // execution.c functions
 void	start_processes(t_token *token_list);
@@ -157,21 +157,17 @@ void	check_ctrl_d(char *prompt);
 void	check_whitespaces_enter(char **prompt);
 void	lexer(char **prompt);
 
-// quote.c functions
+// quotes.c functions
 void	mark_metachar_inside_quotes(char *prompt);
 void	find_metachar_dollar_and_tilde(char *prompt);
 void	change_metachar_back(char *prompt);
 
-// space.c functions
+// spaces.c functions
 void	create_spaces(char **prompt);
 void	mark_pipe_spaces(char *prompt);
 void	mark_token_spaces(char *prompt);
 
 // parser folder
-// heredoc.c functions
-void	heredoc(t_token *token, int i);
-void	redirect_heredoc(t_token *token_list);
-
 // parser_tilde_exp.c functions
 void	try_find_tilde(char **aux_token_i);
 
@@ -188,22 +184,29 @@ void	found_variable(char **tpidoken_i, char *env_i, int *j, int *length);
 void	not_found_variable(char **token_i, int *j, int *length);
 
 // parser_var_exp.c functions
-void	try_find_variable(char **token_i, int *j);
 void	put_exit_status(char **token_i, int *j);
+void	try_find_variable(char **token_i, int *j);
 void	expand_variable(t_token *token_list);
 
 // parser.c functions
 void	parser(t_token *token_list);
 
-// redirect.c functions
+// redirect folder
+// heredoc.c functions
+void	heredoc(t_token *token, int i);
+void	redirect_heredoc(t_token *token_list);
+
+// redirect_utils.c functions
 void	update_token(char **token);
+
+// redirect.c functions
 void	redirect_input(t_token *token, int i, int *ver);
 void	redirect_in_out(t_token *token_list);
 
 // signal folder
 // signal_handlers.c functions
-void	signal_handler_heredoc(int signal);
 void	signal_handler(int signal);
+void	signal_handler_heredoc(int signal);
 
 // token folder
 // token_utils.c functions
