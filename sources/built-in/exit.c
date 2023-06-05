@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:45:45 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/31 19:39:13 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:43:42 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@ static unsigned long long	check_first_parameter(char **token, int *flag)
 
 	i = 0;
 	status = 0;
-	while ((token[1][i] >= 9 && token[1][i] <= 13) || token[1][i] == 32)
-		i++;
-	if (token[1][i] == '+')
-		*flag = 1;
-	else if (token[1][i] == '-')
-		*flag = -1;
-	status = ft_atoull(token[1]);
+	if (!token[1][0])
+		status = (unsigned long long)LL_MAX + 2;
+	else
+	{
+		while ((token[1][i] >= 9 && token[1][i] <= 13) || token[1][i] == 32)
+			i++;
+		if (token[1][i] == '+')
+			*flag = 1;
+		else if (token[1][i] == '-')
+			*flag = -1;
+		status = ft_atoull(token[1]);
+	}
 	return (status);
 }
 
