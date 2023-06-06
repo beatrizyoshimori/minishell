@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_var_exp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/05/30 22:02:12 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:39:08 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	put_exit_status(char **token_i, int *j)
 	free(exit_st);
 	free(*token_i);
 	*token_i = ft_strdup(aux);
-	*j -= length + 1;
+	*j = length - 1;
 	free(aux);
 }
 
