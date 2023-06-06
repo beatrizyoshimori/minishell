@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/03 19:54:24 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:30:48 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	exec_command(t_token *token_list)
 	}
 	else if (g_ms.num_tokens > 1)
 		start_processes(token_list);
+	else if (token_list->no_exec)
+		close_fd(token_list);
 }
 
 static void	create_prompt(t_token *token_list)
