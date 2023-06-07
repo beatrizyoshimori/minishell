@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 20:04:09 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/25 20:17:26 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:48:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	mark_metachar_dollar(char *prompt, int i)
 		prompt[i] = DOLLAR_VAR;
 }
 
-void	find_metachar_dollar_and_tilde(char *prompt)
+void	find_metachar(char *prompt)
 {
 	int	i;
 

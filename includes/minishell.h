@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/05 17:04:45 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:46:20 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	lexer(char **prompt);
 
 // quotes.c functions
 void	mark_metachar_inside_quotes(char *prompt);
-void	find_metachar_dollar_and_tilde(char *prompt);
+void	find_metachar(char *prompt);
 void	change_metachar_back(char *prompt);
 
 // spaces.c functions
