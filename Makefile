@@ -1,12 +1,20 @@
 NAME			=		minishell
 
+NAME_B			=		minishell_bonus
+
 HEADER_PATH		=		includes
+
+HEADER_B_PATH	=		includes_bonus
 
 LIBFT_PATH		=		libft
 
 OBJECTS_PATH	=		objects
 
+OBJECTS_B_PATH	=		objects_bonus
+
 SOURCES_PATH	=		sources
+
+SOURCES_B_PATH	=		sources_bonus
 
 BUILT-IN_PATH	=		built-in
 
@@ -76,7 +84,7 @@ TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
 
 LIBFT_H			=		$(addprefix $(LIBFT_PATH)/,		$(HEADER_PATH))
 
-LIBFT			=		$(addprefix $(LIBFT_PATH)/, 	libft.a)
+LIBFT			=		$(addprefix $(LIBFT_PATH)/,		libft.a)
 
 SOURCES			=		non_ms_functions.c \
 						minishell.c \
@@ -90,13 +98,23 @@ SOURCES			=		non_ms_functions.c \
 						$(SIGNAL) \
 						$(TOKEN)
 
-OBJECT			=		$(addprefix $(OBJECTS_PATH)/, $(SOURCES:.c=.o))
+SOURCES_B		=		parser_bonus.c \
+						quotes_bonus.c \
+						wildcards_bonus.c
 
-SOURCE			=		$(addprefix $(SOURCES_PATH)/, $(SOURCES))
+OBJECT			=		$(addprefix $(OBJECTS_PATH)/,	$(SOURCES:.c=.o))
+
+SOURCE			=		$(addprefix $(SOURCES_PATH)/,	$(SOURCES))
+
+OBJECT_B		=		$(filter-out $(OBJECTS_PATH)/$(LEXER_PATH)/quotes.o, \
+							$(filter-out $(OBJECTS_PATH)/$(PARSER_PATH)/parser.o, $(OBJECT))) \
+						$(addprefix $(OBJECTS_B_PATH)/,	$(SOURCES_B:.c=.o))
+
+SOURCE_B		=		$(addprefix $(SOURCES_B_PATH)/,	$(SOURCES_B))
 
 CC				=		cc
 
-C_FLAGS			=		-Wall -Werror -Wextra -I$(HEADER_PATH) -I$(LIBFT_H)
+C_FLAGS			=		-Wall -Werror -Wextra -I$(HEADER_PATH) -I$(HEADER_B_PATH) -I$(LIBFT_H)
 
 LIBFT_FLAGS		=		-L$(LIBFT_PATH) -lft
 
@@ -127,20 +145,38 @@ $(OBJECTS_PATH):
 $(OBJECTS_PATH)/%.o:	$(SOURCES_PATH)/%.c $(HEADER_PATH)/minishell.h
 						@$(CC) $(C_FLAGS) -c $< -o $@
 
+bonus:					$(LIBFT) $(OBJECTS_PATH) $(NAME_B)
+
+$(NAME_B):				$(OBJECTS_B_PATH) $(OBJECT_B)
+						@$(CC) $(C_FLAGS) $(OBJECT_B) $(LIBFT_FLAGS) -o $@ -lreadline
+
+$(OBJECTS_B_PATH):
+						@mkdir -p $(OBJECTS_B_PATH) \
+						$(OBJECTS_B_PATH)/$(SOURCES_B_PATH)
+
+$(OBJECTS_B_PATH)/%.o:	$(SOURCES_B_PATH)/%.c $(HEADER_B_PATH)/minishell_bonus.h
+						@$(CC) $(C_FLAGS) -c $< -o $@
+
 v:						$(LIBFT) $(NAME)
 						@valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
 						--suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
 						--trace-children-skip='*/bin/*,*/sbin/*' \
 						./minishell
 
+vb:						$(LIBFT) $(NAME) $(NAME_B)
+						@valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
+						--suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
+						--trace-children-skip='*/bin/*,*/sbin/*' \
+						./minishell_bonus
+
 clean:
-						@$(RM) $(OBJECTS_PATH)
+						@$(RM) $(OBJECTS_PATH) $(OBJECTS_B_PATH)
 						@make -C $(LIBFT_PATH) clean
 
 fclean:					clean
-						@$(RM) $(NAME)
+						@$(RM) $(NAME) $(NAME_B)
 						@make -C $(LIBFT_PATH) fclean
 
 re:						fclean all
 
-.PHONY:					all clean fclean re
+.PHONY:					all bonus clean fclean re
