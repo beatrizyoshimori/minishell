@@ -6,7 +6,7 @@
 /*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/06 20:39:08 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:39:21 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	try_find_variable(char **token_i, int *j)
 	i = 0;
 	length = 0;
 	isname = get_length_after_dollar(*token_i, j, &length);
-	if (isname)
+	if (isname == 1)
 	{
 		while (g_ms.env[i])
 		{

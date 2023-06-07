@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_var_exp_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:06:35 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/30 21:39:33 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:38:13 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ int	get_length_after_dollar(char *token_i, int *j, int *length)
 		}
 		return (1);
 	}
-	else
+	else if (ft_isdigit(token_i[*j]))
 	{
 		*length = 1;
 		(*j)++;
 		return (0);
 	}
+	else
+		return (-1);
 }
 
 void	found_variable(char **token_i, char *env_i, int *j, int *length)
