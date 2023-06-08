@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:38:06 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/07 20:38:19 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:59:38 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	wildcards(t_token *token_list)
 		ft_lstadd_back(&files, ft_lstnew(entry->d_name));
 		entry = readdir(dir);
 	}
-	//print_list_wc(files);
 	try_find_wildcards(token_list, files);
 	free_list(&files);
 	closedir(dir);
