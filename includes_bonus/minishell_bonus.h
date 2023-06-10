@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/07 20:59:08 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:09:23 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	mark_token_spaces(char *prompt);
 
 // parser folder
 // parser_tilde_exp.c functions
-void	try_find_tilde(char **aux_token_i);
+void	try_find_tilde(char **token_i);
 
 // parser_utils.c functions
 void	check_pipe_error(t_token *token_list);

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 18:40:02 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/17 16:42:21 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:00:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ static void	try_find_home(char **token_i, int *j)
 	free(home);
 }
 
-void	try_find_tilde(char **aux_token_i)
+void	try_find_tilde(char **token_i)
 {
 	int	j;
 
 	j = 0;
-	while ((*aux_token_i)[j])
+	while ((*token_i)[j])
 	{
-		if ((*aux_token_i)[j] == TILDE_VAR)
-			try_find_home(aux_token_i, &j);
-		if ((*aux_token_i)[j])
+		if ((*token_i)[j] == TILDE_VAR)
+			try_find_home(token_i, &j);
+		if ((*token_i)[j])
 			j++;
 	}
 }

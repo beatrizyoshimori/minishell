@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_var_exp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 19:21:49 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/06 21:39:21 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:00:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,23 @@ void	try_find_variable(char **token_i, int *j)
 		not_found_variable(token_i, j, &length);
 }
 
-static void	try_find_dollar(char **aux_token_i)
+static void	try_find_dollar(char **token_i)
 {
 	int	j;
 
 	j = 0;
-	while ((*aux_token_i)[j])
+	while ((*token_i)[j])
 	{
-		if ((*aux_token_i)[j] == DOLLAR_VAR)
+		if ((*token_i)[j] == DOLLAR_VAR)
 		{
-			if ((*aux_token_i)[j + 1])
+			if ((*token_i)[j + 1])
 				j++;
-			if ((*aux_token_i)[j] == '?')
-				put_exit_status(aux_token_i, &j);
+			if ((*token_i)[j] == '?')
+				put_exit_status(token_i, &j);
 			else
-				try_find_variable(aux_token_i, &j);
+				try_find_variable(token_i, &j);
 		}
-		if (*aux_token_i)
+		if (*token_i)
 			j++;
 	}
 }
