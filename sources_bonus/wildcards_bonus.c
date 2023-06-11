@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:38:06 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/10 18:48:00 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/10 21:22:47 by byoshimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void	aux_expand_wildcards(char *token_i, t_list *files)
 	free_ptrptr(split_wc);
 }
 
-static void	cat_files(t_list **dir, t_list *sub_files, char *slash)
+static void	cat_files(t_list **dir, t_list *sub_files)
 {
 	t_list	*aux_sub;
 	char	*aux;
@@ -121,7 +121,7 @@ static void	cat_files(t_list **dir, t_list *sub_files, char *slash)
 	{
 		if (((char *)aux_sub->content)[0])
 		{
-			aux = ft_strjoin(slash, (char *)aux_sub->content);
+			aux = ft_strjoin("/", (char *)aux_sub->content);
 			ft_lstadd_back(dir, ft_lstnew(ft_strjoin((*dir)->content, aux)));
 			free(aux);
 		}
@@ -133,14 +133,12 @@ static void	cat_files(t_list **dir, t_list *sub_files, char *slash)
 	*dir = aux_sub;
 }
 
-static t_list	*expand_wildcards(char *token_i)
+static t_list	*expand_wildcards(char *token_i, char *path_prev)
 {
-	static int		first = 1;
-	static char		*path;
+	char			*path;
 	int				j;
 	char			*aux_token;
 	char			*aux_token2;
-	char			*slash;
 	t_list			*files;
 	t_list			*aux_files;
 	t_list			*cp_files;
@@ -150,52 +148,42 @@ static t_list	*expand_wildcards(char *token_i)
 	struct dirent	*entry;
 
 	j = 0;
-	if (token_i[0] == '/')
-		path = ft_strdup("/");
-	else if (!ft_strncmp(token_i, "../", 3))
+	if (g_ms.first_wildcard)
 	{
-		path = ft_strdup("../");
-		j += 2;
+		if (path_prev[ft_strlen(path_prev) - 1] != '/')
+			path = ft_strjoin(path_prev, "/");
+		else
+			path = ft_strdup(path_prev);
+		g_ms.first_wildcard = 0;
 	}
 	else
 	{
-		if (first)
-			path = ft_strdup("./");
-		else
-		{
-			aux_token = ft_strdup(token_i);
-			if (ft_strchr(aux_token, '/'))
-				*(ft_strchr(aux_token, '/') + 1) = '\0';
-			printf("aux_token: %s\n", aux_token);
-			aux_token2 = ft_strdup(path);
-			free(path);
-			path = ft_strjoin(aux_token2, aux_token);
-			free(aux_token);
-			free(aux_token2);
-			while (token_i[j] != '/')
-				j++;
-		}
-		if (token_i[0] == '.')
+		aux_token = ft_strdup(token_i);
+		if (ft_strchr(aux_token, '/'))
+			*(ft_strchr(aux_token, '/') + 1) = '\0';
+		path = ft_strjoin(path_prev, aux_token);
+		free(aux_token);
+		while (token_i[j] != '/')
+			j++;
+		while (token_i[j] == '/')
 			j++;
 	}
-	first = 0;
-	printf("path: %s\n", path);
-	while (token_i[j] == '/')
-		j++;
 	aux_token = ft_strdup(token_i + j);
 	files = NULL;
 	dir = opendir(path);
-	free(path);
+	if (dir == NULL)
+	{
+		free(path);
+		free(aux_token);
+		return (NULL);
+	}
 	entry = readdir(dir);
-	printf("OI\n");
 	while (entry)
 	{
 		ft_lstadd_back(&files, ft_lstnew(ft_strdup(entry->d_name)));
 		entry = readdir(dir);
 	}
 	closedir(dir);
-	printf("files:\n");
-	print_list_wc(files);
 	aux_token2 = ft_strdup(aux_token);
 	if (ft_strchr(aux_token2, '/'))
 		*(ft_strchr(aux_token2, '/')) = '\0';
@@ -210,18 +198,9 @@ static t_list	*expand_wildcards(char *token_i)
 			{
 				free(aux_token2);
 				aux_token2 = ft_strjoin((char *)aux_cp->content, ft_strchr(aux_token, '/'));
-				slash = ft_strdup(ft_strchr(aux_token, '/'));
 				j = 0;
-				while (slash[j] == '/')
-					j++;
-				slash[j] = '\0';
-				sub_files = expand_wildcards(aux_token2);
-				printf("sub_files:\n");
-				print_list_wc(sub_files);
-				cat_files(&files, sub_files, slash);
-				printf("files:\n");
-				print_list_wc(files);
-				free(slash);
+				sub_files = expand_wildcards(aux_token2, path);
+				cat_files(&files, sub_files);
 				free_list(&sub_files);
 			}
 			else
@@ -230,38 +209,94 @@ static t_list	*expand_wildcards(char *token_i)
 				free(files->content);
 				free(files);
 				files = aux_files;
-				// printf("files:\n");
-				// print_list_wc(files);
 			}
 			aux_cp = aux_cp->next;
 		}
 	}
 	else
 	{
+		free(path);
 		free(aux_token2);
 		free(aux_token);
 		free_list(&cp_files);
 		return (files);
 	}
+	free(path);
 	free(aux_token2);
 	free(aux_token);
 	free_list(&cp_files);
 	return (files);
 }
 
-// static void	put_wildcards(char **token_i, t_list *wildcards)
-// {
-// 	int		j;
-// 	char	*aux;
-// 	t_list	*aux_wildcards;
+static char	**copy_ptrptr(char **ptrptr)
+{
+	int		i;
+	char	**cp_ptrptr;
+
+	i = 0;
+	while (ptrptr[i])
+		i++;
+	cp_ptrptr = (char **)ft_calloc(i + 1, sizeof(char *));
+	i = 0;
+	while (ptrptr[i])
+	{
+		cp_ptrptr[i] = ft_strdup(ptrptr[i]);
+		i++;
+	}
+	return (cp_ptrptr);
+}
+
+static void	put_wildcards(t_token *token, int *i, t_list *wildcards)
+{
+	int		aux_i;
+	int		j;
+	char	**cp_token;
+	t_list	*aux_wildcards;
 	
-// 	aux = (char *)ft_calloc(1, sizeof(char));
-// 	aux_wildcards = wildcards;
-// 	while (aux_wildcards)
-// 	{
-// 		if (((char *)aux_wildcards->content)[0] != '.' && ((char *)aux_wildcards->content)[0])
-// 		{
-// 			free(*token_i);
+	j = 0;
+	while (token->token[j])
+		j++;
+	j--;
+	aux_wildcards = wildcards;
+	while (aux_wildcards)
+	{
+		if (((char *)aux_wildcards->content)[0] != '.' && ((char *)aux_wildcards->content)[0])
+			j++;
+		aux_wildcards = aux_wildcards->next;
+	}
+	aux_i = *i;
+	*i = j - 1;
+	cp_token = copy_ptrptr(token->token);
+	free_ptrptr(token->token);
+	token->token = (char **)ft_calloc(j + 1, sizeof(char *));
+	j = 0;
+	while (j < aux_i)
+	{
+		token->token[j] = ft_strdup(cp_token[j]);
+		j++;
+	}
+	aux_i++;
+	aux_wildcards = wildcards;
+	while (aux_wildcards)
+	{
+		if (((char *)aux_wildcards->content)[0] != '.' && ((char *)aux_wildcards->content)[0])
+		{
+			token->token[j] = ft_strdup((char *)aux_wildcards->content);
+			j++;
+		}
+		aux_wildcards = aux_wildcards->next;
+	}
+	while (cp_token[aux_i])
+	{
+		token->token[j] = ft_strdup(cp_token[aux_i]);
+		aux_i++;
+		j++;
+	}
+}
+
+	// aux = (char *)ft_calloc(1, sizeof(char));
+
+// free(*token_i);
 // 			*token_i = ft_strjoin(aux, (char *)aux_wildcards->content);
 // 			free(aux);
 // 			aux = ft_strdup(*token_i);
@@ -272,22 +307,29 @@ static t_list	*expand_wildcards(char *token_i)
 // 				*token_i = ft_strdup(aux);
 // 			free(aux);
 // 			aux = ft_strdup(*token_i);
-// 		}
-// 		aux_wildcards = aux_wildcards->next;
-// 	}
-// 	j = 0;
-// 	while ((*token_i)[j])
-// 	{
-// 		if ((*token_i)[j] == WILDCARDS)
-// 			(*token_i)[j] = '*';
-// 		j++;
-// 	}
-// 	free(aux);
-// }
+
+static int	get_first_path(char *token_i, char **first_path)
+{
+	int		j;
+
+	j = 0;
+	while (token_i[j] == '.' || token_i[j] == '/')
+		j++;
+	if (j == 0)
+		*first_path = ft_strdup("./");
+	else
+	{
+		*first_path = ft_strdup(token_i);
+		(*first_path)[j] = '\0';
+	}
+	return (j);
+}
 
 void	wildcards(t_token *token_list)
 {
 	int		i;
+	int		j;
+	char	*first_path;
 	t_token	*aux;
 	t_list	*wildcards;
 
@@ -300,8 +342,11 @@ void	wildcards(t_token *token_list)
 			if ((i == 0 || (i > 0 && ft_strncmp(aux->token[i - 1], "<<", 3)))
 				&& ft_strchr_wc(aux->token[i]))
 			{
-				wildcards = expand_wildcards(aux->token[i]);
-				//put_wildcards(&aux->token[i], wildcards);
+				g_ms.first_wildcard = 1;
+				j = get_first_path(aux->token[i], &first_path);
+				wildcards = expand_wildcards(aux->token[i] + j, first_path);
+				free(first_path);
+				put_wildcards(aux, &i, wildcards);
 				free_list(&wildcards);
 			}
 			i++;
