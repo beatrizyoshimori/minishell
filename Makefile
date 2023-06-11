@@ -151,8 +151,7 @@ $(NAME_B):				$(OBJECTS_B_PATH) $(OBJECT_B)
 						@$(CC) $(C_FLAGS) $(OBJECT_B) $(LIBFT_FLAGS) -o $@ -lreadline
 
 $(OBJECTS_B_PATH):
-						@mkdir -p $(OBJECTS_B_PATH) \
-						$(OBJECTS_B_PATH)/$(SOURCES_B_PATH)
+						@mkdir -p $(OBJECTS_B_PATH)
 
 $(OBJECTS_B_PATH)/%.o:	$(SOURCES_B_PATH)/%.c $(HEADER_B_PATH)/minishell_bonus.h
 						@$(CC) $(C_FLAGS) -c $< -o $@
