@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:38:06 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/10 21:22:47 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:07:39 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	free_list(t_list **files)
 	}
 }
 
-static t_list	*copy_files(t_list *files)
+static t_list	*copy_list(t_list *files)
 {
 	t_list	*aux;
 	t_list	*cp_files;
@@ -65,11 +65,14 @@ static void	aux_expand_wildcards(char *token_i, t_list *files)
 
 	length = ft_strlen(token_i);
 	split_wc = ft_split(token_i, WILDCARDS);
-	if (!split_wc)
+	if (!split_wc[0])
 	{
+		free(split_wc);
 		split_wc = (char **)ft_calloc(2, sizeof(char *));
 		split_wc[0] = (char *)ft_calloc(1, sizeof(char));
 	}
+	else
+		g_ms.show_hidden_folders = 1;
 	aux_files = files;
 	while (aux_files)
 	{
@@ -127,10 +130,6 @@ static void	cat_files(t_list **dir, t_list *sub_files)
 		}
 		aux_sub = aux_sub->next;
 	}
-	aux_sub = (*dir)->next;
-	free((*dir)->content);
-	free(*dir);
-	*dir = aux_sub;
 }
 
 static t_list	*expand_wildcards(char *token_i, char *path_prev)
@@ -150,10 +149,7 @@ static t_list	*expand_wildcards(char *token_i, char *path_prev)
 	j = 0;
 	if (g_ms.first_wildcard)
 	{
-		if (path_prev[ft_strlen(path_prev) - 1] != '/')
-			path = ft_strjoin(path_prev, "/");
-		else
-			path = ft_strdup(path_prev);
+		path = ft_strdup(path_prev);
 		g_ms.first_wildcard = 0;
 	}
 	else
@@ -188,9 +184,10 @@ static t_list	*expand_wildcards(char *token_i, char *path_prev)
 	if (ft_strchr(aux_token2, '/'))
 		*(ft_strchr(aux_token2, '/')) = '\0';
 	aux_expand_wildcards(aux_token2, files);
-	cp_files = copy_files(files);
+	cp_files = copy_list(files);
 	if (ft_strchr(aux_token, '/'))
 	{
+		printf("aux_token: %s\n", aux_token);
 		aux_cp = cp_files;
 		while (aux_cp)
 		{
@@ -203,13 +200,10 @@ static t_list	*expand_wildcards(char *token_i, char *path_prev)
 				cat_files(&files, sub_files);
 				free_list(&sub_files);
 			}
-			else
-			{
-				aux_files = files->next;
-				free(files->content);
-				free(files);
-				files = aux_files;
-			}
+			aux_files = files->next;
+			free(files->content);
+			free(files);
+			files = aux_files;
 			aux_cp = aux_cp->next;
 		}
 	}
@@ -246,7 +240,7 @@ static char	**copy_ptrptr(char **ptrptr)
 	return (cp_ptrptr);
 }
 
-static void	put_wildcards(t_token *token, int *i, t_list *wildcards)
+static void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wildcards)
 {
 	int		aux_i;
 	int		j;
@@ -260,7 +254,7 @@ static void	put_wildcards(t_token *token, int *i, t_list *wildcards)
 	aux_wildcards = wildcards;
 	while (aux_wildcards)
 	{
-		if (((char *)aux_wildcards->content)[0] != '.' && ((char *)aux_wildcards->content)[0])
+		if (((((char *)aux_wildcards->content)[0] == '.' && g_ms.show_hidden_folders) || ((char *)aux_wildcards->content)[0] != '.') && ((char *)aux_wildcards->content)[0])
 			j++;
 		aux_wildcards = aux_wildcards->next;
 	}
@@ -279,9 +273,12 @@ static void	put_wildcards(t_token *token, int *i, t_list *wildcards)
 	aux_wildcards = wildcards;
 	while (aux_wildcards)
 	{
-		if (((char *)aux_wildcards->content)[0] != '.' && ((char *)aux_wildcards->content)[0])
+		if (((((char *)aux_wildcards->content)[0] == '.' && g_ms.show_hidden_folders) || ((char *)aux_wildcards->content)[0] != '.') && ((char *)aux_wildcards->content)[0])
 		{
-			token->token[j] = ft_strdup((char *)aux_wildcards->content);
+			if (!first_path)
+				token->token[j] = ft_strdup((char *)aux_wildcards->content);
+			else
+				token->token[j] = ft_strjoin(first_path, (char *)aux_wildcards->content);
 			j++;
 		}
 		aux_wildcards = aux_wildcards->next;
@@ -292,21 +289,8 @@ static void	put_wildcards(t_token *token, int *i, t_list *wildcards)
 		aux_i++;
 		j++;
 	}
+	free_ptrptr(cp_token);
 }
-
-	// aux = (char *)ft_calloc(1, sizeof(char));
-
-// free(*token_i);
-// 			*token_i = ft_strjoin(aux, (char *)aux_wildcards->content);
-// 			free(aux);
-// 			aux = ft_strdup(*token_i);
-// 			free(*token_i);
-// 			if (aux_wildcards->next)
-// 				*token_i = ft_strjoin(aux, " ");
-// 			else
-// 				*token_i = ft_strdup(aux);
-// 			free(aux);
-// 			aux = ft_strdup(*token_i);
 
 static int	get_first_path(char *token_i, char **first_path)
 {
@@ -315,14 +299,29 @@ static int	get_first_path(char *token_i, char **first_path)
 	j = 0;
 	while (token_i[j] == '.' || token_i[j] == '/')
 		j++;
-	if (j == 0)
-		*first_path = ft_strdup("./");
-	else
+	*first_path = ft_strdup(token_i);
+	(*first_path)[j] = '\0';
+	if (!ft_strchr(*first_path, '/'))
 	{
-		*first_path = ft_strdup(token_i);
-		(*first_path)[j] = '\0';
+		free(*first_path);
+		*first_path = ft_strdup("./");
+		return (0);
 	}
-	return (j);
+	*(ft_strrchr(*first_path, '/') + 1) = '\0';
+	return (ft_strlen(*first_path));
+}
+
+static void	change_back_asterisc(char **token_i)
+{
+	int	j;
+
+	j = 0;
+	while ((*token_i)[j])
+	{
+		if ((*token_i)[j] == WILDCARDS)
+			(*token_i)[j] = '*';
+		j++;
+	}
 }
 
 void	wildcards(t_token *token_list)
@@ -339,15 +338,24 @@ void	wildcards(t_token *token_list)
 		i = 0;
 		while (aux->token[i])
 		{
-			if ((i == 0 || (i > 0 && ft_strncmp(aux->token[i - 1], "<<", 3)))
-				&& ft_strchr_wc(aux->token[i]))
+			if (ft_strchr_wc(aux->token[i]) && (i == 0 || (i > 0 && ft_strncmp(aux->token[i - 1], "<<", 3))))
 			{
 				g_ms.first_wildcard = 1;
 				j = get_first_path(aux->token[i], &first_path);
 				wildcards = expand_wildcards(aux->token[i] + j, first_path);
+				if (j == 0)
+				{
+					free(first_path);
+					first_path = NULL;
+				}
+				if (wildcards)
+				{
+					put_wildcards(aux, &i, first_path, wildcards);
+					free_list(&wildcards);
+				}
+				else
+					change_back_asterisc(&aux->token[i]);
 				free(first_path);
-				put_wildcards(aux, &i, wildcards);
-				free_list(&wildcards);
 			}
 			i++;
 		}
