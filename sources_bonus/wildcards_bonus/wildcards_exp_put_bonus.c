@@ -6,26 +6,44 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:07:02 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:21:20 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:06:33 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wildcards)
+static void	insert_wc(t_token *token, int *j, t_list *wc, char *first_path)
 {
-	int		aux_i;
+	t_list	*aux_wc;
+
+	aux_wc = wc;
+	while (aux_wc)
+	{
+		if (((char *)aux_wc->content)[0])
+		{
+			if (!first_path)
+				token->token[*j] = ft_strdup((char *)aux_wc->content);
+			else
+				token->token[*j] = ft_strjoin(first_path,
+						(char *)aux_wc->content);
+			(*j)++;
+		}
+		aux_wc = aux_wc->next;
+	}
+}
+
+static int	remalloc(t_token *token, t_list *wildcards)
+{
 	int		j;
 	int		l;
-	char	**cp_token;
 	t_list	*aux_wildcards;
 
 	j = 0;
 	while (token->token[j])
 		j++;
 	j--;
-	aux_wildcards = wildcards;
 	l = 0;
+	aux_wildcards = wildcards;
 	while (aux_wildcards)
 	{
 		if (((char *)aux_wildcards->content)[0])
@@ -33,11 +51,20 @@ void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wildcards)
 		aux_wildcards = aux_wildcards->next;
 	}
 	j += l;
-	aux_i = *i;
-	*i += l - 1;
-	cp_token = copy_ptrptr(token->token);
 	free_ptrptr(token->token);
 	token->token = (char **)ft_calloc(j + 1, sizeof(char *));
+	return (l);
+}
+
+void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wc)
+{
+	int		aux_i;
+	int		j;
+	char	**cp_token;
+
+	cp_token = copy_ptrptr(token->token);
+	aux_i = *i;
+	*i += remalloc(token, wc) - 1;
 	j = 0;
 	while (j < aux_i)
 	{
@@ -45,19 +72,7 @@ void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wildcards)
 		j++;
 	}
 	aux_i++;
-	aux_wildcards = wildcards;
-	while (aux_wildcards)
-	{
-		if (((char *)aux_wildcards->content)[0])
-		{
-			if (!first_path)
-				token->token[j] = ft_strdup((char *)aux_wildcards->content);
-			else
-				token->token[j] = ft_strjoin(first_path, (char *)aux_wildcards->content);
-			j++;
-		}
-		aux_wildcards = aux_wildcards->next;
-	}
+	insert_wc(token, &j, wc, first_path);
 	while (cp_token[aux_i])
 	{
 		token->token[j] = ft_strdup(cp_token[aux_i]);
