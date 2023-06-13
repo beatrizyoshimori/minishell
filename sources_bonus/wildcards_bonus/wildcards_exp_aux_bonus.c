@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:04:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:05:09 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:29:52 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	aux_expand_wildcards(char *token_i, t_list *files)
+void	aux_get_wildcards(char *token_i, t_list *files)
 {
 	int		j;
 	int		k;

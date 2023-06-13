@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:20:30 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:30:16 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,10 +224,10 @@ void	parser(t_token *token_list);
 void	wildcards(t_token *token_list);
 
 // wildcards_exp_aux_bonus.c functions
-void	aux_expand_wildcards(char *token_i, t_list *files);
+void	aux_get_wildcards(char *token_i, t_list *files);
 
 // wildcards_exp_bonus.c functions
-t_list	*expand_wildcards(char *token_i, char *path_prev);
+t_list	*get_wildcards_expansion(char *token_i, char *path_prev);
 
 // wildcards_exp_put_bonus.c functions
 void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wc);

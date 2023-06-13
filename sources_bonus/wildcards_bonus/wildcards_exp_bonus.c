@@ -6,13 +6,13 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:00:23 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:01:21 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:34:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-t_list	*expand_wildcards(char *token_i, char *path_prev)
+t_list	*get_wildcards_expansion(char *token_i, char *path_prev)
 {
 	int				j;
 	int				end_w_slash;
@@ -68,7 +68,7 @@ t_list	*expand_wildcards(char *token_i, char *path_prev)
 		*(ft_strchr(aux_token2, '/')) = '\0';
 		end_w_slash = end_with_slash(aux_token2 + ft_strlen(aux_token2) + 1);
 	}
-	aux_expand_wildcards(aux_token2, files);
+	aux_get_wildcards(aux_token2, files);
 	if (check_empty_subfiles(files))
 	{
 		free(path);
@@ -96,7 +96,7 @@ t_list	*expand_wildcards(char *token_i, char *path_prev)
 				free(aux_token2);
 				aux_token2 = ft_strjoin((char *)aux_cp->content, ft_strchr(aux_token, '/'));
 				j = 0;
-				sub_files = expand_wildcards(aux_token2, path);
+				sub_files = get_wildcards_expansion(aux_token2, path);
 				cat_files(&files, sub_files);
 				free_list(&sub_files);
 			}
