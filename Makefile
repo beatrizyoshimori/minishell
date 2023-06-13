@@ -30,13 +30,19 @@ EXECUTION_PATH	=		execution
 
 LEXER_PATH		=		lexer
 
+LEXER_B_PATH	=		lexer_bonus
+
 PARSER_PATH		=		parser
+
+PARSER_B_PATH	=		parser_bonus
 
 REDIRECT_PATH	=		redirect
 
 SIGNAL_PATH		=		signal
 
 TOKEN_PATH		=		token
+
+WILDCARDS_PATH	=		wildcards_bonus
 
 CD				=		$(addprefix $(CD_PATH)/,		cd_utils.c \
 														cd.c)
@@ -68,11 +74,15 @@ LEXER			=		$(addprefix $(LEXER_PATH)/,		lexer.c \
 														quotes.c \
 														spaces.c)
 
+LEXER_B			=		$(addprefix $(LEXER_B_PATH)/,	quotes_bonus.c)
+
 PARSER			=		$(addprefix $(PARSER_PATH)/,	parser_tilde_exp.c \
 														parser_utils.c \
 														parser_var_exp_utils.c \
 														parser_var_exp.c \
 														parser.c)
+
+PARSER_B		=		$(addprefix $(PARSER_B_PATH)/,	parser_bonus.c)
 
 REDIRECT		=		$(addprefix $(REDIRECT_PATH)/,	heredoc.c \
 														redirect_utils.c \
@@ -81,6 +91,13 @@ REDIRECT		=		$(addprefix $(REDIRECT_PATH)/,	heredoc.c \
 SIGNAL			=		$(addprefix $(SIGNAL_PATH)/,	signal_handlers.c)
 
 TOKEN			=		$(addprefix $(TOKEN_PATH)/,		token_utils.c)
+
+WILDCARDS		=		$(addprefix $(WILDCARDS_PATH)/,	wildcards_bonus.c \
+														wildcards_exp_aux_bonus.c \
+														wildcards_exp_bonus.c \
+														wildcards_exp_put_bonus.c \
+														wildcards_list_utils_bonus.c \
+														wildcards_utils_bonus.c)
 
 LIBFT_H			=		$(addprefix $(LIBFT_PATH)/,		$(HEADER_PATH))
 
@@ -98,9 +115,9 @@ SOURCES			=		non_ms_functions.c \
 						$(SIGNAL) \
 						$(TOKEN)
 
-SOURCES_B		=		parser_bonus.c \
-						quotes_bonus.c \
-						wildcards_bonus.c
+SOURCES_B		=		$(LEXER_B) \
+						$(PARSER_B) \
+						$(WILDCARDS)
 
 OBJECT			=		$(addprefix $(OBJECTS_PATH)/,	$(SOURCES:.c=.o))
 
@@ -151,7 +168,10 @@ $(NAME_B):				$(OBJECTS_B_PATH) $(OBJECT_B)
 						@$(CC) $(C_FLAGS) $(OBJECT_B) $(LIBFT_FLAGS) -o $@ -lreadline
 
 $(OBJECTS_B_PATH):
-						@mkdir -p $(OBJECTS_B_PATH)
+						@mkdir -p $(OBJECTS_B_PATH) \
+						$(OBJECTS_B_PATH)/$(LEXER_B_PATH) \
+						$(OBJECTS_B_PATH)/$(PARSER_B_PATH) \
+						$(OBJECTS_B_PATH)/$(WILDCARDS_PATH)
 
 $(OBJECTS_B_PATH)/%.o:	$(SOURCES_B_PATH)/%.c $(HEADER_B_PATH)/minishell_bonus.h
 						@$(CC) $(C_FLAGS) -c $< -o $@

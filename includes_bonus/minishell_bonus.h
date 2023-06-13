@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/12 21:28:17 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:20:30 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,16 +209,42 @@ void	signal_handler_heredoc(int signal);
 void	set_tokens(char **tokens, t_token **token_list);
 
 // sources_bonus folder
-// parser.c functions
-void	parser(t_token *token_list);
-
+// lexer_bonus folder
 // quotes.c functions
 void	mark_metachar_inside_quotes(char *prompt);
 void	find_metachar(char *prompt);
 void	change_metachar_back(char *prompt);
 
+// parser_bonus folder
+// parser.c functions
+void	parser(t_token *token_list);
+
+// wildcards_bonus folder
 // wildcards_bonus.c functions
 void	wildcards(t_token *token_list);
+
+// wildcards_exp_aux_bonus.c functions
+void	aux_expand_wildcards(char *token_i, t_list *files);
+
+// wildcards_exp_bonus.c functions
+t_list	*expand_wildcards(char *token_i, char *path_prev);
+
+// wildcards_exp_put_bonus.c functions
+void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wc);
+
+// wildcards_list_utils_bonus.c functions
+int		check_empty_subfiles(t_list *files);
+void	free_list(t_list **files);
+void	cat_files(t_list **dir, t_list *sub_files);
+void	put_slash_dir(t_list **files);
+t_list	*copy_list(t_list *files);
+
+// wildcards_utils_bonus.c functions
+int		ft_strchr_wc(const char *s);
+int		end_with_slash(char *aux_token);
+int		get_first_path(char *token_i, char **first_path);
+char	**copy_ptrptr(char **ptrptr);
+void	change_back_asterisc(char **token_i);
 
 // non ms functions
 void	print_list(t_token *token_list);
