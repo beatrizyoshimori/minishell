@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/09 13:00:46 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:15:33 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@
 
 typedef struct s_ms
 {
+	char			**paths;
+	char			**env;
+	char			*home;
+	pid_t			*pid;
+	long long		exit_status;
+	struct s_token	*token_list;
 	int				num_tokens;
 	int				env_nbr_ptr;
 	int				*pipe_fd;
@@ -57,12 +63,6 @@ typedef struct s_ms
 	int				on_fork;
 	int				print_error;
 	int				fd_heredoc;
-	char			**paths;
-	char			**env;
-	char			*home;
-	pid_t			*pid;
-	long long		exit_status;
-	struct s_token	*token_list;
 }	t_ms;
 
 typedef struct s_token

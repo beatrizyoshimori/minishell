@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/12 19:07:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:28:17 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_ms
 	int				print_error;
 	int				fd_heredoc;
 	int				first_wildcard;
-	int				show_hidden_folders;
 }	t_ms;
 
 typedef struct s_token

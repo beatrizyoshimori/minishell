@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 22:04:36 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/05 17:00:35 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:05:20 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_isdirectory(char *token_cmd)
 {
 	struct stat	statbuf;
 
-	if (stat(token_cmd, &statbuf) != 0)
+	if (stat(token_cmd, &statbuf))
 		return (0);
 	if (S_ISDIR(statbuf.st_mode))
 	{
