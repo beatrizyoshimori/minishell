@@ -6,13 +6,14 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:10:31 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:12:06 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:42:44 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-int	check_empty_subfiles(t_list *files)
+int	check_empty_subfiles(t_list *files, char *path,
+	char *aux_token, char *aux_token2)
 {
 	t_list	*aux;
 
@@ -23,6 +24,7 @@ int	check_empty_subfiles(t_list *files)
 			return (0);
 		aux = aux->next;
 	}
+	free_all_wc(files, path, aux_token, aux_token2);
 	return (1);
 }
 
@@ -65,11 +67,12 @@ void	put_slash_dir(t_list **files)
 	t_list		*aux_cp;
 	struct stat	statbuf;
 
+	statbuf = (struct stat){0};
 	cp_files = copy_list(*files);
 	aux_cp = cp_files;
 	while (aux_cp)
 	{
-		stat(aux_cp->content, &statbuf);
+		stat((char *)aux_cp->content, &statbuf);
 		if (((char *)aux_cp->content)[0] && S_ISDIR(statbuf.st_mode))
 		{
 			aux = ft_strdup((*files)->content);

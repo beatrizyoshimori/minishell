@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcards_utils.c                                  :+:      :+:    :+:   */
+/*   wildcards_utils_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:13:30 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:14:25 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:32:11 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,25 @@ int	ft_strchr_wc(const char *s)
 	return (0);
 }
 
-int	end_with_slash(char *aux_token)
+int	end_with_slash(char *token_i)
 {
-	int	i;
+	int		j;
+	char	*aux;
 
-	i = 0;
-	while (aux_token[i] == '/')
-		i++;
-	if (!aux_token[i])
-		return (1);
+	if (ft_strchr(token_i, '/'))
+	{
+		*(ft_strchr(token_i, '/')) = '\0';
+		aux = ft_strdup(token_i + ft_strlen(token_i) + 1);
+		j = 0;
+		while (aux[j] == '/')
+			j++;
+		if (!aux[j])
+		{
+			free(aux);
+			return (1);
+		}
+		free(aux);
+	}
 	return (0);
 }
 

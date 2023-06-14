@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 17:30:16 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/13 22:32:47 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,19 +221,25 @@ void	parser(t_token *token_list);
 
 // wildcards_bonus folder
 // wildcards_bonus.c functions
+t_list	*get_wildcards_expansion(char *token_i, char *path_prev);
 void	wildcards(t_token *token_list);
 
 // wildcards_exp_aux_bonus.c functions
 void	aux_get_wildcards(char *token_i, t_list *files);
 
 // wildcards_exp_bonus.c functions
-t_list	*get_wildcards_expansion(char *token_i, char *path_prev);
+char	*get_path_wc(char *token_i, char *path_prev, char **aux_token);
+int		get_files(t_list **files, char *path, char *aux_token);
+void	free_all_wc(t_list *files, char *path,
+			char *aux_token, char *aux_token2);
+void	delete_node_list(t_list **files);
 
 // wildcards_exp_put_bonus.c functions
 void	put_wildcards(t_token *token, int *i, char *first_path, t_list *wc);
 
 // wildcards_list_utils_bonus.c functions
-int		check_empty_subfiles(t_list *files);
+int		check_empty_subfiles(t_list *files, char *path,
+			char *aux_token, char *aux_token2);
 void	free_list(t_list **files);
 void	cat_files(t_list **dir, t_list *sub_files);
 void	put_slash_dir(t_list **files);
@@ -241,10 +247,13 @@ t_list	*copy_list(t_list *files);
 
 // wildcards_utils_bonus.c functions
 int		ft_strchr_wc(const char *s);
-int		end_with_slash(char *aux_token);
+int		end_with_slash(char *token_i);
 int		get_first_path(char *token_i, char **first_path);
 char	**copy_ptrptr(char **ptrptr);
 void	change_back_asterisc(char **token_i);
+
+void	free_all_wc(t_list *files, char *path,
+			char *aux_token, char *aux_token2);
 
 // non ms functions
 void	print_list(t_token *token_list);
