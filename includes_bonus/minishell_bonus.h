@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/13 22:32:47 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:57:46 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,8 @@ void	redirect_in_out(t_token *token_list);
 
 // signal folder
 // signal_handlers.c functions
-void	signal_handler(int signal);
+void	signal_handler_parent(void);
+void	signal_handler_child(void);
 void	signal_handler_heredoc(int signal);
 
 // token folder

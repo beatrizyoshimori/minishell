@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 20:14:37 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/05 16:30:37 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:03:36 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	heredoc_readline(char *dlmt)
 
 	quotes = 0;
 	prompt = NULL;
-	g_ms.on_fork = 2;
 	signal(SIGINT, signal_handler_heredoc);
 	while (1)
 	{
@@ -84,7 +83,7 @@ void	heredoc(t_token *token, int i)
 	int		status;
 	pid_t	pid;
 
-	if (g_ms.exit_status == 148)
+	if (g_ms.exit_status == 130)
 	{
 		token->no_exec = 1;
 		return ;
@@ -92,19 +91,20 @@ void	heredoc(t_token *token, int i)
 	if (g_ms.fd_heredoc)
 		close(g_ms.fd_heredoc);
 	g_ms.fd_heredoc = open(".h*e*r*e*d*o*c*", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	g_ms.on_fork = 2;
+	signal_handler_child();
 	pid = fork();
 	if (!pid)
 		heredoc_readline(token->token[i + 1]);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_ms.exit_status = WEXITSTATUS(status);
-	if (g_ms.exit_status == 148)
+	signal_handler_parent();
+	if (g_ms.exit_status == 130)
 	{
 		close(g_ms.fd_heredoc);
 		g_ms.syntax_error = 1;
 	}
-	else
-		g_ms.on_fork = 0;
 }
 
 void	redirect_heredoc(t_token *token_list)
@@ -123,7 +123,10 @@ void	redirect_heredoc(t_token *token_list)
 		{
 			if (aux->token[i][0] == '<'
 				&& aux->token[i][1] == '<' && !aux->token[i][2])
+			{
 				heredoc(aux, i);
+				g_ms.on_fork = 0;
+			}
 			i++;
 		}
 		aux = aux->next;

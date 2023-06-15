@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/06 19:30:48 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:26:51 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ int	main(int argc, char **argv, char **envp)
 	copy_envp(envp);
 	get_paths(envp);
 	token_list = NULL;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_handler);
-	signal(SIGPIPE, signal_handler);
+	signal_handler_parent();
 	create_prompt(token_list);
 	return (0);
 }

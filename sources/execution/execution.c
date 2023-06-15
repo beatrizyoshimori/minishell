@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:48:34 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/05 16:35:03 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/14 21:59:04 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	wait_processes(t_token *token_list, int num_proc)
 		if (i != num_proc)
 			aux = aux->next->next;
 	}
+	signal_handler_parent();
 }
 
 static void	start_child_process(t_token *token_list, t_token *token, int i)
@@ -58,12 +59,12 @@ static void	start_processes_aux(t_token *token_list, t_token *token, int i)
 		print_error("bilu: ", token->token[0], "Is a directory", 126);
 		token->no_exec = 1;
 	}
+	g_ms.on_fork = 1;
+	signal_handler_child();
 	g_ms.pid[i] = fork();
 	if (!g_ms.pid[i])
-	{
-		g_ms.on_fork = 1;
 		start_child_process(token_list, token, i);
-	}
+	g_ms.on_fork = 0;
 }
 
 void	start_processes(t_token *token_list)
