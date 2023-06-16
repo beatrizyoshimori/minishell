@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:48:53 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/14 20:26:51 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:42:30 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	create_prompt(t_token *token_list)
 	while (1)
 	{
 		prompt = readline("bilu> ");
+		g_ms.first_heredoc = 1;
 		check_ctrl_d(prompt);
 		check_whitespaces_enter(&prompt);
 		add_history(prompt);
@@ -64,7 +65,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	g_ms = (t_ms){0};
 	copy_envp(envp);
-	get_paths(envp);
 	token_list = NULL;
 	signal_handler_parent();
 	create_prompt(token_list);
