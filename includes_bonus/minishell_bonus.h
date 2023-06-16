@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/14 20:57:46 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:55:32 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_ms
 	int				on_fork;
 	int				print_error;
 	int				fd_heredoc;
+	int				first_heredoc;
 	int				first_wildcard;
 }	t_ms;
 
@@ -123,7 +124,7 @@ void	unset(char **token);
 // envp_utils folder
 // envp_utils.c functions
 int		dup_env(void);
-void	get_paths(char **envp);
+void	get_paths(void);
 void	copy_envp(char **envp);
 
 // error_free folder
