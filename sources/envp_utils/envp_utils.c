@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:12:43 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/05/24 20:07:41 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:55:36 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,21 @@ int	dup_env(void)
 	return (i);
 }
 
-void	get_paths(char **envp)
+void	get_paths(void)
 {
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	while (g_ms.env[i])
 	{
-		if (!ft_strncmp(envp[i], "PATH=", 5))
+		if (!ft_strncmp(g_ms.env[i], "PATH=", 5))
 			break ;
 		i++;
 	}
-	g_ms.paths = ft_split(envp[i] + 5, ':');
+	if (!g_ms.env[i])
+		g_ms.paths = NULL;
+	else
+		g_ms.paths = ft_split(g_ms.env[i] + 5, ':');
 }
 
 void	copy_envp(char **envp)
