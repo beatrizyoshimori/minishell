@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 20:14:37 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/14 22:03:36 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/15 23:14:34 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	heredoc(t_token *token, int i)
 		token->no_exec = 1;
 		return ;
 	}
+	g_ms.first_heredoc = 0;
 	if (g_ms.fd_heredoc)
 		close(g_ms.fd_heredoc);
 	g_ms.fd_heredoc = open(".h*e*r*e*d*o*c*", O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -99,7 +100,6 @@ void	heredoc(t_token *token, int i)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_ms.exit_status = WEXITSTATUS(status);
-	signal_handler_parent();
 	if (g_ms.exit_status == 130)
 	{
 		close(g_ms.fd_heredoc);
@@ -124,8 +124,11 @@ void	redirect_heredoc(t_token *token_list)
 			if (aux->token[i][0] == '<'
 				&& aux->token[i][1] == '<' && !aux->token[i][2])
 			{
+				if (g_ms.first_heredoc)
+					g_ms.exit_status = 0;
 				heredoc(aux, i);
 				g_ms.on_fork = 0;
+				signal_handler_parent();
 			}
 			i++;
 		}
