@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: byoshimo <byoshimo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:59:18 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/03 19:52:16 by byoshimo         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:19:21 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	exit_process(t_token *token_list)
 	free_token_list(&token_list);
 	free(g_ms.pipe_fd);
 	free(g_ms.pid);
-	free_ptrptr(g_ms.paths);
 	free_ptrptr(g_ms.env);
 	free(g_ms.home);
 	exit(g_ms.exit_status);
