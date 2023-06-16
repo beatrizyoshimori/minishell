@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:06:35 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/07 19:18:36 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:13:50 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ void	not_found_variable(char **token_i, int *j, int *length)
 	*token_i = ft_strdup(aux);
 	*j = *j - *length - 2;
 	free(aux);
+	g_ms.exit_status = 0;
 }
