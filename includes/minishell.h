@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/17 14:51:57 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:01:08 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_token
 
 extern t_ms	g_ms;
 
+// sources folders
 // built-in folder
 // cd folder
 // cd_utils.c functions
