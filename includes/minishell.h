@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by byoshimo          #+#    #+#             */
-/*   Updated: 2023/06/16 16:55:41 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/17 14:51:57 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,5 @@ void	signal_handler_heredoc(int signal);
 // token folder
 // token_utils.c functions
 void	set_tokens(char **tokens, t_token **token_list);
-
-// non ms functions
-void	print_list(t_token *token_list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lucade-s <lucade-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:06:19 by lucade-s          #+#    #+#             */
-/*   Updated: 2023/06/16 16:55:32 by lucade-s         ###   ########.fr       */
+/*   Updated: 2023/06/17 14:51:52 by lucade-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,9 +256,5 @@ void	change_back_asterisc(char **token_i);
 
 void	free_all_wc(t_list *files, char *path,
 			char *aux_token, char *aux_token2);
-
-// non ms functions
-void	print_list(t_token *token_list);
-void	print_list_wc(t_list *files);
 
 #endif

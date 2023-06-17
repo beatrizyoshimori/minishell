@@ -103,8 +103,7 @@ LIBFT_H			=		$(addprefix $(LIBFT_PATH)/,		$(HEADER_PATH))
 
 LIBFT			=		$(addprefix $(LIBFT_PATH)/,		libft.a)
 
-SOURCES			=		non_ms_functions.c \
-						minishell.c \
+SOURCES			=		minishell.c \
 						$(BUILT-IN) \
 						$(ENVP) \
 						$(ERROR) \
@@ -175,18 +174,6 @@ $(OBJECTS_B_PATH):
 
 $(OBJECTS_B_PATH)/%.o:	$(SOURCES_B_PATH)/%.c $(HEADER_B_PATH)/minishell_bonus.h
 						@$(CC) $(C_FLAGS) -c $< -o $@
-
-v:						$(LIBFT) $(NAME)
-						@valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
-						--suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
-						--trace-children-skip='*/bin/*,*/sbin/*' \
-						./minishell
-
-vb:						$(LIBFT) $(NAME) $(NAME_B)
-						@valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
-						--suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
-						--trace-children-skip='*/bin/*,*/sbin/*' \
-						./minishell_bonus
 
 clean:
 						@$(RM) $(OBJECTS_PATH) $(OBJECTS_B_PATH)
