@@ -120,13 +120,9 @@ SOURCES_B		=		$(LEXER_B) \
 
 OBJECT			=		$(addprefix $(OBJECTS_PATH)/,	$(SOURCES:.c=.o))
 
-SOURCE			=		$(addprefix $(SOURCES_PATH)/,	$(SOURCES))
-
 OBJECT_B		=		$(filter-out $(OBJECTS_PATH)/$(LEXER_PATH)/quotes.o, \
 							$(filter-out $(OBJECTS_PATH)/$(PARSER_PATH)/parser.o, $(OBJECT))) \
 						$(addprefix $(OBJECTS_B_PATH)/,	$(SOURCES_B:.c=.o))
-
-SOURCE_B		=		$(addprefix $(SOURCES_B_PATH)/,	$(SOURCES_B))
 
 CC				=		cc
 
